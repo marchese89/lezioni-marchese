@@ -169,7 +169,8 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 
         </script>
 
-<link href="fogliCSS/home.css" rel="stylesheet" type="text/css">
+<link href="fogliCSS/home.css?ts=<?=time()?>&quot" rel="stylesheet" type="text/css">
+<link href="fogliCSS/menu.css?ts=<?=time()?>&quot" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="script/jquery-2.1.1.js"></script>
 <script type="text/javascript"
 	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
@@ -178,7 +179,7 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 
 
 </head>
-<body style="background-color: #ffffff">
+<body style="background-color: #ffffff;">
 
 	<div id="cookie">
 		<br> Questo sito utilizza i cookie tecnici (indispensabili per il suo
@@ -190,8 +191,8 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 
 	</div>
 
-	<table 
-		style="border-radius: 7px 7px 7px 7px;vertical-align: middle; white-space: nowrap; background-color: #e6e6e6; margin-left: auto; margin-right: auto; position: relative; z-index: 1; top: 0; width: 100%; border: 3px solid black; border-width: 0; border-spacing: 0;">
+	<table
+		style="border-radius: 7px 7px 7px 7px; vertical-align: middle; white-space: nowrap; background-color: #e6e6e6; margin-left: auto; margin-right: auto; position: relative; z-index: 1; top: 0; width: 100%; border: 3px solid black; border-width: 0; border-spacing: 0;">
 
 		<tr style="height: 20px;">
 			<td colspan="8"></td>
@@ -206,19 +207,41 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 		<tr>
 			<td colspan="2"></td>
 
-			<td style="font-size: 18pt">Corsi</td>
-			<td style="font-size: 18pt">Lezioni online</td>
-			<td style="font-size: 18pt">Esercizi</td>
-			<td style="font-size: 18pt">Recensioni</td>
-			<td style="font-size: 18pt">Lavora con noi</td>
-			<td style="font-size: 18pt">Chi siamo</td>
+			<th style="font-size: 18pt">
+				<div id="cssmenu">
+					<ul>
+						<li class='active has-sub'><a href="">Corsi</a>
+							<ul>
+								<li class='active has-sub'><a href="">Corso 1</a></li>
+								<li class='active has-sub'><a href="">Corso 2</a></li>
+								<li class='active has-sub'><a href="">Corso 3</a></li>
+							</ul></li>
+					</ul>
+					<ul>
+						<li class='active has-sub'><a href="">Lezioni online</a></li>
+					</ul>
+					<ul>
+						<li class='active has-sub'><a href="">Esercizi</a></li>
+					</ul>
+					<ul>
+						<li class='active has-sub'><a href="">Recensioni</a></li>
+					</ul>
+					<ul>
+						<li class='active has-sub'><a href="">Lavora con noi</a></li>
+					</ul>
+					<ul>
+						<li class='active has-sub'><a href="">Contatti</a></li>
+					</ul>
+				</div>
+			</th>
+
 		</tr>
 
 		</th>
 
 		</tr>
 		<tr>
-			<th colspan="8"  style="padding: 0; text-align: center">
+			<th colspan="8" style="padding: 0; text-align: center">
 				<div id="mostraPagina"></div>
 			</th>
 		</tr>
@@ -236,7 +259,7 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 				style="background-color: #8f9296; text-align: center; height: 40px; color: black"
 				colspan="8">Easy Learning</th>
 		</tr>
-		
+
 	</table>
 </body>
 </html>
