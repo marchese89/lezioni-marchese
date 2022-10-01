@@ -81,12 +81,12 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 		<button onclick="accettaCookie()">Chiudi</button>
 
 	</div>
-	<header>
-		<table 
-			style="vertical-align: middle; white-space: nowrap; margin-left: auto; margin-right: auto; position: relative; z-index: 1; top: 0; width: 100%; border-width: 0; border-spacing: 0;">
-			<tr>
-				<td colspan=2></td>
-				<td align=right>
+
+	<table 
+		style="vertical-align: middle; white-space: nowrap;  margin-right: auto;  z-index: 1; top: 0; width: 100%; border-width: 0; border-spacing: 0;">
+		<tr style="background-color: #e1e1e1">
+			<td colspan=2></td>
+			<td align=right>
 			<?php
 if (empty($_SESSION['user'])) {
     ?>
@@ -100,65 +100,60 @@ if (empty($_SESSION['user'])) {
     } else {
         ?>
         <a href="index.php?pagina=amministrazione/admin.php"><b>Il mio
-							profilo</b></a>
+						profilo</b></a>
         <?php
     }
 }
 ?>
 		</td>
-			</tr>
-			<tr>
-				<td style="margin-left: 0; align: center;"><img
-						src="images/logo.png" width="600" height="100" 
-						alt="img"></a></td>
-				<td colspan="4"></td>
-			</tr>
-			<tr>
-				<td colspan="2"></td>
+		</tr>
+		<tr style="background-color: #e1e1e1">
+			<td style="margin-left: 0; align: center;"><img src="images/logo.png"
+				width="600" height="100" alt="img"></a></td>
+			<td></td>
+			<th style="font-size: 18pt;">
+				<div id="cssmenu">
+					<ul>
+						<li class='active has-sub'><a href="">Corsi</a>
+							<ul>
+								<li align=left><a href="">Scuole Superiori</a></li>
+								<li align=left><a href="">Università</a></li>
+								<li align=left><a href="">Corsi Extra</a></li>
+							</ul></li>
+					</ul>
+					<ul>
+						<li class='active has-sub'><a href="">Lezioni online</a></li>
+					</ul>
+					<ul>
+						<li class='active has-sub'><a href="">Esercizi</a>
+							<ul>
+								<li align=left class='active has-sub'><a href="">Esercizi Svolti</a></li>
+								<li align=left><a href="">Svolgimento Esercizi</a></li>
+								<li align=left><a href="">Correzione Esercizi svolti</a></li>
+							</ul></li>
+					</ul>
+					<ul>
+						<li><a href="">Recensioni</a></li>
+					</ul>
+					<ul>
+						<li><a href="">Lavora con noi</a></li>
+					</ul>
+					<ul>
+						<li><a href="">Chi Siamo</a></li>
+					</ul>
+					<ul>
+						<li><a href="">Contatti</a></li>
+					</ul>
+				</div>
+			</th>
 
-				<th style="font-size: 18pt;">
-					<div id="cssmenu">
-						<ul>
-							<li class='active has-sub'><a href="">Corsi</a>
-								<ul>
-									<li align=left><a href="">Scuole Superiori</a></li>
-									<li align=left><a href="">Università</a></li>
-									<li align=left><a href="">Corsi Extra</a></li>
-								</ul></li>
-						</ul>
-						<ul>
-							<li class='active has-sub'><a href="">Lezioni online</a></li>
-						</ul>
-						<ul>
-							<li class='active has-sub'><a href="">Esercizi</a>
-								<ul>
-									<li align=left class='active has-sub'><a href="">Esercizi
-											Svolti</a></li>
-									<li align=left><a href="">Svolgimento Esercizi</a></li>
-									<li align=left><a href="">Correzione Esercizi svolti</a></li>
-								</ul></li>
-						</ul>
-						<ul>
-							<li><a href="">Recensioni</a></li>
-						</ul>
-						<ul>
-							<li><a href="">Lavora con noi</a></li>
-						</ul>
-						<ul>
-							<li><a href="">Chi Siamo</a></li>
-						</ul>
-						<ul>
-							<li><a href="">Contatti</a></li>
-						</ul>
-					</div>
-				</th>
+		</tr>
 
-			</tr>
+		<tr>
+			<th colspan=3>
 
-		</table>
-	</header>
 
-			<div id="mostraPagina" style="padding: 0; text-align: center">
+				<div id="mostraPagina" style="padding: 0; text-align: center">
 				<?php
     if (empty($pagina_interna)) {
         $pagina_interna = 'home.php';
@@ -168,9 +163,11 @@ if (empty($_SESSION['user'])) {
     } catch (Exception $e) {}
     ?>
                 </div>
-
-	<footer>
-		<b>Easy Learning</b>
-	</footer>
+			</th>
+		</tr>
+		<tr>
+			<th colspan=3 style="background-color: #8f9296;height: 30px"><b>Easy Learning</b></th>
+		</tr>
+	</table>
 </body>
 </html>
