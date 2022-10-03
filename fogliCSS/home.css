@@ -21,22 +21,6 @@ body {
 	overflow-y: scroll;
 }
 
-div#header {
-	/*position:relative;
-    top:0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1600px;
-    height: 90px;
-
-    background-color: #ffffff;
-    font-size:14px;
-    padding: 15px 15px 25px 15px;
-*/
-	-moz-border-radius: 7px 7px 0 0;
-	-webkit-border-radius: 7px 7px 0 0;
-	border-radius: 7px 7px 0 0;
-}
 
 h1, h2 {
 	margin: 0;
@@ -52,6 +36,10 @@ h1 {
 h2 {
 	font: bold 2.5em/20px arial, sans-serif;
 	text-align: center
+}
+
+h3{
+	color: #0e83cd;
 }
 
 
@@ -84,8 +72,6 @@ div#mostraPagina {
 .h4:hover {
 	*border-bottom: 2px solid #0E9CFB;
 	border: 2px solid;
-	color: #0E9CFB;
-	-moz-text-decoration-color: #0E9CFB;
 	margin-top: 3px;
 	margin-right: 3px;
 	margin-left: 3px;

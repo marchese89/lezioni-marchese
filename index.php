@@ -62,6 +62,8 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 	type="text/css">
 <link href="fogliCSS/menu.css?ts=<?=time()?>&quot" rel="stylesheet"
 	type="text/css">
+<link href="fogliCSS/pagina_login.css?ts=<?=time()?>&quot"
+	rel="stylesheet" type="text/css">
 <script type="text/javascript" src="script/jquery-2.1.1.js"></script>
 <script type="text/javascript"
 	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
@@ -82,15 +84,15 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 
 	</div>
 
-	<table 
-		style="vertical-align: middle; white-space: nowrap;  margin-right: auto;  z-index: 1; top: 0; width: 100%; border-width: 0; border-spacing: 0;">
+	<table
+		style="vertical-align: middle; white-space: nowrap; margin-right: auto; z-index: 1; top: 0; width: 100%; border-width: 0; border-spacing: 0;">
 		<tr style="background-color: #e1e1e1">
 			<td colspan=2></td>
 			<td align=right>
 			<?php
 if (empty($_SESSION['user'])) {
     ?>
-    <a href="login.html"><b>Accedi</b></a>
+    <a href="login.html"><b>Accedi/Registrati</b></a>
    <?php
 } else {
     if ($_SESSION['user'] !== "admin") {
@@ -108,8 +110,9 @@ if (empty($_SESSION['user'])) {
 		</td>
 		</tr>
 		<tr style="background-color: #e1e1e1">
-			<td style="margin-left: 0; align: center;"><img src="images/logo.png"
-				width="600" height="100" alt="img"></a></td>
+			<td style="margin-left: 0; align: center;"><a href="index.html"><img
+					src="images/logo.png" width="600" height="100" title="Home Page"
+					alt="img"></a></td>
 			<td></td>
 			<th style="font-size: 18pt;">
 				<div id="cssmenu">
@@ -166,7 +169,12 @@ if (empty($_SESSION['user'])) {
 			</th>
 		</tr>
 		<tr>
-			<th colspan=3 style="background-color: #8f9296;height: 30px"><b>Easy Learning</b></th>
+		
+		
+		<tr>
+			<th colspan=3
+				style="background-color: #8f9296; height: 30px; display: none"><b>Easy
+					Learning</b></th>
 		</tr>
 	</table>
 </body>

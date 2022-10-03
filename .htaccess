@@ -4,6 +4,7 @@ php_value error_reporting 7
 RewriteEngine on 
 RewriteRule ^index.html index.php 
 RewriteRule ^login.html index.php?pagina=amministrazione/login.php
+RewriteRule ^recupero_credenziali.html index.php?pagina=amministrazione/recupero_credenziali.php
 RewriteRule ^registrati.html index.php?pagina=amministrazione/registrazione.php
 RewriteRule ^richiedi_preventivo.html index.php?pagina=clienti/preventivo1.php&type=0
 RewriteRule ^richiedi_preventivo_.html index.php?pagina=clienti/preventivo1.php&type=1

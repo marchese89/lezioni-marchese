@@ -13,44 +13,17 @@ if (! empty($_GET['return'])) {
 <form
 	action="amministrazione/risultato_registrazione.php<?php if(!empty($ritorno)){echo '?return=ok';}?>"
 	method="post">
-	<table border="0" width="100%" cellspacing="0" cellpadding="0"
+	<table width="100%" cellspacing="0" cellpadding="0"
 		align="center"
 		style="border-collapse: collapse;" 
 		RULES=none FRAME=none>
 		<tr>
-			<th valign="center" height="100" colspan="3"><font size="7">Iscrizione</font></th>
+			<th valign="center" height="100" style="font-size: 24px;color: #0e83cd;">Iscrizione</th>
 		</tr>
 		<tr>
-			<td valign="middle" align="center" height="60" width="98">
-				<p>Partita IVA</p>
-				<p>
-					<input type="text" name="piva" maxlength="11" size="30" id="piva">
-					<script type="text/javascript">
-                                    var f4 = new LiveValidation('piva', {onlyOnSubmit: true});
-                                    f4.add(Validate.Length, {is: 11});
-                                    f4.add(Validate.soloNumeri);
-                                </script>
-				</p>
-			</td>
-			<td valign="middle" align="center" height="60" width="98">
-				<p>Codice Fiscale*</p>
-				<p>
-					<input type="text" id="cf" name="cf" maxlength="16" size="30">
-					<script type="text/javascript">
-                                    var cf_ = new LiveValidation('cf', {onlyOnSubmit: true});
-                                    cf_.add(Validate.Presence);
-                                    cf_.add(Validate.Length, {is: 16});
-                                    cf_.add(Validate.CodiceFiscale);
-                                </script>
-				</p>
-			</td>
-
-		</tr>
-
-		<tr>
 
 			<td valign="middle" align="center" height="60" width="98">
-				<p>Nome*</p>
+				<p style="color: #0e83cd" >Nome</p>
 				<p>
 					<input type="text" id="nome" name="nome" maxlength="45" size="30">
 					<script type="text/javascript">
@@ -60,8 +33,10 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p>
 			</td>
+			</tr>
+			<tr>
 			<td valign="middle" align="center" height="60" width="98">
-				<p>Cognome*</p>
+				<p style="color: #0e83cd">Cognome</p>
 				<p>
 					<input type="text" id="cognome" name="cognome" maxlength="45"
 						size="30">
@@ -73,27 +48,10 @@ if (! empty($_GET['return'])) {
 				</p>
 			</td>
 		</tr>
-		<tr>
-
-
-			<td valign="middle" align="center" height="60" width="98" colspan="2">
-				<p>Telefono*</p>
-				<p>
-					<input type="text" id="telefono" name="telefono" maxlength="16"
-						size="30">
-					<script type="text/javascript">
-                                    var telefono_ = new LiveValidation('telefono', {onlyOnSubmit: true});
-                                    telefono_.add(Validate.Presence);
-                                    telefono_.add(Validate.numTelefono);
-                                </script>
-				</p>
-			</td>
-
-		</tr>
 
 		<tr>
 			<td valign="middle" align="center" height="60" width="78">
-				<p>Email*</p>
+				<p style="color: #0e83cd">Email</p>
 				<p>
 					<input type="text" name="email1" id="email1" maxlength="45"
 						size="30">
@@ -104,8 +62,10 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p>
 			</td>
+			</tr>
+			<tr>
 			<td valign="middle" align="center" height="60" width="78">
-				<p>Conferma Email*</p>
+				<p style="color: #0e83cd">Conferma Email</p>
 				<p>
 					<input type="text" name="email2" id="email2" maxlength="45"
 						size="30">
@@ -122,7 +82,7 @@ if (! empty($_GET['return'])) {
 
 		<tr>
 			<td valign="middle" align="center" height="60" width="78">
-				<p>Password*</p>
+				<p style="color: #0e83cd">Password</p>
 				<p>
 					<input type="password" id="pass1" name="pass1" maxlength="45"
 						size="20">
@@ -132,8 +92,10 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p>
 			</td>
+			</tr>
+			<tr>
 			<td valign="middle" align="center" height="80" width="78">
-				<p>Conferma Password*</p>
+				<p style="color: #0e83cd">Conferma Password</p>
 				<p>
 					<input type="password" name="pass2" id="pass2" maxlength="45"
 						size="20">
@@ -147,10 +109,7 @@ if (! empty($_GET['return'])) {
 
 		</tr>
 		<tr>
-			<td colspan="2" align="left" height="50px">* Campi Oblligatori</td>
-		</tr>
-		<tr>
-			<th colspan="2" height="130px">Informativa sul trattamento dei dati
+			<th colspan="2" height="130px" style="color: #0e83cd">Informativa sul trattamento dei dati
 				personali<br> <textarea rows="8" cols="40" disabled>Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
 1. I dati personali da Lei/Voi forniti o acquisiti nell&apos;ambito della nostra attivit&agrave; saranno oggetto di trattamento improntato ai principi di correttezza, liceit&agrave;, trasparenza e di tutela della Sua/Vostra riservatezza e dei Suoi/Vostri diritti.
 2. Il trattamento di tali dati personali sar&agrave; finalizzato agli adempimenti degli obblighi contrattuali o derivanti da incarico conferito dall&apos;interessato ed in particolare all&apos;invio telematico di ulteriori informazioni commerciali e materiale pubblicitario sulle novit&agrave; dei prodotti dei titolari di questo sito o eventuali fatture.
@@ -183,18 +142,12 @@ b) al trattamento di dati personali che lo riguardano a fini di invio di materia
 			</th>
 		</tr>
 		<tr>
-			<th colspan="2" height="40px">Ho letto l'informativa <input
+			<th colspan="2" height="40px" style="color: #0e83cd">Ho letto l'informativa <input
 				type="checkbox" style="font-size: x-large"> &nbsp; <script
 					type="text/javascript">
                                     var info_ = new LiveValidation('info', {onlyOnSubmit: true});
                                     info_.add(Validate.Acceptance);
                                 </script>
-			</th>
-		</tr>
-		<tr>
-			<th colspan="2" height="40px">Desidero ricevere comunicazioni sulle
-				offerte <input type="checkbox" style="font-size: x-large"
-				name="offerte" value="si">
 			</th>
 		</tr>
 		<tr>

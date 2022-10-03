@@ -1,0 +1,124 @@
+
+
+table tr td{
+    font-family: "Verdana";
+    white-space: nowrap;
+}
+
+input[type=text], input[type=password], input[type=submit],input[type=button] {
+    border:1px solid #8f9296;	
+    font-size:14px;
+    font-family: verdana;
+    height:22px;
+    background-color: #ffffff;
+    color: #0e83cd;
+}
+input[type=submit],input[type=button]{
+	border:1px solid #8f9296;	
+    font-size:14px;
+    font-family: verdana;
+    height:30px;
+    width: 100px;
+    font-weight: bold;
+    color: #0e83cd;
+}
+input[type=submit]:hover,input[type=button]:hover{
+	background-color: #e1e1e1;
+}
+
+button{
+    background: -moz-linear-gradient(top, #fc5f1b 0%, #f6ea70 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc5f1b), color-stop(100%, #f6ea70));
+    background: -webkit-linear-gradient(top, #fc5f1b 0%, #f6ea70 100%);
+    background: -o-linear-gradient(top, #fc5f1b 0%, #f6ea70 100%);
+    background: -ms-linear-gradient(top, #fc5f1b 0%, #f6ea70 100%);
+    background: linear-gradient(to bottom, #fc5f1b 0%, #f6ea70 100%);
+    border:1px solid #e1e1e1;	
+    color: #0e83cd;
+}
+
+button:hover{
+    border:1px solid #e1e1e1;
+}
+
+input[type=text]:focus,input[type=password]:focus{
+    outline-style: none;
+    background-color: #ffffff;
+}
+
+input[type=checkbox]{
+    font-size: xx-small;
+    border-radius: 6px;
+}
+
+#check_news{
+    font-size: x-large;
+}
+
+
+
+
+.LV_validation_message{
+    font-weight:bold;
+    margin:0 0 0 5px;
+}
+
+.LV_valid {
+    color:#00CC00;
+}
+
+.LV_invalid {
+    color:#CC0000;
+}
+
+.LV_valid_field,
+input.LV_valid_field:hover, 
+input.LV_valid_field:active,
+textarea.LV_valid_field:hover, 
+textarea.LV_valid_field:active {
+    border: 1px solid #00CC00;
+}
+
+.LV_invalid_field, 
+input.LV_invalid_field:hover, 
+input.LV_invalid_field:active,
+textarea.LV_invalid_field:hover, 
+textarea.LV_invalid_field:active {
+    border: 1px solid #808080;
+}
+
+
+.button {
+  background: #3498db;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 4px 10px 4px 10px;
+  text-decoration: none;
+}
+
+
+.button:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
+
+a.collegamento{
+    color: #0e83cd;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+a.collegamento:hover{
+    text-decoration: underline;
+}
+
+label#azzeratutto{
+    font-size: 14px;
+    cursor: pointer;
+    color: #0e83cd
+}
+
+label#azzeratutto:hover{
+    text-decoration: underline;
+}
