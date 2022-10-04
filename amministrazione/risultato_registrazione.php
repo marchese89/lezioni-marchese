@@ -29,7 +29,7 @@ $password1 = password_hash($_POST['pass1'], PASSWORD_DEFAULT);
 $codiceA = generaCodice();
 $data = date("Y-m-d H:i:s");
 
-$sql0 = "INSERT INTO utente (email,password,nome,cognome,codice_attivaz,data_iscrizione)" . "VALUES('$email1','$nome','$cognome','$password1','$codiceA','$data')";
+$sql0 = "INSERT INTO utente (email,password,nome,cognome,codice_attivaz,data_iscrizione)" . "VALUES('$email1','$password1','$nome','$cognome','$codiceA','$data')";
 $result = - 1;
 if ($datiValidi) {
     $result = $conn->query($sql0);
