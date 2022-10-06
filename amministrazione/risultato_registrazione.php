@@ -1,11 +1,12 @@
 
 <?php
+date_default_timezone_set('Europe/Rome');
 include '../config/mysql-config.php';
 include '../script/validazione_campi/validazioneServer.php';
 session_start();
 
 mysqli_autocommit($conn, FALSE);
-$conn->query("LOCK TABLES utente,studente WRITE");
+$conn->query("LOCK TABLES utente WRITE,studente WRITE");
 $conn->query("BEGIN");
 
 function generaCodice($length = 6)
@@ -39,6 +40,8 @@ if ($result) {
     $risultatoReg = "ok";
     $conn->query("COMMIT");
 
+    $_SESSION['registrazione'] = $risultatoReg;
+    
     $to = $email1;
     $subject = "Completa la tua registrazione";
     $sender = "register@volantinimanifesti.it"; // TODO da modificare
@@ -60,6 +63,7 @@ if ($result) {
 }
 
 $conn->query("UNLOCK TABLES");
+
 
 header("Location: ../risultato-operazione.html");
 

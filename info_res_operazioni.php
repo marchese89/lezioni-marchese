@@ -20,7 +20,8 @@ if (isset($_SESSION['res_preventivo'])) {
         $messaggio = '<font size="6" color="red">Richiesta di Preventivo fallita<br>Si prega di riprovare</font>';
     }
     unset($_SESSION['res_preventivo']);
-} else if (isset($_SESSION['registrazione'])) {
+} 
+if (isset($_SESSION['registrazione'])) {
     if ($_SESSION['registrazione'] == 'ok') {
         $messaggio = '<font size="6" color="#0e83cd">Registrazione Effettuata correttamente</font><p>' .
                 '<font size="4" color="#0e83cd">verr&agrave; inviata una email all\'indirizzo da lei indicato per l\'attivazione dell\'account.<font><br>'.

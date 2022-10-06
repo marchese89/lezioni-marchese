@@ -1,18 +1,18 @@
 <?php
 include '../config/mysql-config.php';
-
-$user = $_POST['email'];
+session_start();
+date_default_timezone_set('Europe/Rome');
+$email = $_POST['email'];
 $pass = $_POST['password'];
-$return;
-if (! empty($_GET['return'])) {
+if (isset($_GET['return'])) {
     $return = $_GET['return'];
 }
-$sql = "SELECT * FROM amministratore WHERE email='$user'";
+$sql = "SELECT * FROM amministratore WHERE email='$email'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    $email;
+    $nomeUt_;
     while ($row = $result->fetch_assoc()) {
-        $email = $row['email'];
+        $nomeUt_ = $row['user'];
         if (password_verify($pass, $row['password'])) {
             $_SESSION['user'] = "admin";
             $_SESSION['nomeUtente'] = "amministratore";
@@ -24,18 +24,16 @@ if ($result->num_rows > 0) {
     }
     if ($_SESSION['loginCorretto']) {
         $data = date("Y-m-d H:i:s");
-        $conn->query("UPDATE amministratore SET ultimo_accesso='$data' WHERE email='$email'");
+        $conn->query("UPDATE amministratore SET ultimo_accesso='$data' WHERE user='$nomeUt_'");
     }
 } else {
 
-    $sql2 = "SELECT * FROM utente WHERE email='$user'";
+    $sql2 = "SELECT * FROM utente WHERE email='$email'";
     $result2 = $conn->query($sql2);
 
     if ($result2->num_rows > 0) {
-        $email;
         while ($row = $result2->fetch_assoc()) {
             if (password_verify($pass, $row['password'])) {
-                $email = $row['email'];
                 $_SESSION['user'] = $row['email'];
                 $_SESSION['nomeUtente'] = $row['nome'];
                 $_SESSION['loginCorretto'] = TRUE;
@@ -47,7 +45,7 @@ if ($result->num_rows > 0) {
         }
         if ($_SESSION['loginCorretto']) {
             $data = date("Y-m-d H:i:s");
-            $conn->query("UPDATE cliente SET ultimo_accesso='$data' WHERE cf='$email'");
+            $conn->query("UPDATE utente SET ultimo_accesso='$data' WHERE email='$email'");
         }
     } else {
         $_SESSION['loginCorretto'] = FALSE;
@@ -56,48 +54,13 @@ if ($result->num_rows > 0) {
 $redirezione = '';
 if ($_SESSION['loginCorretto']) {
     if ($_SESSION['user'] === "admin") {
-        $redirezione = 'Location: ../index.php?pagina=amministrazione/admin.php';
+        $redirezione = 'Location: ../home-admin.html';
     } else {
-        if (! empty($return)) {
-            $cf = $_SESSION['user'];
-            $trovaIndirizzi = "SELECT * FROM indirizzo WHERE cliente='$cf'";
-            $res = $conn->query($trovaIndirizzi);
-            $giaPresente = FALSE;
-            while ($indirizzo = $res->fetch_assoc()) {
-                if ($indirizzo['via'] == $_SESSION['indirizzo']->getVia()) {
-                    $giaPresente = TRUE;
-                    $_SESSION['indirizzo_scelto'] = $indirizzo['id_indirizzo'];
-                    break;
-                }
-            }
-            if (! $giaPresente) {
-                $cf = $_SESSION['user'];
-                $via = $_SESSION['indirizzo']->getVia();
-                $numC = $_SESSION['indirizzo']->getNumC();
-                $cap = $_SESSION['indirizzo']->getCap();
-                $comune = $_SESSION['indirizzo']->getComune();
-                $provincia = $_SESSION['indirizzo']->getProvincia();
-
-                $inserisciIndirizzo = "INSERT INTO indirizzo(cliente,via,numero_c,cap,comune,provincia)" . " VALUES('$cf','$via','$numC','$cap','$comune','$provincia')";
-                $conn->query($inserisciIndirizzo);
-
-                $trovaIndirizzo = "SELECT * FROM indirizzo WHERE cliente='$cf' AND via='$via'";
-                $res = $conn->query($trovaIndirizzo);
-                $ind = $res->fetch_assoc();
-                $_SESSION['indirizzo_scelto'] = $ind['id_indirizzo'];
-            }
-            $redirezione = 'Location: ../index.php?pagina=acquisti/vai_alla_cassa.php';
-        } else {
-            $redirezione = 'Location: ../index.html';
-        }
+        $redirezione = 'Location: ../home-user.html';
     }
-    unset($_SESSION['loginCorretto']);
-} else {
-    if (! empty($return)) {
-        $redirezione = 'Location: ../index.php?pagina=clienti/accedi_registrati.php';
-    } else {
-        $redirezione = 'Location: ../login.html';
-    }
+}else{
+    $redirezione = 'Location: ../login.html';
 }
+
 
 header($redirezione);

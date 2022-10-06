@@ -19,10 +19,11 @@ RewriteRule ^mostra_vol-([0-9]*).html index.php?pagina=visualizza_volantino_home
 RewriteRule ^prodotti-in-offerta.html index.php?pagina=presentazione_prodotti/prodotti_in_offerta.php
 RewriteRule ^contatti.html index.php?pagina=amministrazione/contatti_per_clienti.php
 RewriteRule ^chi_siamo.html index.php?pagina=amministrazione/chi_siamo.php
-RewriteRule ^home-user.html index.php?pagina=clienti/utente.php
-RewriteRule ^modifica-dati.html index.php?pagina=clienti/ModDatiUtente.php
-RewriteRule ^modifica-dati2.html index.php?pagina=clienti/modifica_dati_p.php
-RewriteRule ^modifica-pass.html index.php?pagina=clienti/cambia_pass.php
+RewriteRule ^home-user.html index.php?pagina=studenti/studente.php
+RewriteRule ^home-admin.html index.php?pagina=amministrazione/admin.php
+RewriteRule ^modifica-dati.html index.php?pagina=studenti/ModDatiUtente.php
+RewriteRule ^modifica-dati2.html index.php?pagina=studenti/modifica_dati_p.php
+RewriteRule ^modifica-pass.html index.php?pagina=studenti/cambia_pass.php
 RewriteRule ^indirizzi-utente.html index.php?pagina=clienti/Indirizzi.php
 RewriteRule ^ordini-utente.html index.php?pagina=acquisti/ordini_cliente.php
 RewriteRule ^ordini-utente-([0-9]*).html index.php?pagina=acquisti/ordini_cliente.php&page=$1

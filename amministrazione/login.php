@@ -70,7 +70,7 @@
                 </tr>
                 <tr valign="bottom">
                     <?php
-                    if (!empty($_SESSION['loginCorretto']) && $_SESSION['loginCorretto'] === FALSE) {
+                    if (isset($_SESSION['loginCorretto']) && $_SESSION['loginCorretto'] === FALSE) {
                         ?>
                         <td><font color="red" size="4.5">Email o password non validi.</font></td>
                         <?php

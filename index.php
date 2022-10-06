@@ -1,10 +1,9 @@
 <?php
+session_cache_limiter('nocache');
+session_start();
 include 'acquisti/carrello.php';
 include 'config/mysql-config.php';
-session_cache_limiter('nocache');
 
-session_start();
-$_SESSION['user'] = '';
 
 if (empty($_SESSION['carrello'])) {
     $_SESSION['carrello'] = new Carrello();
@@ -12,7 +11,7 @@ if (empty($_SESSION['carrello'])) {
 
 $pagina_interna = filter_input(INPUT_GET, "pagina");
 
-if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
+if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
     header("Location: index.html");
 }
 
@@ -92,17 +91,16 @@ if ($_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.
 			<?php
 if (empty($_SESSION['user'])) {
     ?>
-    <a href="login.html"><b>Accedi/Registrati</b></a>
+    <a href="login.html" class="collegamento"><b>Accedi</b></a>|<a href="registrati.html" class="collegamento"><b>Registrati</b></a>
    <?php
 } else {
     if ($_SESSION['user'] !== "admin") {
         ?>
-        <a href="home-user.html"><b>Il mio profilo</b></a>
+        <a href="home-user.html"><b>Il mio profilo</b></a>|<a href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
         <?php
     } else {
         ?>
-        <a href="index.php?pagina=amministrazione/admin.php"><b>Il mio
-						profilo</b></a>
+        <a href="index.php?pagina=amministrazione/admin.php"><b>Il mio profilo</b></a>|<a href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
         <?php
     }
 }
