@@ -67,8 +67,7 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 <script type="text/javascript"
 	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
 <script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -137,7 +136,7 @@ if (empty($_SESSION['user'])) {
 						<li><a href="">Recensioni</a></li>
 					</ul>
 					<ul>
-						<li><a href="">Lavora con noi</a></li>
+						<li><a href="lavora-con-noi.html">Lavora con noi</a></li>
 					</ul>
 					<ul>
 						<li><a href="">Chi Siamo</a></li>

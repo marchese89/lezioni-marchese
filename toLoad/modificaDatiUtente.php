@@ -17,9 +17,9 @@ $viaModificata = FALSE;
 
 $trovaCliente = "SELECT * FROM utente WHERE email='$email'";
 $res = $conn->query($trovaCliente);
-$cliente = $res->fetch_assoc();
+$utente = $res->fetch_assoc();
 
-if (! empty($nome) && $nome !== $cliente['nome']) {
+if (! empty($nome) && $nome !== $utente['nome']) {
     $aggiornaCliente = "UPDATE utente SET nome='$nome' WHERE email='$email'";
     if (! $conn->query($aggiornaCliente)) {
         $conn->query("ROLLBACK");
@@ -28,7 +28,7 @@ if (! empty($nome) && $nome !== $cliente['nome']) {
     $_SESSION['nomeUtente'] = $nome;
 }
 
-if (! empty($cognome) && $cognome !== $cliente['cognome']) {
+if (! empty($cognome) && $cognome !== $utente['cognome']) {
     $aggiornaCliente = "UPDATE utente SET cognome='$cognome' WHERE cf='$email'";
     if (! $conn->query($aggiornaCliente)) {
         $conn->query("ROLLBACK");
@@ -36,7 +36,7 @@ if (! empty($cognome) && $cognome !== $cliente['cognome']) {
     }
 }
 
-if (! empty($nuovaEmail) && $nuovaEmail !== $cliente['email']) {
+if (! empty($nuovaEmail) && $nuovaEmail !== $utente['email']) {
     $aggiornaCliente = "UPDATE cliente SET email='$nuovaEmail' WHERE cf='$email'";
     if (! $conn->query($aggiornaCliente)) {
         $conn->query("ROLLBACK");

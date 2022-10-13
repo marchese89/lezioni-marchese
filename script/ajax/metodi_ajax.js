@@ -1,33 +1,4 @@
 
-function cambiaNewsletter() {
-
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            document.getElementById("res").innerHTML = xmlhttp.responseText;
-        }
-    }
-    var form = document.forms['newsletter'];
-    var queryString = "";
-    for (var i = 0; i < form.length; i++) {
-        if (i !== 0) {
-            queryString = queryString + '&' + document.forms['newsletter'][i].name + '=' + document.forms['newsletter'][i].value;
-        } else {
-            queryString = queryString + document.forms['newsletter'][i].name + '=' + document.forms['newsletter'][i].value;
-        }
-    }
-
-    xmlhttp.open("POST", "richieste_ajax/cambia_newsletter.php", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(queryString);
-
-}
 
 //cambia la password dell'amministratore
 function cambiaPass() {
