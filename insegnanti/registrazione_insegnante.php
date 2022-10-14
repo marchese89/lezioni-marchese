@@ -13,10 +13,10 @@ session_start();
      $('#fileuploadFotoCF').click();
  }
  function cliccaFile4(){
-     $('#fileuploadFotoDI').click();
+     $('#fileuploadPDF_TS').click();
  }
  function cliccaFile5(){
-     $('#fileuploadFotoDI').click();
+     $('#fileuploadPDF_CV').click();
  }
  function visualizzaAnteprima(img){
      $('#anteprima').attr('src', img.value);
@@ -28,19 +28,34 @@ session_start();
      reader.readAsDataURL(img.files[0]);
      document.getElementById("anteprima").style.opacity = "1";     
  }
- function visualizza_pdf(img){
-     $('#ant_pdf').attr('src', img.value);
+ function visualizza_pdfTS(img){
+     $('#ant_pdfTS').attr('src', img.value);
      
      var reader = new FileReader();
      reader.onload = function (e) {
-        $('#ant_pdf').attr('src', 'images/miniatura_pdf.png');
+        $('#ant_pdfTS').attr('src', 'images/miniatura_pdf.png');
      }
      reader.readAsDataURL(img.files[0]);
-     document.getElementById("ant_pdf").style.opacity = "1";
+     document.getElementById("ant_pdfTS").style.opacity = "1";
      var file = img.files[0];  
      var filename = file.name;
-     $('#nome_pdf').html('&nbsp;&nbsp;&nbsp;' +filename);
-     document.getElementById("nome_pdf").style.opacity = "1";
+     $('#nome_pdfTS').html('&nbsp;&nbsp;&nbsp;' +filename);
+     document.getElementById("nome_pdfTS").style.opacity = "1";
+ }
+
+ function visualizza_pdfCV(img){
+     $('#ant_pdfCV').attr('src', img.value);
+     
+     var reader = new FileReader();
+     reader.onload = function (e) {
+        $('#ant_pdfCV').attr('src', 'images/miniatura_pdf.png');
+     }
+     reader.readAsDataURL(img.files[0]);
+     document.getElementById("ant_pdfCV").style.opacity = "1";
+     var file = img.files[0];  
+     var filename = file.name;
+     $('#nome_pdfCV').html('&nbsp;&nbsp;&nbsp;' +filename);
+     document.getElementById("nome_pdfCV").style.opacity = "1";
  }
  
  //upload file con ajax
@@ -155,15 +170,38 @@ function mandaFotoCF(supportAjaxUpload, formID) {
     
 }
 
-function mandaPdfVol(supportAjaxUpload, formID) {
+function mandaPdfTS(supportAjaxUpload, formID) {
     if (supportAjaxUpload) {
         document.getElementById("progressBar2").style.display = 'block';
 
-        var file_ = _("fileuploadPDF").files[0];
+        var file_ = _("fileuploadPDF_TS").files[0];
 
         var formdata_ = new FormData();
-        formdata_.append("fileuploadPDF", file_);
-        formdata_.append("UploadPDF", "__");
+        formdata_.append("fileuploadPDF_TS", file_);
+        formdata_.append("UploadPDF_TS", "__");
+        var ajax_ = new XMLHttpRequest();
+        ajax_.upload.addEventListener("progress", progressHandler2, false);
+        ajax_.addEventListener("load", completeHandler2, false);
+        ajax_.addEventListener("error", errorHandler2, false);
+        ajax_.addEventListener("abort", abortHandler2, false);
+        ajax_.open("POST", "upload/upload.php");
+        ajax_.send(formdata_);
+
+    } else {
+        _(formID).submit();
+
+    }
+}
+
+function mandaPdfCV(supportAjaxUpload, formID) {
+    if (supportAjaxUpload) {
+        document.getElementById("progressBar2").style.display = 'block';
+
+        var file_ = _("fileuploadPDF_CV").files[0];
+
+        var formdata_ = new FormData();
+        formdata_.append("fileuploadPDF_CV", file_);
+        formdata_.append("UploadPDF_CV", "__");
         var ajax_ = new XMLHttpRequest();
         ajax_.upload.addEventListener("progress", progressHandler2, false);
         ajax_.addEventListener("load", completeHandler2, false);
@@ -507,10 +545,10 @@ function mandaPdfVol(supportAjaxUpload, formID) {
                             ?>
                     <label><font color="red">Errore di caricamento: <?php echo $toPrint ?></font></label>
                     <?php
-                            if ($_SESSION['motivo_errore_icona'] === 'File gi&agrave; presente') {
+                            if ($_SESSION['motivo_errore_CF'] === 'File gi&agrave; presente') {
                                 if (! empty($_SESSION['to_deleteCF'])) {
                                     ?>
-                            <button onclick=location.href="upload/elimina_foto.php">elimina</button>
+                            <button onclick=location.href="upload/elimina_fotoCF.php">elimina</button>
                             <?php
                                 }
                             }
@@ -522,44 +560,34 @@ function mandaPdfVol(supportAjaxUpload, formID) {
 		</tr>
 <tr style="text-align: center">
     <th style="text-align: center;alignment-adjust: central" >
-            <table style="margin-left:auto;margin-right: auto;font-size: 18px<?php
-        if ($_SESSION['mostraUpPDF'] === 'ok') {
-            echo ';display: block';
-        } else {
-            echo ';display: none';
-        }
-        ?>">
+           <?php 
+           if(!isset($_SESSION['percorsoPDF_TS'])){
+           ?>
+        
                 <tr align="center"><th height="70" align="center">
-                        <label>Inserire il pdf del volantino</label></th></tr>
+                        <label style="color: #0e83cd">Titolo di studio (pdf)</label></th></tr>
                 <tr align="center">
                     <th style="height: 70px;width: 780px;text-align: center" align="center">
-                        <?php
-                        $risUpPDF = $_SESSION['pdfCaricato'];
-                        if (empty($risUpPDF)) {
-                            ?>
-                    <form  enctype="multipart/form-data" method="post" action="upload/upload.php" id="loadPdfVol">
-                        <input id="fileuploadPDF" name="fileuploadPDF" type="file" accept=".pdf" class="file_upload" onchange="visualizza_pdf(this)" />
-                        <input type="button" value="Scegli un file" id="btn2" onclick="cliccaFile2()"/><span style="opacity: 0">_</span>
-                        <img id="ant_pdf" width="30" height="30" style="opacity: 0"/><span style="opacity: 0;font-size: 11px;font-stretch: initial" id="nome_pdf">______</span>
-                        <input type="button" value="Upload" name="UploadPDF" onclick="mandaPdfVol(ajaxUploadSupport(),'loadPdfVol')"/><br>
+                    <form  enctype="multipart/form-data" method="post" action="upload/upload.php" id="loadPdfTS">
+                        <input id="fileuploadPDF_TS" name="fileuploadPDF_TS" type="file" accept=".pdf" class="file_upload" onchange="visualizza_pdfTS(this)" />
+                        <input type="button" value="Scegli un file" id="btn2" onclick="cliccaFile4()"/><span style="opacity: 0">_</span>
+                        <img id="ant_pdfTS" width="30" height="30" style="opacity: 0"/><span style="opacity: 0;font-size: 11px;font-stretch: initial" id="nome_pdfTS">______</span>
+                        <input type="button" value="Upload" name="UploadPDF" onclick="mandaPdfTS(ajaxUploadSupport(),'loadPdfTS')"/><br>
                 <progress id="progressBar2" value="0" max="100" style="width:300px;display: none;margin-left: auto;margin-right: auto"></progress><br>
                 <span id="status2" style="font-size: 12px"></span><br>
                 <span id="loaded_n_total2" style="font-size: 12px"></span>
                     </form>
-                <a href="upload/rimuovi_pannello_pdf.php" class="collegamento">Indietro</a>
+               
                     <?php
-                } else if ($risUpPDF === "OK") {
+           } else if($_SESSION['pdfTSCaricato'] === "OK")  {
                     ?>
-                    <label><font color="green">File caricato correttamente</font></label>
-                    <?php if (empty($_SESSION['mostra_nome_vol'])) {
-                        ?>
-                    <button value="elimina" onclick=location.href="upload/elimina_pdf.php">elimina</button>
-                        <button onclick=location.href="upload/aggiungi_nome_vol.php">Avanti</button>
+                    <label><font color="green">File Titolo di Studio caricato correttamente</font></label>
+                        <p>
+                    <button value="elimina" onclick=location.href="upload/elimina_pdfTS.php">elimina</button>
                         <?php
-                    }
                 } else {
-                    unset($_SESSION['pdfCaricato']);
-                    $motivoErrore = $_SESSION['motivo_errore_pdf'];
+                    unset($_SESSION['pdfTSCaricato']);
+                    $motivoErrore = $_SESSION['motivo_errore_pdfTS'];
                     $toPrint = '';
                     switch ($motivoErrore) {
                         case 1: $toPrint = 'File troppo grande';
@@ -577,61 +605,51 @@ function mandaPdfVol(supportAjaxUpload, formID) {
                     ?>
                     <label><font color="red">Errore di caricamento: <?php echo $toPrint ?></font></label>
                     <?php
-                        if($_SESSION['motivo_errore_pdf'] === 'File gi&agrave; presente' && !empty($_SESSION['pdf_to_delete'])){
+                        if($_SESSION['motivo_errore_pdfTS'] === 'File gi&agrave; presente' && !empty($_SESSION['pdf_to_deleteTS'])){
                     ?>
-                          <button onclick=location.href="upload/elimina_pdf.php">elimina</button>
+                          <button onclick=location.href="upload/elimina_pdfTS.php">elimina</button>
                     <?php
                           
                         }
-                    ?>
-                    <a href="index.php?pagina=amministrazione/admin.php&inner=upload/inserisciVolantino.php" class="collegamento">Indietro</a>
-                    <?php
+                   
                         
                 }
                 ?>
                 </th>
                 </tr>
-                </tr>
+               
 <tr style="text-align: center">
     <th style="text-align: center;alignment-adjust: central" >
-            <table style="margin-left:auto;margin-right: auto;font-size: 18px<?php
-        if ($_SESSION['mostraUpPDF'] === 'ok') {
-            echo ';display: block';
-        } else {
-            echo ';display: none';
-        }
-        ?>">
+            <?php 
+            if(!isset($_SESSION['percorsoPDF_CV'])){
+            ?>
                 <tr align="center"><th height="70" align="center">
-                        <label>Inserire il pdf del volantino</label></th></tr>
+                        <label style="color: #0e83cd">Curriculum Vitae (pdf)</label></th></tr>
                 <tr align="center">
                     <th style="height: 70px;width: 780px;text-align: center" align="center">
-                        <?php
-                        $risUpPDF = $_SESSION['pdfCaricato'];
-                        if (empty($risUpPDF)) {
-                            ?>
-                    <form  enctype="multipart/form-data" method="post" action="upload/upload.php" id="loadPdfVol">
-                        <input id="fileuploadPDF" name="fileuploadPDF" type="file" accept=".pdf" class="file_upload" onchange="visualizza_pdf(this)" />
-                        <input type="button" value="Scegli un file" id="btn2" onclick="cliccaFile2()"/><span style="opacity: 0">_</span>
-                        <img id="ant_pdf" width="30" height="30" style="opacity: 0"/><span style="opacity: 0;font-size: 11px;font-stretch: initial" id="nome_pdf">______</span>
-                        <input type="button" value="Upload" name="UploadPDF" onclick="mandaPdfVol(ajaxUploadSupport(),'loadPdfVol')"/><br>
+                        
+                    <form  enctype="multipart/form-data" method="post" action="upload/upload.php" id="loadPdfCV">
+                        <input id="fileuploadPDF_CV" name="fileuploadPDF_CV" type="file" accept=".pdf" class="file_upload" onchange="visualizza_pdfCV(this)" />
+                        <input type="button" value="Scegli un file" id="btn2" onclick="cliccaFile5()"/><span style="opacity: 0">_</span>
+                        <img id="ant_pdfCV" width="30" height="30" style="opacity: 0"/><span style="opacity: 0;font-size: 11px;font-stretch: initial" id="nome_pdfCV">______</span>
+                        <input type="button" value="Upload" name="UploadPDF" onclick="mandaPdfCV(ajaxUploadSupport(),'loadPdfVol')"/><br>
                 <progress id="progressBar2" value="0" max="100" style="width:300px;display: none;margin-left: auto;margin-right: auto"></progress><br>
                 <span id="status2" style="font-size: 12px"></span><br>
                 <span id="loaded_n_total2" style="font-size: 12px"></span>
                     </form>
-                <a href="upload/rimuovi_pannello_pdf.php" class="collegamento">Indietro</a>
+               
                     <?php
-                } else if ($risUpPDF === "OK") {
+            } else if (isset($_SESSION['pdfCVCaricato']) && $_SESSION['pdfCVCaricato'] === "OK") {
                     ?>
                     <label><font color="green">File caricato correttamente</font></label>
-                    <?php if (empty($_SESSION['mostra_nome_vol'])) {
-                        ?>
-                    <button value="elimina" onclick=location.href="upload/elimina_pdf.php">elimina</button>
-                        <button onclick=location.href="upload/aggiungi_nome_vol.php">Avanti</button>
+                    <p>
+                    <button value="elimina" onclick=location.href="upload/elimina_pdfCV.php">elimina</button>
+                        
                         <?php
-                    }
+                    
                 } else {
-                    unset($_SESSION['pdfCaricato']);
-                    $motivoErrore = $_SESSION['motivo_errore_pdf'];
+                    unset($_SESSION['pdfCVCaricato']);
+                    $motivoErrore = $_SESSION['motivo_errore_pdfCV'];
                     $toPrint = '';
                     switch ($motivoErrore) {
                         case 1: $toPrint = 'File troppo grande';
@@ -649,15 +667,12 @@ function mandaPdfVol(supportAjaxUpload, formID) {
                     ?>
                     <label><font color="red">Errore di caricamento: <?php echo $toPrint ?></font></label>
                     <?php
-                        if($_SESSION['motivo_errore_pdf'] === 'File gi&agrave; presente' && !empty($_SESSION['pdf_to_delete'])){
+                        if($_SESSION['motivo_errore_pdfCV'] === 'File gi&agrave; presente' && !empty($_SESSION['pdf_to_deleteCV'])){
                     ?>
-                          <button onclick=location.href="upload/elimina_pdf.php">elimina</button>
+                          <button onclick=location.href="upload/elimina_pdfCV.php">elimina</button>
                     <?php
                           
                         }
-                    ?>
-                    <a href="index.php?pagina=amministrazione/admin.php&inner=upload/inserisciVolantino.php" class="collegamento">Indietro</a>
-                    <?php
                         
                 }
                 ?>

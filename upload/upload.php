@@ -19,7 +19,7 @@ if (isset($_POST["UploadFoto"])) {
         if (is_uploaded_file($_FILES['fileuploadFoto']['tmp_name'])) {
 
             $number = 1;
-            $nomeFoto = "";
+            
             while (file_exists($percorso . $number)) {
                 $number ++;
             }
@@ -79,7 +79,6 @@ if (isset($_POST["UploadFotoDI"])) {
         if (is_uploaded_file($_FILES['fileuploadFotoDI']['tmp_name'])) {
 
             $number = 1;
-            $nomeFoto = "";
             while (file_exists($percorso . $number)) {
                 $number ++;
             }
@@ -138,7 +137,6 @@ if (isset($_POST["UploadFotoCF"])) {
         if (is_uploaded_file($_FILES['fileuploadFotoCF']['tmp_name'])) {
 
             $number = 1;
-            $nomeFoto = "";
             while (file_exists($percorso . $number)) {
                 $number ++;
             }
@@ -195,19 +193,25 @@ if (isset($_POST["UploadPDF_TS"])) {
         $dim_ext = strlen($ext) + 1;
         $senzaExt = substr($_FILES['fileuploadPDF_TS']['name'], 0, - $dim_ext);
         $data = date("Y_m_d_H_i_s");
+        
+        $number = 1;
+        while (file_exists($percorso . $number . $ext)) {
+            $number ++;
+        }
+        
         if (is_uploaded_file($_FILES['fileuploadPDF_TS']['tmp_name'])) {
 
-            $nomeFile = "file_insegnanti/titolo_studio/" . $senzaExt . $data . '.' . $ext;
+            $nomeFile = "file_insegnanti/titolo_studio/" . $number . '.' . $ext;
 
             if (! file_exists($percorso . $_FILES['fileuploadPDF_TS']['name'])) {
 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_TS']['tmp_name'], $percorso . $senzaExt . $data . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_TS']['tmp_name'], $percorso . $number . '.' . $ext)) {
                         $_SESSION['percorsoPDF_TS'] = $nomeFile;
                         $_SESSION['pdfTSCaricato'] = "OK";
                     } else {
                         $_SESSION['pdfTSCaricato'] = "ERRORE";
-                        $_SESSION['motivo_errore_pdfTS'] = $_FILES['fileuploadPDF']['error'];
+                        $_SESSION['motivo_errore_pdfTS'] = $_FILES['fileuploadPDF_TS']['error'];
                     }
                 } else {
                     $_SESSION['pdfTSCaricato'] = "ERRORE";
@@ -236,58 +240,61 @@ if (isset($_POST["UploadPDF_TS"])) {
 
 if (isset($_POST["UploadPDF_CV"])) {
 
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $mime = finfo_file($finfo, $_FILES['fileuploadPDF']['tmp_name']);
     $ok = FALSE;
-    switch ($mime) {
-        case 'application/pdf':
-            $ok = TRUE;
-            break;
-        default:
-            $ok = FALSE;
+    if ($_FILES['fileuploadPDF_CV']['type'] === "application/pdf") {
+        $ok = TRUE;
+    } else {
+        $ok = FALSE;
     }
     if ($ok == TRUE) {
-        $percorso = "../volantiniPDF/";
-        $nome_pdf = $_FILES['fileuploadPDF']['name'];
+        $percorso = "../file_insegnanti/cv/";
+        $nome_pdf = $_FILES['fileuploadPDF_CV']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-        $senzaExt = substr($_FILES['fileuploadPDF']['name'], 0, - $dim_ext);
+        $senzaExt = substr($_FILES['fileuploadPDF_CV']['name'], 0, - $dim_ext);
         $data = date("Y_m_d_H_i_s");
-        if (is_uploaded_file($_FILES['fileuploadPDF']['tmp_name'])) {
+        
+        $number = 1;
+        while (file_exists($percorso . $number . $ext)) {
+            $number ++;
+        }
+        
+        
+        if (is_uploaded_file($_FILES['fileuploadPDF_CV']['tmp_name'])) {
 
-            $nomeFile = "volantiniPDF/" . $senzaExt . $data . '.' . $ext;
+            $nomeFile = "file_insegnanti/cv/" . $number . '.' . $ext;
 
-            if (! file_exists($percorso . $_FILES['fileuploadPDF']['name'])) {
+            if (! file_exists($percorso . $_FILES['fileuploadPDF_CV']['name'])) {
 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF']['tmp_name'], $percorso . $senzaExt . $data . '.' . $ext)) {
-                        $_SESSION['percorsoPDF'] = $nomeFile;
-                        $_SESSION['pdfCaricato'] = "OK";
+                    if (move_uploaded_file($_FILES['fileuploadPDF_CV']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                        $_SESSION['percorsoPDF_CV'] = $nomeFile;
+                        $_SESSION['pdfCVCaricato'] = "OK";
                     } else {
-                        $_SESSION['pdfCaricato'] = "ERRORE";
-                        $_SESSION['motivo_errore_pdf'] = $_FILES['fileuploadPDF']['error'];
+                        $_SESSION['pdfCVCaricato'] = "ERRORE";
+                        $_SESSION['motivo_errore_pdfCV'] = $_FILES['fileuploadPDF_CV']['error'];
                     }
                 } else {
-                    $_SESSION['pdfCaricato'] = "ERRORE";
-                    $_SESSION['motivo_errore_pdf'] = "nome file troppo lungo";
+                    $_SESSION['pdfCVCaricato'] = "ERRORE";
+                    $_SESSION['motivo_errore_pdfCV'] = "nome file troppo lungo";
                 }
             } else {
-                $_SESSION['pdfCaricato'] = "ERRORE";
+                $_SESSION['pdfCVCaricato'] = "ERRORE";
                 // vediamo se il pdf è collegato ad un altro volantino
-                $sql = "SELECT * FROM volantino WHERE percorso_pdf='$nomeFile'";
+                $sql = "SELECT * FROM insegnante WHERE cv='$nomeFile'";
                 $res = $conn->query($sql);
                 if ($res->num_rows == 0) {
-                    $_SESSION['pdf_to_delete'] = 'ok';
-                    $_SESSION['percorsoPDF'] = $nomeFile;
+                    $_SESSION['pdf_to_deleteCV'] = 'ok';
+                    $_SESSION['percorsoPDF_CV'] = $nomeFile;
                 }
-                $_SESSION['motivo_errore_pdf'] = "File gi&agrave; presente";
+                $_SESSION['motivo_errore_pdfCV'] = "File gi&agrave; presente";
             }
         } else {
-            $_SESSION['pdfCaricato'] = "ERRORE";
-            $_SESSION['motivo_errore_pdf'] = $_FILES['fileuploadPDF']['error'];
+            $_SESSION['pdfCVCaricato'] = "ERRORE";
+            $_SESSION['motivo_errore_pdfCV'] = $_FILES['fileuploadPDF_CV']['error'];
         }
     } else {
-        $_SESSION['pdfCaricato'] = "ERRORE";
-        $_SESSION['motivo_errore_pdf'] = "Formato file non supportato";
+        $_SESSION['pdfCVCaricato'] = "ERRORE";
+        $_SESSION['motivo_errore_pdfCV'] = "Formato file non supportato";
     }
 }
