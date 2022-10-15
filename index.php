@@ -63,6 +63,7 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 	type="text/css">
 <link href="fogliCSS/pagina_login.css?ts=<?=time()?>&quot"
 	rel="stylesheet" type="text/css">
+<link href="fogliCSS/admin.css?ts=<?=time()?>&quot" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="script/jquery-2.1.1.js"></script>
 <script type="text/javascript"
 	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
@@ -82,11 +83,11 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 
 	</div>
 
-	<table
-		style="vertical-align: middle; white-space: nowrap; margin-right: auto; z-index: 1; top: 0; width: 100%; border-width: 0; border-spacing: 0;">
-		<tr style="background-color: #e1e1e1">
-			<td colspan=2></td>
-			<td align=right>
+	<table id="pagina_iniziale">
+	
+		<tr id="prima_riga">
+			<td colspan=2 id="pr_sinistra"></td>
+			<td align=right id="pr_destra">
 			<?php
 if (empty($_SESSION['user'])) {
     ?>
@@ -106,12 +107,12 @@ if (empty($_SESSION['user'])) {
 ?>
 		</td>
 		</tr>
-		<tr style="background-color: #e1e1e1">
-			<td style="margin-left: 0; align: center;"><a href="index.html"><img
+		<tr id="seconda_riga">
+			<th style="margin-left: 0; align: center;" id="p_col"><a href="index.html"><img
 					src="images/logo.png" width="600" height="100" title="Home Page"
-					alt="img"></a></td>
-			<td></td>
-			<th style="font-size: 18pt;">
+					alt="img"></a></th>
+			<th id="c"></th>
+			<th style="font-size: 18pt;" id="s_col">
 				<div id="cssmenu">
 					<ul>
 						<li class='active has-sub'><a href="">Corsi</a>
@@ -148,7 +149,7 @@ if (empty($_SESSION['user'])) {
 			</th>
 
 		</tr>
-
+		
 		<tr>
 			<th colspan=3>
 

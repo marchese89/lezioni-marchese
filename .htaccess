@@ -20,8 +20,5 @@ RewriteRule ^dettagli-ordine-([0-9]*)-([0-9]*).html index.php?pagina=acquisti/de
 RewriteRule ^carica-file-prodotto-([0-9]*)-([0-9]*)-([0-9]*).html index.php?pagina=acquisti/carica_file_prod.php&prod=$1&ordine=$2&return=$3
 RewriteRule ^visualizza-pdf-([0-9]*)-([0-9]*)-([0-9]*).html index.php?pagina=acquisti/visualizzaPdfprod.php&id_riga=$1&ordine=$2&return=$3
 RewriteRule ^cookiepolicy.html index.php?pagina=cookie.html
-RewriteRule ^configura-prod([0-9]*)-off([0-9]*).html index.php?pagina=presentazione_prodotti/configuratore_prodotto.php&prod=$1&offerta=$2
-RewriteRule ^prodotti-vari.html index.php?pagina=acquisti/visualizza_prodotti_vari.php
-RewriteRule ^mostra-prodotto-([0-9]*).html index.php?pagina=acquisti/mostra_prod_gen.php&prod=$1
 RewriteRule ^corsi-studente.html index.php?pagina=studenti/corsi_studente.php
 RewriteRule ^lavora-con-noi.html index.php?pagina=insegnanti/registrazione_insegnante.php

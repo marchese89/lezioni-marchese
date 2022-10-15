@@ -12,6 +12,89 @@ body {
 	height: 100%;
 }
 
+table#pagina_iniziale {
+	vertical-align: middle;
+	white-space: nowrap;
+	margin-right: auto;
+	z-index: 1;
+	top: 0;
+	width: 100%;
+	border-width: 0;
+	border-spacing: 0;
+	border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    
+    background: -webkit-linear-gradient(#e1e1e1, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#e1e1e1, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#e1e1e1, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#e1e1e1, white); /* Standard syntax */
+}
+
+
+table#pagina_iniziale tr#prima_riga td#pr_destra{
+	background-color:#9d9d9d;
+	#e1e1e1;
+    border-radius: 0px 7px 7px 0px;
+    -moz-border-radius: 0px 7px 7px 0px;
+    -webkit-border-radius: 0px 7px 7px 0px;
+    
+    background: -webkit-linear-gradient(#9d9d9d, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9d9d9d, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9d9d9d, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9d9d9d, white); /* Standard syntax */
+}
+table#pagina_iniziale tr#prima_riga td#pr_sinistra{
+	background-color:#9d9d9d;
+	#e1e1e1;
+	border-radius: 7px 0px 0px 7px;
+    -moz-border-radius: 7px 0px 0px 7px;
+    -webkit-border-radius: 7px 0px 0px 7px;
+    
+    background: -webkit-linear-gradient(#9d9d9d, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9d9d9d, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9d9d9d, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9d9d9d, white); /* Standard syntax */
+}
+
+table#pagina_iniziale tr#seconda_riga th#p_col{
+	background-color:#e1e1e1;
+	border-width: 0;
+	border-spacing: 0;
+	border-radius: 7px 0px 0px 7px;
+    -moz-border-radius: 7px 0px 0px 7px;
+    -webkit-border-radius: 7px 0px 0px 7px;
+    
+    background: -webkit-linear-gradient(white,#9d9d9d); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(white,#9d9d9d); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(white,#9d9d9d); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(white,#9d9d9d); /* Standard syntax */
+}
+
+table#pagina_iniziale tr#seconda_riga th#c{	
+	border-width: 0;
+	border-spacing: 0; 
+    background: -webkit-linear-gradient(white,#9d9d9d); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(white,#9d9d9d); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(white,#9d9d9d); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(white,#9d9d9d); /* Standard syntax */
+}
+
+table#pagina_iniziale tr#seconda_riga th#s_col{
+	background-color:#e1e1e1;
+	border-width: 0;
+	border-spacing: 0;
+	border-radius: 0px 7px 7px 0px;
+    -moz-border-radius: 0px 7px 7px 0px;
+    -webkit-border-radius: 0px 7px 7px 0px;
+    
+    background: -webkit-linear-gradient(white,#9d9d9d); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(white,#9d9d9d); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(white,#9d9d9d); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(white,#9d9d9d); /* Standard syntax */
+}
+
+
 /* css per MIE browsers */
 html {
 	overflow-y: auto;
@@ -20,7 +103,6 @@ html {
 body {
 	overflow-y: scroll;
 }
-
 
 h1, h2 {
 	margin: 0;
@@ -38,10 +120,9 @@ h2 {
 	text-align: center
 }
 
-h3{
+h3 {
 	color: #0e83cd;
 }
-
 
 /*stili specifici per il layout*/
 div#mostraPagina {

@@ -85,7 +85,7 @@ if (! empty($_GET['return'])) {
 				<p style="color: #0e83cd">Password</p>
 				<p>
 					<input type="password" id="pass1" name="pass1" maxlength="45"
-						size="20">
+						size="30">
 					<script type="text/javascript">
                                     var pass1_ = new LiveValidation('pass1', {onlyOnSubmit: true});
                                     pass1_.add(Validate.Presence);
@@ -98,7 +98,7 @@ if (! empty($_GET['return'])) {
 				<p style="color: #0e83cd">Conferma Password</p>
 				<p>
 					<input type="password" name="pass2" id="pass2" maxlength="45"
-						size="20">
+						size="30">
 					<script type="text/javascript">
                                     var pass2_ = new LiveValidation('pass2', {onlyOnSubmit: true});
                                     pass2_.add(Validate.Presence);
@@ -143,7 +143,7 @@ b) al trattamento di dati personali che lo riguardano a fini di invio di materia
 		</tr>
 		<tr>
 			<th colspan="2" height="40px" style="color: #0e83cd">Ho letto l'informativa <input
-				type="checkbox" style="font-size: x-large"> &nbsp; <script
+				type="checkbox" style="font-size: x-large" name="info" id="info"> &nbsp; <script
 					type="text/javascript">
                                     var info_ = new LiveValidation('info', {onlyOnSubmit: true});
                                     info_.add(Validate.Acceptance);

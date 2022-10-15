@@ -233,8 +233,23 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 		<td><b>Invia la tua <font color="green">candidatura</font>! 
 
 </table>
+<table style="width: 100%; font-size: 18pt">
+	<tr style="height: 40px; align-content: center">
+		<td style="color: red;"><b>
+		<?php 
+		if(isset($_SESSION['file_non_caricati'])){
+		    echo 'Alcuni file non sono stati caricati!';
+		}
+		?>
+		</b>
+		</td>
+	</tr>
+	
+
+</table>
+
 <form
-	action="lavora-con-noi2.html"
+	action="insegnanti/risultato_registrazione_insegnante.php"
 	method="post">
 	<table width="100%" cellspacing="0" cellpadding="0" align="center"
 		style="border-collapse: collapse;" RULES=none FRAME=none>
@@ -247,7 +262,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 			<td valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Nome</p>
 				<p>
-					<input type="text" id="nome" name="nome" maxlength="45" size="30">
+					<input type="text" id="nome" name="nome" maxlength="45" size="30" <?php if(isset($_SESSION['nome'])){echo 'value="'. $_SESSION['nome'].'"';}?>>
 					<script type="text/javascript">
                                     var nome_ = new LiveValidation('nome', {onlyOnSubmit: true});
                                     nome_.add(Validate.Presence);
@@ -261,7 +276,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 				<p style="color: #0e83cd">Cognome</p>
 				<p>
 					<input type="text" id="cognome" name="cognome" maxlength="45"
-						size="30">
+						size="30" <?php if(isset($_SESSION['cognome'])){echo 'value="'. $_SESSION['cognome'].'"';}?>>
 					<script type="text/javascript">
                                     var cognome_ = new LiveValidation('cognome', {onlyOnSubmit: true});
                                     cognome_.add(Validate.Presence);
@@ -274,7 +289,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 			<td>
 				<p style="color: #0e83cd">Codice Fiscale</p>
 				<p>
-					<input type="text" id="cf" name="cf" maxlength="16" size="30">
+					<input type="text" id="cf" name="cf" maxlength="16" size="30" <?php if(isset($_SESSION['cf'])){echo 'value="'. $_SESSION['cf'].'"';}?>>
 					<script type="text/javascript">
                                     var cf_ = new LiveValidation('cf', {onlyOnSubmit: true});
                                     cf_.add(Validate.Presence);
@@ -290,7 +305,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 				<p style="color: #0e83cd">Email</p>
 				<p>
 					<input type="text" name="email1" id="email1" maxlength="45"
-						size="30">
+						size="30" <?php if(isset($_SESSION['email1'])){echo 'value="'. $_SESSION['email1'].'"';}?>>
 					<script type="text/javascript">
                                     var email1 = new LiveValidation('email1', {onlyOnSubmit: true});
                                     email1.add(Validate.Presence);
@@ -304,7 +319,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 				<p style="color: #0e83cd">Conferma Email</p>
 				<p>
 					<input type="text" name="email2" id="email2" maxlength="45"
-						size="30">
+						size="30" <?php if(isset($_SESSION['email2'])){echo 'value="'. $_SESSION['email2'].'"';}?>>
 				</p> <script type="text/javascript">
                                 var email2 = new LiveValidation('email2', {onlyOnSubmit: true});
                                 email2.add(Validate.Presence);
@@ -321,7 +336,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 				<p style="color: #0e83cd">Password</p>
 				<p>
 					<input type="password" id="pass1" name="pass1" maxlength="45"
-						size="20">
+						size="30" <?php if(isset($_SESSION['pass1'])){echo 'value="'. $_SESSION['pass1'].'"';}?>>
 					<script type="text/javascript">
                                     var pass1_ = new LiveValidation('pass1', {onlyOnSubmit: true});
                                     pass1_.add(Validate.Presence);
@@ -334,7 +349,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 				<p style="color: #0e83cd">Conferma Password</p>
 				<p>
 					<input type="password" name="pass2" id="pass2" maxlength="45"
-						size="20">
+						size="30" <?php if(isset($_SESSION['pass2'])){echo 'value="'. $_SESSION['pass2'].'"';}?>>
 					<script type="text/javascript">
                                     var pass2_ = new LiveValidation('pass2', {onlyOnSubmit: true});
                                     pass2_.add(Validate.Presence);
@@ -641,7 +656,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
                     <?php
             } else if (isset($_SESSION['pdfCVCaricato']) && $_SESSION['pdfCVCaricato'] === "OK") {
                     ?>
-                    <label><font color="green">File caricato correttamente</font></label>
+                    <label><font color="green">File Curriculum Vitae caricato correttamente</font></label>
                     <p>
                     <button value="elimina" onclick=location.href="upload/elimina_pdfCV.php">elimina</button>
                         
@@ -714,7 +729,7 @@ b) al trattamento di dati personali che lo riguardano a fini di invio di materia
 		</tr>
 		<tr>
 			<th colspan="2" height="40px" style="color: #0e83cd">Ho letto
-				l'informativa <input type="checkbox" style="font-size: x-large">
+				l'informativa <input type="checkbox" style="font-size: x-large" name="info" id="info">
 				&nbsp; <script type="text/javascript">
                                     var info_ = new LiveValidation('info', {onlyOnSubmit: true});
                                     info_.add(Validate.Acceptance);

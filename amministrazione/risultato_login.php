@@ -10,9 +10,9 @@ if (isset($_GET['return'])) {
 $sql = "SELECT * FROM amministratore WHERE email='$email'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    $nomeUt_;
+    $email;
     while ($row = $result->fetch_assoc()) {
-        $nomeUt_ = $row['user'];
+        $email = $row['email'];
         if (password_verify($pass, $row['password'])) {
             $_SESSION['user'] = "admin";
             $_SESSION['nomeUtente'] = "amministratore";
@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
     }
     if ($_SESSION['loginCorretto']) {
         $data = date("Y-m-d H:i:s");
-        $conn->query("UPDATE amministratore SET ultimo_accesso='$data' WHERE user='$nomeUt_'");
+        $conn->query("UPDATE amministratore SET ultimo_accesso='$data' WHERE email='$email'");
     }
 } else {
 
