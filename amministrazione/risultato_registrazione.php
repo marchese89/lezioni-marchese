@@ -29,40 +29,45 @@ $password1 = password_hash($_POST['pass1'], PASSWORD_DEFAULT);
 $codiceA = generaCodice();
 $data = date("Y-m-d H:i:s");
 
-$sql0 = "INSERT INTO utente (email,password,nome,cognome,codice_attivaz,data_iscrizione,stato_account)" . "VALUES('$email1','$password1','$nome','$cognome','$codiceA','$data','0')";
+$sql0 = "INSERT INTO utente (email,password,nome,cognome,codice_attivaz,data_iscrizione,stato_account) VALUES('$email1','$password1','$nome','$cognome','$codiceA','$data','0')";
 $result = - 1;
-if ($datiValidi) {
-    $result = $conn->query($sql0);
-}
+$result = $conn->query($sql0);
+
 $testoMailReg = "Gentile cliente\ngrazie per essersi registrato.\nPer attivare il suo account inserisca" . " il codice " . $codiceA . " dopo aver effettuato l'accesso\nEasy Learning";
 if ($result) {
-    $risultatoReg = "ok";
-    $conn->query("COMMIT");
+    $r = $conn->query("SELECT * FROM utente WHERE email='$email1'");
+    $ut = $r->fetch_assoc();
+    $id = $ut['id'];
+    $r2 = $conn->query("INSERT INTO studente(utente_s) VALUES('$id')");
+    if ($r2) {
+        $conn->query("COMMIT");
 
-    $_SESSION['registrazione'] = $risultatoReg;
-    
-    $to = $email1;
-    $subject = "Completa la tua registrazione";
-    $sender = "register@easylearning.com"; // TODO da modificare
+        $_SESSION['registrazione'] = "ok";
 
-    $headers = "Reply-To: EasyLearning <$sender>\r\n";
-    $headers .= "Return-Path: EasyLearning <$sender>\r\n";
-    $headers .= "From: EasyLearning <$sender>\r\n";
-    $headers .= "Organization: EasyLearning\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/plain; charset=\"iso-8859-1\"\r\n";
-    $headers .= "X-Priority: 3\r\n";
-    $headers .= "X-Mailer: PHP " . phpversion() . "\r\n";
+        $to = $email1;
+        $subject = "Completa la tua registrazione";
+        $sender = "register@easylearning.com"; // TODO da modificare
 
-    mail($to, $subject, $testoMailReg, $headers, "-f$sender");
-    
+        $headers = "Reply-To: EasyLearning <$sender>\r\n";
+        $headers .= "Return-Path: EasyLearning <$sender>\r\n";
+        $headers .= "From: EasyLearning <$sender>\r\n";
+        $headers .= "Organization: EasyLearning\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/plain; charset=\"iso-8859-1\"\r\n";
+        $headers .= "X-Priority: 3\r\n";
+        $headers .= "X-Mailer: PHP " . phpversion() . "\r\n";
+
+        mail($to, $subject, $testoMailReg, $headers, "-f$sender");
+    } else {
+        $risultatoReg = "no";
+        $conn->query("ROLLBACK");
+    }
 } else {
     $risultatoReg = "no";
     $conn->query("ROLLBACK");
 }
 
 $conn->query("UNLOCK TABLES");
-
 
 header("Location: ../risultato-operazione.html");
 

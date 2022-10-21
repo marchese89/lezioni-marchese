@@ -4,14 +4,13 @@ session_start();
 include 'acquisti/carrello.php';
 include 'config/mysql-config.php';
 
-
 if (empty($_SESSION['carrello'])) {
     $_SESSION['carrello'] = new Carrello();
 }
 
 $pagina_interna = filter_input(INPUT_GET, "pagina");
 
-if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
+if (! empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
     header("Location: index.html");
 }
 
@@ -63,12 +62,14 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 	type="text/css">
 <link href="fogliCSS/pagina_login.css?ts=<?=time()?>&quot"
 	rel="stylesheet" type="text/css">
-<link href="fogliCSS/admin.css?ts=<?=time()?>&quot" rel="stylesheet" type="text/css">
+<link href="fogliCSS/admin.css?ts=<?=time()?>&quot" rel="stylesheet"
+	type="text/css">
 <script type="text/javascript" src="script/jquery-2.1.1.js"></script>
 <script type="text/javascript"
 	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
 <script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -84,23 +85,40 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 	</div>
 
 	<table id="pagina_iniziale">
-	
+
 		<tr id="prima_riga">
 			<td colspan=2 id="pr_sinistra"></td>
 			<td align=right id="pr_destra">
 			<?php
 if (empty($_SESSION['user'])) {
     ?>
-    <a href="login.html" class="collegamento"><b>Accedi</b></a>|<a href="registrati.html" class="collegamento"><b>Registrati</b></a>
+    <a href="login.html" class="collegamento"><b>Accedi</b></a>|<a
+				href="registrati.html" class="collegamento"><b>Registrati</b></a>
    <?php
 } else {
     if ($_SESSION['user'] !== "admin") {
+        $user = $_SESSION['user'];
+    
+        $r1 = $conn->query("SELECT * FROM utente WHERE email='$user'");
+        $ut = $r1->fetch_assoc();
+        $id = $ut['id'];
+        $r2 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
+        if($r2->num_rows > 0){
         ?>
-        <a href="home-user.html"><b>Il mio profilo</b></a>|<a href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
+        <a href="home-user.html"><b>Il mio profilo</b></a>|<a
+				href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
         <?php
+        }else{
+            ?>
+            <a href="home-insegnante.html"><b>Il mio profilo</b></a>|<a
+				href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
+        <?php     
+        }
     } else {
         ?>
-        <a href="index.php?pagina=amministrazione/admin.php"><b>Il mio profilo</b></a>|<a href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
+        <a href="index.php?pagina=amministrazione/admin.php"><b>Il mio
+						profilo</b></a>|<a href="amministrazione/logout.php"
+				class="collegamento"><b>Logout</b></a>
         <?php
     }
 }
@@ -108,48 +126,21 @@ if (empty($_SESSION['user'])) {
 		</td>
 		</tr>
 		<tr id="seconda_riga">
-			<th style="margin-left: 0; align: center;" id="p_col"><a href="index.html"><img
-					src="images/logo.png" width="600" height="100" title="Home Page"
-					alt="img"></a></th>
+			<th style="margin-left: 0; align: center;" id="p_col"><a
+				href="index.html"><img src="images/logo.png" width="600"
+					height="100" title="Home Page" alt="img"></a></th>
 			<th id="c"></th>
 			<th style="font-size: 18pt;" id="s_col">
-				<div id="cssmenu">
-					<ul>
-						<li class='active has-sub'><a href="">Corsi</a>
-							<ul>
-								<li align=left><a href="">Scuole Superiori</a></li>
-								<li align=left><a href="">Università</a></li>
-								<li align=left><a href="">Corsi Extra</a></li>
-							</ul></li>
-					</ul>
-					<ul>
-						<li class='active has-sub'><a href="">Lezioni online</a></li>
-					</ul>
-					<ul>
-						<li class='active has-sub'><a href="">Esercizi</a>
-							<ul>
-								<li align=left class='active has-sub'><a href="">Esercizi Svolti</a></li>
-								<li align=left><a href="">Svolgimento Esercizi</a></li>
-								<li align=left><a href="">Correzione Esercizi svolti</a></li>
-							</ul></li>
-					</ul>
-					<ul>
-						<li><a href="">Recensioni</a></li>
-					</ul>
-					<ul>
-						<li><a href="lavora-con-noi.html">Lavora con noi</a></li>
-					</ul>
-					<ul>
-						<li><a href="">Chi Siamo</a></li>
-					</ul>
-					<ul>
-						<li><a href="">Contatti</a></li>
-					</ul>
-				</div>
-			</th>
+			<a href="">Corsi</a> 
+			<a href="">Svolgimento Esercizi</a> 
+			<a href="">Esercizi Svolti</a>
+				<a href="">Chi Siamo</a>
+				<a href="">Contatti</a>
+				<a href="lavora-con-noi.html">Lavora con noi</a>
+				</th>
 
 		</tr>
-		
+
 		<tr>
 			<th colspan=3>
 

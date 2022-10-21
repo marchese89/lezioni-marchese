@@ -9,11 +9,21 @@
 		</tr>
 	</thead>
 	<tbody>
+		<div id="inner">
+	<?php
+$inner;
+if (isset($_GET['inner'])) {
+    $inner = $_GET['inner'];
+}
+if (! empty($inner) && $inner != 'amministrazione/admin.php') {
+    include $inner;
+} else {
+    ?>
 		<tr>
-			<td align="center"><strong><a
-					href="index.php?pagina=amministrazione/admin.php&inner=amministrazione/volantInDistAdm.php">Volantini
-						In Distribuzione</a></strong></td>
-		</tr>
+				<td align="center"><strong><a
+						href="index.php?pagina=amministrazione/admin.php&inner=amministrazione/volantInDistAdm.php">Volantini
+							In Distribuzione</a></strong></td>
+			</tr>
 		<tr>
 			<td align="center"><strong><a
 					href="index.php?pagina=amministrazione/admin.php&inner=amministrazione/richieste_preventivi.php">Richieste
@@ -74,6 +84,10 @@
 					href="index.php?pagina=amministrazione/admin.php&inner=amministrazione/cambia_c_admin.php">Cambia
 						Credenziali</a></strong></td>
 		</tr>
-		</tbody>
+		<?php
+}
+?>
+		</div>
+	</tbody>
 </table>
 

@@ -12,6 +12,10 @@ input[type=text], input[type=password], input[type=submit],input[type=button] {
     height:22px;
     background-color: #ffffff;
     color: #0e83cd;
+    
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
 }
 input[type=submit],input[type=button]{
 	border:1px solid #8f9296;	
@@ -115,6 +119,21 @@ label#azzeratutto{
     font-size: 14px;
     cursor: pointer;
     color: #0e83cd
+}
+
+label{
+    font-size: 14px;
+    cursor: pointer;
+    color: #0e83cd
+}
+
+select{
+    font-size: 18px;
+    cursor: pointer;
+    color: black;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
 }
 
 label#azzeratutto:hover{

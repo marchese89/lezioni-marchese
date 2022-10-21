@@ -32,7 +32,6 @@ if (isset($_POST["UploadFoto"])) {
                     if (move_uploaded_file($_FILES['fileuploadFoto']['tmp_name'], $percorso . $number)) {
                         $_SESSION['percorsoFoto'] = "file_insegnanti/foto/" . $number;
                         $_SESSION['fotoCaricata'] = "OK";
-                        echo 'foto caricata';
                     } else {
                         $_SESSION['fotoCaricata'] = "ERRORE";
                         $_SESSION['motivo_errore_Foto'] = $_FILES['fileuploadFoto']['error'];
@@ -93,7 +92,7 @@ if (isset($_POST["UploadFotoDI"])) {
                         $_SESSION['fotoDICaricata'] = "OK";
                     } else {
                         $_SESSION['fotoDICaricata'] = "ERRORE";
-                        $_SESSION['motivo_errore_Foto'] = $_FILES['fileuploadFotoDI']['error'];
+                        $_SESSION['motivo_errore_DI'] = $_FILES['fileuploadFotoDI']['error'];
                     }
                 } else {
                     $_SESSION['fotoDICaricata'] = "ERRORE";

@@ -11,7 +11,6 @@ em {
 table#pannello_controllo{
     font-size: 12px;
     margin: 0px auto;
-    height: 646px;
     max-height: 646px;
     border-radius: 7px 7px 7px 7px;
     -moz-border-radius: 7px 7px 7px 7px;
@@ -47,12 +46,13 @@ table#pannello_controllo th:after {
 
 
 table#pannello_controllo td {
-    border-bottom: 1px solid #fc5f1b;
-    border-top: 1px solid #fc5f1b;
+    border-bottom: 1px solid #808080;
+    border-top: 1px solid #808080;
     border-radius: 4px 4px 4px 4px;
     -moz-border-radius: 4px 4px 4px 4px;
     -webkit-border-radius: 4px 4px 4px 4px;
     padding: 0px 8px;
+    
 }
 
 
@@ -69,13 +69,18 @@ table#pannello_controllo thead{
     border-bottom: 1px solid #e8e8e8;
 }
 table#pannello_controllo a{
-    color: #000;
+    color: #0e83cd;
     text-decoration: none;
+}
+
+table#pannello_controllo a:hover{
+    color: #0e83cd;
+    text-decoration: underline;
 }
 
 table#pannello_controllo tbody tr td#ultima_r{
     color: #000;
-    border-bottom: 2px solid #fc5f1b;
+    border-bottom: 2px solid #808080;;
 }
 
 

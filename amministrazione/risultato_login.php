@@ -27,13 +27,14 @@ if ($result->num_rows > 0) {
         $conn->query("UPDATE amministratore SET ultimo_accesso='$data' WHERE email='$email'");
     }
 } else {
-
+    $id;
     $sql2 = "SELECT * FROM utente WHERE email='$email'";
     $result2 = $conn->query($sql2);
 
     if ($result2->num_rows > 0) {
         while ($row = $result2->fetch_assoc()) {
             if (password_verify($pass, $row['password'])) {
+                $id = $row['id'];
                 $_SESSION['user'] = $row['email'];
                 $_SESSION['nomeUtente'] = $row['nome'];
                 $_SESSION['loginCorretto'] = TRUE;
@@ -56,11 +57,18 @@ if ($_SESSION['loginCorretto']) {
     if ($_SESSION['user'] === "admin") {
         $redirezione = 'Location: ../home-admin.html';
     } else {
-        $redirezione = 'Location: ../home-user.html';
+        $r1 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
+        if ($r1->num_rows > 0) {
+            $redirezione = 'Location: ../home-user.html';
+        }else{
+            $r1 = $conn->query("SELECT * FROM insegnante WHERE utente_i='$id'");
+            if ($r1->num_rows > 0) {
+                $redirezione = 'Location: ../home-insegnante.html';
+            }
+        }
     }
-}else{
+} else {
     $redirezione = 'Location: ../login.html';
 }
-
 
 header($redirezione);

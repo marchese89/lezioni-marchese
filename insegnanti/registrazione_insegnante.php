@@ -223,8 +223,8 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 		</b></td>
 	</tr>
 	<tr style="height: 100px">
-		<td><b>Vuoi utilizzare questa piattaforma per trovare nuovi <font
-				color="green">allievi</font>?
+		<td><b>Vuoi utilizzare questa <font
+				color="green">piattaforma</font>?
 		</b>
 		
 		<td></td>
@@ -418,7 +418,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
                             ?>
                     <label><font color="red">Errore di caricamento: <?php echo $toPrint ?></font></label>
                     <?php
-                            if ($_SESSION['motivo_errore_icona'] === 'File gi&agrave; presente') {
+                            if ($_SESSION['motivo_errore_Foto'] === 'File gi&agrave; presente') {
                                 if (! empty($_SESSION['to_delete'])) {
                                     ?>
                             <button onclick=location.href="upload/elimina_foto.php">elimina</button>

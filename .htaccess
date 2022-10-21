@@ -9,6 +9,7 @@ RewriteRule ^registrati.html index.php?pagina=amministrazione/registrazione.php
 RewriteRule ^contatti.html index.php?pagina=amministrazione/contatti_per_clienti.php
 RewriteRule ^chi_siamo.html index.php?pagina=amministrazione/chi_siamo.php
 RewriteRule ^home-user.html index.php?pagina=studenti/studente.php
+RewriteRule ^home-insegnante.html index.php?pagina=insegnanti/insegnante.php
 RewriteRule ^home-admin.html index.php?pagina=amministrazione/admin.php
 RewriteRule ^modifica-dati.html index.php?pagina=studenti/ModDatiUtente.php
 RewriteRule ^modifica-dati2.html index.php?pagina=studenti/modifica_dati_p.php
@@ -21,4 +22,10 @@ RewriteRule ^carica-file-prodotto-([0-9]*)-([0-9]*)-([0-9]*).html index.php?pagi
 RewriteRule ^visualizza-pdf-([0-9]*)-([0-9]*)-([0-9]*).html index.php?pagina=acquisti/visualizzaPdfprod.php&id_riga=$1&ordine=$2&return=$3
 RewriteRule ^cookiepolicy.html index.php?pagina=cookie.html
 RewriteRule ^corsi-studente.html index.php?pagina=studenti/corsi_studente.php
+RewriteRule ^corsi-insegnante.html index.php?pagina=insegnanti/corsi_insegnante.php
+RewriteRule ^elenco-corsi.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/elenco_corsi.php
+RewriteRule ^nuovo-corso.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuovo_corso.php
+RewriteRule ^nuova-area-tematica.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuova_area_tematica.php
+RewriteRule ^nuova-materia.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuova_materia.php
+RewriteRule ^preventivi-esercizi.html index.php?pagina=insegnanti/preventivi.php
 RewriteRule ^lavora-con-noi.html index.php?pagina=insegnanti/registrazione_insegnante.php
