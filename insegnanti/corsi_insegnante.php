@@ -32,7 +32,7 @@ if (! empty($inner) && $inner != 'amministrazione/admin.php') {
 					Esercizi</a></strong></td>
 		</tr>
 		<tr>
-			<td align="center"><strong><a
+			<td align="center" id="indietro"><strong><a
 					href="home-insegnante.html">
 					Indietro</a></strong></td>
 		</tr>

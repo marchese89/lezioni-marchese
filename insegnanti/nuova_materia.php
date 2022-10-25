@@ -3,11 +3,15 @@ session_start();
 include 'config/mysql-config.php';
 include 'script/funzioni-php.php';
 ?>
+<tr style="height: 60px">
+	<td><label style="font-size: 18px">Inserisci nuova Materia</label>
+	</td>
+</tr>
+
 <form action="insegnanti/inserisci_materia.php" method="post">
 	<tr style="height: 60px">
-		<td><label>Area Tematica</label> <select name="area_tematica"
-			onclick="caricaMateria()">
-				<option value=0></option>
+		<td><label>Area Tematica</label> <select name="area_tematica">
+				
 	<?php
 $email = $_SESSION['user'];
 $id_insegnante = trova_id_insegnante($email);
@@ -43,19 +47,48 @@ while ($row = $result->fetch_assoc()) {
 <tr style="height: 60px">
 	<td><label style="font-size: 18px">Materie Inserite</label></td>
 </tr>
-<tr>
-	<td>
+
 	<?php
 	$result = $conn->query("SELECT * FROM materia");
 	while($row = $result->fetch_assoc()){
+	    echo '<tr style="height: 60px"><td>';
 	    $id_a_t = $row['area_tematica'];
 	    $result2 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
 	    $row2 = $result2->fetch_assoc();
-	    echo "<label> " . $row2['nome']. " - ". $row['nome'] . "</label> <p>" ;
+	    $id_mat = $row['id'];
+	    $result3 = $conn->query("SELECT * FROM corso WHERE materia='$id_mat'");
+	    $to_delete;
+	    if($result3->num_rows > 0){
+	        $to_delete = FALSE;
+	    }else{
+	        $to_delete = TRUE;
+	    }
+	    echo "<p><label> " . $row2['nome']. " - ". $row['nome'] . "</label>";
+	    ?>
+	    <p>
+	    <form action="insegnanti/modifica_materia.php" method="post" >
+	    	<input type="hidden" name="id" value="<?php echo $id_mat;?>">
+			<input type="text" id="materia2" name="materia2"  maxlength="45"
+				size="24" autofocus="true" >
+			<script type="text/javascript">
+                                    var materia2 = new LiveValidation('materia2', {onlyOnSubmit: true});
+                                    materia2.add(Validate.Presence);
+                                    materia2.add(Validate.SoloTesto);
+                                </script>
+			<input type="submit" value="Modifica">
+		</form>
+		
+	    <?php
+	    if($to_delete){
+	        ?>
+	        <button class="button" onclick=location.href="insegnanti/elimina-materia.php?<?php echo 'id='.$id_mat;?>">Elimina</button>
+	        
+	        <?php 
+	    }
+	    echo '<p></td></tr>';
 	}
 	?>
-	</td>
-</tr>
+
 	<tr>
-		<td align="center"><strong><a href="elenco-corsi.html"> Indietro</a></strong></td>
+		<td align="center" id="indietro"><strong><a href="elenco-corsi.html"> Indietro</a></strong></td>
 	</tr>

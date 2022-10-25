@@ -27,5 +27,6 @@ RewriteRule ^elenco-corsi.html index.php?pagina=insegnanti/corsi_insegnante.php&
 RewriteRule ^nuovo-corso.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuovo_corso.php
 RewriteRule ^nuova-area-tematica.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuova_area_tematica.php
 RewriteRule ^nuova-materia.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuova_materia.php
+RewriteRule ^nuova-lezione.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuova_lezione.php
 RewriteRule ^preventivi-esercizi.html index.php?pagina=insegnanti/preventivi.php
 RewriteRule ^lavora-con-noi.html index.php?pagina=insegnanti/registrazione_insegnante.php

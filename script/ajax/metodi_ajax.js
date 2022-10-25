@@ -311,3 +311,4 @@ function accettaCookie() {
     xmlhttp.send();
 }
 
+

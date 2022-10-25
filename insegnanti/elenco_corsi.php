@@ -27,11 +27,10 @@ while ($row = $result->fetch_assoc()) {
 }
 ?>
 <tr>
-	<td align="center"><strong><a href="elenco-corsi.html"> Elenco
-				corsi/lezioni inserite</a></strong></td>
+	<td align="center"><strong><a href="nuova-lezione.html"> Nuova Lezione</a></strong></td>
 </tr>
 <tr>
-			<td align="center"><strong><a
+			<td align="center" id="indietro"><strong><a
 					href="corsi-insegnante.html">
 					Indietro</a></strong></td>
 		</tr>
