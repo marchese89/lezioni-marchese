@@ -68,59 +68,45 @@ function visualizza_pdfL(img){
 }
 
 
-function carica_lezioni(id_argomento) {
-	  if (id_argomento == "") {
-	    document.getElementById("lezioni_corso").innerHTML = "";
-	    return;
-	  } else {
-	    var xmlhttp = new XMLHttpRequest();
-	    xmlhttp.onreadystatechange = function() {
-	      if (this.readyState == 4 && this.status == 200) {
-	        document.getElementById("lezioni_corso").innerHTML = this.responseText;
-	      }
-	    };
-	    xmlhttp.open("GET","richieste_ajax/lezioni_corso.php?id="+id_argomento,true);
-	    xmlhttp.send();
-	  }
-	}
 </script>
 <tr style="height: 60px">
-	<td><label style="font-size: 18px">Inserisci nuova Lezione</label></td>
+	<td><label style="font-size: 18px">Modifica Lezione</label></td>
 </tr>
-<form action="insegnanti/inserisci_lezione.php" method="post">
+<form action="insegnanti/modifica-lezione.php" method="post">
 	<tr style="height: 60px;">
 
-		<td><label>Area Tematica - Materia - Corso - Argomento</label> <select
-			name="argomento" id="argomento" onchange="carica_lezioni(this.value)">
+		<td><label>
 				
 	<?php
-$email = $_SESSION['user'];
+$id_lezione = $_GET['id'];
 
-$result0 = $conn->query("SELECT * FROM argomento");
-while ($argomento = $result0->fetch_assoc()) {
-    $id_corso = $argomento['corso_arg'];
-    $result1 = $conn->query("SELECT * FROM corso WHERE id='$id_corso'");
-    $corso = $result1->fetch_assoc();
-    $id_mat = $corso['materia'];
-    $result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat'");
-    $materia = $result2->fetch_assoc();
-    $id_a_t = $materia['area_tematica'];
-    $result3 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
-    $area_tematica = $result3->fetch_assoc();
-    ?>
-	    <option value="<?php echo $argomento['id'];?>"><?php echo  $area_tematica['nome'] . " - ". $materia['nome']. " - " . $corso['nome'] . " - " . $argomento['nome'];?></option>
-	    <?php
-}
+$result0 = $conn->query("SELECT * FROM lezione WHERE id='$id_lezione'");
+$lezione = $result0->fetch_assoc();
+$id_argomento = $lezione['arg_lez'];
+$result1 = $conn->query("SELECT * FROM argomento WHERE id='$id_argomento'");
+$argomento = $result1->fetch_assoc();
+$id_corso = $argomento['corso_arg'];
+$result = $conn->query("SELECT * FROM corso WHERE id='$id_corso'");
+$r = $result->fetch_assoc();
+$id_mat = $r['materia'];
+$result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat'");
+$row2 = $result2->fetch_assoc();
+$id_a_t = $row2['area_tematica'];
+$result3 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
+$row3 = $result3->fetch_assoc();
+echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Corso: " . $r['nome'] . " - Argomento: " . $argomento['nome'];
+
 ?>
-				
-		</select></td>
+	</label> <input type="hidden" name="id"
+			value="<?php echo $_GET['id']?>"></td>
 
 	</tr>
 
 	<tr style="height: 60px">
-		<td><label>Numero</label><input type="text"
-			name="numero_lezione" id="numero_lezione" maxlength="45" size="24"
-			autofocus="true"> <script type="text/javascript">
+		<td><label>Numero</label><input type="text" name="numero_lezione"
+			id="numero_lezione" maxlength="45" size="24" autofocus="true"
+			value="<?php echo $lezione['numero'];?>"> <script
+				type="text/javascript">
                                     var numero_lezione = new LiveValidation('numero_lezione', {onlyOnSubmit: true});
                                     numero_lezione.add(Validate.Presence);
                                     numero_lezione.add(Validate.soloNumeri);
@@ -128,9 +114,10 @@ while ($argomento = $result0->fetch_assoc()) {
 	</tr>
 
 	<tr style="height: 60px">
-		<td><label>Titolo</label><input type="text"
-			name="titolo_lezione" id="titolo_lezione" maxlength="45" size="24"
-			autofocus="true"> <script type="text/javascript">
+		<td><label>Titolo</label><input type="text" name="titolo_lezione"
+			id="titolo_lezione" maxlength="45" size="24" autofocus="true"
+			value="<?php echo $lezione['titolo'];?>"> <script
+				type="text/javascript">
                                     var titolo_lezione = new LiveValidation('titolo_lezione', {onlyOnSubmit: true});
                                     titolo_lezione.add(Validate.Presence);
                                     titolo_lezione.add(Validate.TestoEnumeri);
@@ -138,9 +125,10 @@ while ($argomento = $result0->fetch_assoc()) {
 	</tr>
 
 	<tr style="height: 60px">
-		<td><label>Prezzo</label><input type="text"
-			name="prezzo_lezione" id="prezzo_lezione" maxlength="45" size="24"
-			autofocus="true"> <b> &euro;</b> <script type="text/javascript">
+		<td><label>Prezzo</label><input type="text" name="prezzo_lezione"
+			id="prezzo_lezione" maxlength="45" size="24" autofocus="true"
+			value="<?php echo $lezione['prezzo'];?>"> <b> &euro;</b> <script
+				type="text/javascript">
                                     var prezzo_lezione = new LiveValidation('prezzo_lezione', {onlyOnSubmit: true});
                                     prezzo_lezione.add(Validate.Presence);
                                     prezzo_lezione.add(Validate.soloNumeri);
@@ -151,6 +139,12 @@ while ($argomento = $result0->fetch_assoc()) {
            <?php
         if (! isset($_SESSION['percorsoPDF_L'])) {
             ?>	
+	
+	
+	
+	
+	
+	
 	
 	<tr align="center">
 		<th style="height: 70px; width: 780px; text-align: center"
@@ -217,11 +211,10 @@ while ($argomento = $result0->fetch_assoc()) {
 		
 		
 		
-		
 		</th>
 	</tr>
 	<tr style="height: 60px">
-		<td><input type="submit" value="Inserisci Lezione"></td>
+		<td><input type="submit" value="Modifica Lezione"></td>
 	</tr>
 </form>
 <tr style="height: 60px">
@@ -229,10 +222,35 @@ while ($argomento = $result0->fetch_assoc()) {
 </tr>
 <tr style="height: 60px">
 	<td>
-		<div id="lezioni_corso"></div>
+		<div id="lezioni_corso">
+		<?php
+
+$id_arg = $_GET['id'];
+
+$result0 = $conn->query("SELECT * FROM argomento WHERE id='$id_argomento'");
+$arg = $result0->fetch_assoc();
+$id_corso = $arg['corso_arg'];
+// ORDER BY numero ASC
+$result = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
+
+$toPrint = "<br>";
+
+while ($argomento = $result->fetch_assoc()) {
+    $id_argomento = $argomento['id'];
+    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_argomento'");
+    while ($lez = $result2->fetch_assoc()) {
+        $toPrint = $toPrint . "<label>";
+        $toPrint = $toPrint . "(" . $lez['numero'] . ") - " . $argomento['nome'] . " - " . $lez['titolo'] . " - prezzo: " . $lez['prezzo'] . "&euro;";
+        $toPrint = $toPrint . '</label>   ';
+        $toPrint = $toPrint . "<br><br>";
+    }
+}
+echo $toPrint;
+?>
+		</div>
 	</td>
 </tr>
 <tr>
-	<td align="center" id="indietro"><strong><a href="elenco-corsi.html">
+	<td align="center" id="indietro"><strong><a href="nuova-lezione.html">
 				Indietro</a></strong></td>
 </tr>

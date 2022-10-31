@@ -11,13 +11,13 @@ $sql = "SELECT * FROM amministratore WHERE email='$email'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $email;
-    while ($row = $result->fetch_assoc()) {
-        $email = $row['email'];
-        if (password_verify($pass, $row['password'])) {
+    while ($argomento = $result->fetch_assoc()) {
+        $email = $argomento['email'];
+        if (password_verify($pass, $argomento['password'])) {
             $_SESSION['user'] = "admin";
             $_SESSION['nomeUtente'] = "amministratore";
             $_SESSION['loginCorretto'] = TRUE;
-            $_SESSION['last_login'] = $row['ultimo_accesso'];
+            $_SESSION['last_login'] = $argomento['ultimo_accesso'];
         } else {
             $_SESSION['loginCorretto'] = FALSE;
         }
@@ -32,13 +32,13 @@ if ($result->num_rows > 0) {
     $result2 = $conn->query($sql2);
 
     if ($result2->num_rows > 0) {
-        while ($row = $result2->fetch_assoc()) {
-            if (password_verify($pass, $row['password'])) {
-                $id = $row['id'];
-                $_SESSION['user'] = $row['email'];
-                $_SESSION['nomeUtente'] = $row['nome'];
+        while ($argomento = $result2->fetch_assoc()) {
+            if (password_verify($pass, $argomento['password'])) {
+                $id = $argomento['id'];
+                $_SESSION['user'] = $argomento['email'];
+                $_SESSION['nomeUtente'] = $argomento['nome'];
                 $_SESSION['loginCorretto'] = TRUE;
-                $_SESSION['last_login'] = $row['ultimo_accesso'];
+                $_SESSION['last_login'] = $argomento['ultimo_accesso'];
                 break;
             } else {
                 $_SESSION['loginCorretto'] = FALSE;

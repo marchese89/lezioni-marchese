@@ -72,7 +72,7 @@ if (! empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_inter
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<body onload="carica_lezioni(document.getElementById('corso').value)">
+<body onload="carica_lezioni(document.getElementById('argomento').value)">
 
 	<div id="cookie">
 		<br> Questo sito utilizza i cookie tecnici (indispensabili per il suo

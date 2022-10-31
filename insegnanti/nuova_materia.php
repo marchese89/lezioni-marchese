@@ -17,9 +17,9 @@ $email = $_SESSION['user'];
 $id_insegnante = trova_id_insegnante($email);
 $result = $conn->query("SELECT * FROM area_tematica");
 
-while ($row = $result->fetch_assoc()) {
+while ($argomento = $result->fetch_assoc()) {
     ?>
-	    <option value="<?php echo $row['id'];?>"><?php echo $row['nome'];?></option>
+	    <option value="<?php echo $argomento['id'];?>"><?php echo $argomento['nome'];?></option>
 	    <?php
     $i ++;
 }
@@ -50,12 +50,12 @@ while ($row = $result->fetch_assoc()) {
 
 	<?php
 	$result = $conn->query("SELECT * FROM materia");
-	while($row = $result->fetch_assoc()){
+	while($argomento = $result->fetch_assoc()){
 	    echo '<tr style="height: 60px"><td>';
-	    $id_a_t = $row['area_tematica'];
+	    $id_a_t = $argomento['area_tematica'];
 	    $result2 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
 	    $row2 = $result2->fetch_assoc();
-	    $id_mat = $row['id'];
+	    $id_mat = $argomento['id'];
 	    $result3 = $conn->query("SELECT * FROM corso WHERE materia='$id_mat'");
 	    $to_delete;
 	    if($result3->num_rows > 0){
@@ -63,7 +63,7 @@ while ($row = $result->fetch_assoc()) {
 	    }else{
 	        $to_delete = TRUE;
 	    }
-	    echo "<p><label> " . $row2['nome']. " - ". $row['nome'] . "</label>";
+	    echo "<p><label> " . $row2['nome']. " - ". $argomento['nome'] . "</label>";
 	    ?>
 	    <p>
 	    <form action="insegnanti/modifica_materia.php" method="post" >

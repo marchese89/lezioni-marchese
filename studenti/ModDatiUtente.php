@@ -10,9 +10,9 @@ $email_utente = $_SESSION['user'];
 
 $sql = "SELECT * FROM utente WHERE email='$email_utente'";
 $result = $conn->query($sql);
-$row;
+$argomento;
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+    $argomento = $result->fetch_assoc();
 } 
 
 ?>
@@ -27,13 +27,13 @@ if ($result->num_rows > 0) {
     <tr align="center" style="height: 80px">
         <td nowrap>
             <label for="labeltesto" style="color: #0e83cd">Nome: </label>
-            <label id="firstName"> <?php echo $row['nome']; ?></label>&nbsp;&nbsp;
+            <label id="firstName"> <?php echo $argomento['nome']; ?></label>&nbsp;&nbsp;
         </td>
 	</tr>
 	<tr>
         <td style="padding-right: 50" nowrap>
             <label for="labeltesto" style="color: #0e83cd">Cognome: </label>
-            <label id="cognome"><?php echo $row['cognome']; ?></label>&nbsp;&nbsp;
+            <label id="cognome"><?php echo $argomento['cognome']; ?></label>&nbsp;&nbsp;
         </td>
     </tr>
 
@@ -41,7 +41,7 @@ if ($result->num_rows > 0) {
 
         <th nowrap>
             <label for="labeltesto" style="color: #0e83cd">Email: </label>
-            <label id="vatNumber"> <?php echo $row['email']; ?></label>
+            <label id="vatNumber"> <?php echo $argomento['email']; ?></label>
         </th>
         <td nowrap>
             &nbsp;

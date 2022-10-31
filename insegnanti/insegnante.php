@@ -8,11 +8,11 @@ if(isset($_SESSION['user'])){
 }
 $sql = "SELECT * FROM utente WHERE email='$email'";
 $result = $conn->query($sql);
-$row;
+$argomento;
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+    $argomento = $result->fetch_assoc();
 }
-if ($row['stato_account'] === '1') {
+if ($argomento['stato_account'] === '1') {
     if (isset($_SESSION['user'])) {
 
         ?>
@@ -59,20 +59,11 @@ if ($row['stato_account'] === '1') {
 	<tr>
 		<th width="70" height="100"><img src="images/home5.png" width="60" />
 		</th>
-		<th style="color: #0e83cd;">I miei Corsi</th>
+		<th style="color: #0e83cd;" width="80%">I miei Corsi</th>
 		<th>
 			<button class="button" onclick=location.href="corsi-insegnante.html">Prosegui</button>
 		</th>
 	</tr>
-	<tr>
-		<th width="70" height="100"><img src="images/555.png" width="60" /></th>
-		<th width="80%" style="color: #0e83cd;">Preventivi Esercizi</th>
-		<th>
-			<button class="button" onclick=location.href="preventivi-esercizi.html">Visualizza</button>
-
-		</th>
-	</tr>
-
 
 </table>
 

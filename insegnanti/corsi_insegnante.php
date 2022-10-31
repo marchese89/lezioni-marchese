@@ -23,12 +23,12 @@ if (! empty($inner) && $inner != 'amministrazione/admin.php') {
 		<tr>
 				<td align="center"><strong><a
 						href="elenco-corsi.html">
-							Elenco corsi/lezioni inserite</a></strong></td>
+							Lezioni</a></strong></td>
 			</tr>
 		
 		<tr>
 			<td align="center"><strong><a
-					href="index.php?pagina=amministrazione/admin.php&inner=prodotti_stampa/gerarchia_categorie.php">
+					href="esercizi.html">
 					Esercizi</a></strong></td>
 		</tr>
 		<tr>

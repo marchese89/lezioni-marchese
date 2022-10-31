@@ -18,12 +18,12 @@ $email = $_SESSION['user'];
 $id_insegnante = trova_id_insegnante($email);
 $result = $conn->query("SELECT * FROM materia");
 
-while ($row = $result->fetch_assoc()) {
-    $id_a_t = $row['area_tematica'];
+while ($argomento = $result->fetch_assoc()) {
+    $id_a_t = $argomento['area_tematica'];
     $result2 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
     $row2 = $result2->fetch_assoc();
     ?>
-	    <option value="<?php echo $row['id'];?>"><?php echo $row2['nome'] . " - ". $row['nome'];?></option>
+	    <option value="<?php echo $argomento['id'];?>"><?php echo $row2['nome'] . " - ". $argomento['nome'];?></option>
 	    <?php
 }
 ?>
@@ -51,10 +51,10 @@ while ($row = $result->fetch_assoc()) {
 
 	<?php
 	$result = $conn->query("SELECT * FROM corso ORDER BY materia ASC");
-	while($row = $result->fetch_assoc()){
+	while($argomento = $result->fetch_assoc()){
 	    echo '<tr style="height: 60px"><td>';
-	    $id_mat = $row['materia'];
-	    $id_corso = $row['id'];
+	    $id_mat = $argomento['materia'];
+	    $id_corso = $argomento['id'];
 	    $result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat' ");
 	    $row2 = $result2->fetch_assoc();
 	    $id_a_t = $row2['area_tematica'];
@@ -67,7 +67,7 @@ while ($row = $result->fetch_assoc()) {
 	    }else{
 	        $to_delete = TRUE;
 	    }
-	    echo "<label>". $row3['nome']." - " . $row2['nome'] . " - ". $row['nome'] . "</label><p>";
+	    echo "<label>". $row3['nome']." - " . $row2['nome'] . " - ". $argomento['nome'] . "</label><p>";
 	    ?>
 	    <p>
 	    <form action="insegnanti/modifica_corso.php" method="post" >

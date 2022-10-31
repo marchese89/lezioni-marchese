@@ -8,11 +8,11 @@ if(isset($_SESSION['user'])){
 }
 $sql = "SELECT * FROM utente WHERE email='$email'";
 $result = $conn->query($sql);
-$row;
+$argomento;
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+    $argomento = $result->fetch_assoc();
 }
-if ($row['stato_account'] === '1') {
+if ($argomento['stato_account'] === '1') {
     if (isset($_SESSION['user'])) {
 
         ?>

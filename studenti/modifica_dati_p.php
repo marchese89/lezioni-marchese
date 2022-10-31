@@ -11,7 +11,7 @@ if(!$conn || empty($_SESSION['user'])){
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+            $argomento = $result->fetch_assoc();
         } else {
             echo "0 results";
         }
@@ -33,14 +33,14 @@ if(!$conn || empty($_SESSION['user'])){
                 <tr align="center" style="height: 80px">
                     <td>
                         <label style="color: #0e83cd">Nome: </label>
-                        <label id="firstName"> <?php echo $row['nome']; ?></label>&nbsp;&nbsp;
+                        <label id="firstName"> <?php echo $argomento['nome']; ?></label>&nbsp;&nbsp;
                         
                     </td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px" >
                         <label style="color: #0e83cd">Cognome: </label>
-                        <label id="cognome"><?php echo $row['cognome']; ?></label>&nbsp;&nbsp;
+                        <label id="cognome"><?php echo $argomento['cognome']; ?></label>&nbsp;&nbsp;
                         
                     </td>
                    
@@ -50,7 +50,7 @@ if(!$conn || empty($_SESSION['user'])){
 
                     <th>
                         <label style="color: #0e83cd">Email: </label>
-                        <label> <input type="text" style="width: 300px"  id="email" name="emailC" value="<?php echo $row['email']; ?>"></label>
+                        <label> <input type="text" style="width: 300px"  id="email" name="emailC" value="<?php echo $argomento['email']; ?>"></label>
                         <script type="text/javascript">
                             var email1 = new LiveValidation('email');
                             email1.add(Validate.Presence);

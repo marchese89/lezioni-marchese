@@ -194,7 +194,7 @@ if (isset($_POST["UploadPDF_TS"])) {
         $data = date("Y_m_d_H_i_s");
         
         $number = 1;
-        while (file_exists($percorso . $number . $ext)) {
+        while (file_exists($percorso . $number . '.'. $ext)) {
             $number ++;
         }
         
@@ -252,7 +252,7 @@ if (isset($_POST["UploadPDF_CV"])) {
         $dim_ext = strlen($ext) + 1;
         
         $number = 1;
-        while (file_exists($percorso . $number . $ext)) {
+        while (file_exists($percorso . $number . '.' .$ext)) {
             $number ++;
         }
         
@@ -312,7 +312,7 @@ if (isset($_POST["UploadPDF_L"])) {
         $dim_ext = strlen($ext) + 1;
       
         $number = 1;
-        while (file_exists($percorso . $number . $ext)) {
+        while (file_exists($percorso . $number . '.' . $ext)) {
             $number ++;
         }
         

@@ -32,9 +32,9 @@ include 'script/funzioni-php.php';
 
 	<?php
 $result = $conn->query("SELECT * FROM area_tematica");
-while ($row = $result->fetch_assoc()) {
+while ($argomento = $result->fetch_assoc()) {
     echo '<tr style="height: 60px" align="center"><td><span>';
-    $id_a_t = $row['id'];
+    $id_a_t = $argomento['id'];
     $result2 = $conn->query("SELECT * FROM materia WHERE area_tematica='$id_a_t'");
     $to_delete;
     if ($result2->num_rows > 0) {
@@ -42,7 +42,7 @@ while ($row = $result->fetch_assoc()) {
     } else {
         $to_delete = TRUE;
     }
-    echo "<label>" . $row['nome'] . "</label>";
+    echo "<label>" . $argomento['nome'] . "</label>";
     ?>
 	    <form action="insegnanti/modifica_area_tematica.php" method="post" >
 	    	<input type="hidden" name="id" value="<?php echo $id_a_t;?>">

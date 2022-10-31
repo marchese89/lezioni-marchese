@@ -7,8 +7,8 @@ $email = $_SESSION['user'];
 $sql = "SELECT * FROM utente WHERE email='$email'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    if($codice === $row['codice_attivaz']){
+    $argomento = $result->fetch_assoc();
+    if($codice === $argomento['codice_attivaz']){
         $conn->query("UPDATE utente SET stato_account='1' WHERE email='$email'");
     }
 }
