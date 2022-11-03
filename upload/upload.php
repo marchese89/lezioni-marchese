@@ -348,3 +348,109 @@ if (isset($_POST["UploadPDF_L"])) {
         $_SESSION['motivo_errore_pdfL'] = "Formato file non supportato";
     }
 }
+
+
+if (isset($_POST["UploadPDF_TE"])) {
+    
+    $ok = FALSE;
+    if ($_FILES['fileuploadPDF_TE']['type'] === "application/pdf" || getimagesize($_FILES['fileuploadPDF_TE']['tmp_name'])) {
+        $ok = TRUE;
+    } else {
+        $ok = FALSE;
+    }
+    if ($ok == TRUE) {
+        $percorso = "../file_esercizi/";
+        $nome_pdf = $_FILES['fileuploadPDF_TE']['name'];
+        $ext = end(explode(".", $nome_pdf));
+        $dim_ext = strlen($ext) + 1;
+        
+        $number = 1;
+        while (file_exists($percorso . $number . '.' . $ext)) {
+            $number ++;
+        }
+        
+        
+        if (is_uploaded_file($_FILES['fileuploadPDF_TE']['tmp_name'])) {
+            
+            $nomeFile = "file_esercizi/" . $number . '.' . $ext;
+            
+            if (! file_exists($percorso . $_FILES['fileuploadPDF_TE']['name'])) {
+                
+                if (strlen($nomeFile) <= 244) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_TE']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                        $_SESSION['percorsoPDF_TE'] = $nomeFile;
+                        $_SESSION['pdfTECaricato'] = "OK";
+                    } else {
+                        $_SESSION['pdfTECaricato'] = "ERRORE";
+                        $_SESSION['motivo_errore_pdfTE'] = $_FILES['fileuploadPDF_TE']['error'];
+                    }
+                } else {
+                    $_SESSION['pdfTECaricato'] = "ERRORE";
+                    $_SESSION['motivo_errore_pdfTE'] = "nome file troppo lungo";
+                }
+            } else {
+                $_SESSION['pdfTECaricato'] = "ERRORE";
+                $_SESSION['motivo_errore_pdfTE'] = "File gi&agrave; presente";
+            }
+        } else {
+            $_SESSION['pdfTECaricato'] = "ERRORE";
+            $_SESSION['motivo_errore_pdfTE'] = $_FILES['fileuploadPDF_TE']['error'];
+        }
+    } else {
+        $_SESSION['pdfTECaricato'] = "ERRORE";
+        $_SESSION['motivo_errore_pdfTE'] = "Formato file non supportato";
+    }
+}
+
+if (isset($_POST["UploadPDF_SE"])) {
+    
+    $ok = FALSE;
+    if ($_FILES['fileuploadPDF_SE']['type'] === "application/pdf" || getimagesize($_FILES['fileuploadPDF_SE']['tmp_name'])) {
+        $ok = TRUE;
+    } else {
+        $ok = FALSE;
+    }
+    if ($ok == TRUE) {
+        $percorso = "../file_esercizi/";
+        $nome_pdf = $_FILES['fileuploadPDF_SE']['name'];
+        $ext = end(explode(".", $nome_pdf));
+        $dim_ext = strlen($ext) + 1;
+        
+        $number = 1;
+        while (file_exists($percorso . $number . '.' . $ext)) {
+            $number ++;
+        }
+        
+        
+        if (is_uploaded_file($_FILES['fileuploadPDF_SE']['tmp_name'])) {
+            
+            $nomeFile = "file_esercizi/" . $number . '.' . $ext;
+            
+            if (! file_exists($percorso . $_FILES['fileuploadPDF_SE']['name'])) {
+                
+                if (strlen($nomeFile) <= 244) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_SE']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                        $_SESSION['percorsoPDF_SE'] = $nomeFile;
+                        $_SESSION['pdfSECaricato'] = "OK";
+                    } else {
+                        $_SESSION['pdfSECaricato'] = "ERRORE";
+                        $_SESSION['motivo_errore_pdfSE'] = $_FILES['fileuploadPDF_SE']['error'];
+                    }
+                } else {
+                    $_SESSION['pdfSECaricato'] = "ERRORE";
+                    $_SESSION['motivo_errore_pdfSE'] = "nome file troppo lungo";
+                }
+            } else {
+                $_SESSION['pdfSECaricato'] = "ERRORE";
+                $_SESSION['motivo_errore_pdfSE'] = "File gi&agrave; presente";
+            }
+        } else {
+            $_SESSION['pdfSECaricato'] = "ERRORE";
+            $_SESSION['motivo_errore_pdfSE'] = $_FILES['fileuploadPDF_SE']['error'];
+        }
+    } else {
+        $_SESSION['pdfSECaricato'] = "ERRORE";
+        $_SESSION['motivo_errore_pdfSE'] = "Formato file non supportato";
+    }
+}
+

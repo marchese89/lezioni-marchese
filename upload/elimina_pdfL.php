@@ -5,4 +5,6 @@ if (isset($_SESSION['percorsoPDF_L'])) {
 }
 unset($_SESSION['percorsoPDF_L']);
 unset($_SESSION['pdfLCaricato']);
-header('Location: ../nuova-lezione.html');
+
+$id = $_GET['id'];
+header('Location: ../modifica-file-lezione-' .$id. '.html');

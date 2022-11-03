@@ -29,6 +29,11 @@ RewriteRule ^nuova-area-tematica.html index.php?pagina=insegnanti/corsi_insegnan
 RewriteRule ^nuova-materia.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuova_materia.php
 RewriteRule ^nuova-lezione.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuova_lezione.php
 RewriteRule ^nuovo-argomento.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/nuovo_argomento.php
+RewriteRule ^modifica-file-lezione-([0-9]*).html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/modifica_file_lezione.php&id=$1
 RewriteRule ^preventivi-esercizi.html index.php?pagina=insegnanti/preventivi.php
 RewriteRule ^lavora-con-noi.html index.php?pagina=insegnanti/registrazione_insegnante.php
 RewriteRule ^modifica-lezione-([0-9]*).html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/modifica_lezione.php&id=$1
+RewriteRule ^aree-tematiche.html index.php?pagina=studenti/aree_tematiche.php
+RewriteRule ^materie-([0-9]*).html index.php?pagina=studenti/materie.php&id_at=$1
+RewriteRule ^corsi-([0-9]*).html index.php?pagina=studenti/corsi.php&id_mat=$1
+RewriteRule ^corso-([0-9]*).html index.php?pagina=studenti/corso.php&id_corso=$1

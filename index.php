@@ -84,7 +84,7 @@ if (! empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_inter
 
 	</div>
 
-	<table id="pagina_iniziale">
+	<table id="pagina_iniziale" cellaspacing=0 cellpaddin=0>
 
 		<tr id="prima_riga">
 			<td colspan=2 id="pr_sinistra"></td>
@@ -131,7 +131,7 @@ if (empty($_SESSION['user'])) {
 					height="100" title="Home Page" alt="img"></a></th>
 			<th id="c"></th>
 			<th style="font-size: 18pt;" id="s_col">
-			<a href="">Corsi</a> 
+			<a href="aree-tematiche.html">Aree Tematiche</a> 
 			<a href="">Svolgimento Esercizi</a> 
 			<a href="">Esercizi Svolti</a>
 				<a href="">Chi Siamo</a>
@@ -143,7 +143,6 @@ if (empty($_SESSION['user'])) {
 
 		<tr>
 			<th colspan=3>
-
 
 				<div id="mostraPagina" style="padding: 0; text-align: center">
 				<?php
@@ -159,12 +158,7 @@ if (empty($_SESSION['user'])) {
 		</tr>
 		<tr>
 		
-		
-		<tr>
-			<th colspan=3
-				style="background-color: #8f9296; height: 30px; display: none"><b>Easy
-					Learning</b></th>
-		</tr>
+
 	</table>
 </body>
 </html>
