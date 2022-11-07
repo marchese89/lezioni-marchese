@@ -1,214 +1,274 @@
 <?php
 
-class ElementoC {
+class ElementoC
+{
+    
+    private $idProdotto;
 
-private $idProdotto;
-//contiene l'id finale delle prop 
-//che identificano prodotto, caratteristica e valore)
-private $prop;
-private $qta;
-private $prezzo;
-private $prezzoIvato;
-private $percorsoFile;
-private $tipoElemento = 0; // 0 = prodotto stampa, 1 = prodotto generico
+    private $prezzo;
 
-public function __construct($prodotto) {
-$this->idProdotto = $prodotto;
-$this->prop = array();
-}
+    //tipi: 0=lezione, 1=tutte le lezioni di un corso, 2=esercizio, 3=tutti gli esercizi di un corso
+    //4= tutte le lezioni e tutti gli esercizi di un corso
+    private $tipoElemento = 0;
 
-public function getId() {
-return $this->idProdotto;
-}
+    private $nome;
+   
+    public function __construct($id,$tipo_elem)
+    {
+        $conn = mysqli_connect("localhost", "root", "[]x?,U*<VkcbFRF,WM]T", "easy-learning");
+        $this->idProdotto = $id;
+        $this->tipoElemento = $tipo_elem;
+        switch ($this->tipoElemento){
+            case 0://lezione
+                $result1 = $conn->query("SELECT * FROM lezione WHERE id='$this->idProdotto'");
+                $lez = $result1->fetch_assoc();
+                $this->nome = $lez['titolo'];
+                $this->prezzo = $lez['prezzo'];
+                break;
+            case 1://tutte le lezioni di un corso
+                $prez = 0;
+                $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$this->idProdotto'");
+                while($arg = $result1->fetch_assoc()){
+                    $id_arg = $arg['id'];
+                    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
+                    $lex = $result2->fetch_assoc();
+                    $prez = $prez+$lex['prezzo'];
+                }
+                $this->prezzo = $prez;
+                $result3 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
+                $corso = $result3->fetch_assoc();
+                $this->nome = $corso['nome'];
+                break;
+            case 2://esercizio
+                $result1 = $conn->query("SELECT * FROM esercizio WHERE id='$this->idProdotto'");
+                $ex = $result1->fetch_assoc();
+                $this->nome = $ex['titolo'];
+                $this->prezzo = $ex['prezzo'];
+                break;
+            case 3://tutti gli esercizi di un corso
+                $prez = 0;
+                $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$this->idProdotto'");
+                while($arg = $result1->fetch_assoc()){
+                    $id_arg = $arg['id'];
+                    $result2 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
+                    $ex = $result2->fetch_assoc();
+                    $prez = $prez+$ex['prezzo'];
+                }
+                $this->prezzo = $prez;
+                $result3 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
+                $corso = $result3->fetch_assoc();
+                $this->nome = $corso['nome'];
+                break;
+            case 4://tutte le lezioni e tutti gli esercizi di un corso
+                $prez = 0;
+                $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$this->idProdotto'");
+                while($arg = $result1->fetch_assoc()){
+                    $id_arg = $arg['id'];
+                    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
+                    $lex = $result2->fetch_assoc();
+                    $prez = $prez+$lex['prezzo'];
+                    $result3 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
+                    $ex = $result3->fetch_assoc();
+                    $prez = $prez+$ex['prezzo'];
+                }
+                $this->prezzo = $prez;
+                $result4 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
+                $corso = $result4->fetch_assoc();
+                $this->nome = $corso['nome'];
+                break;
+            default:
+        }
+    }
 
-public function setQta($qta) {
-$this->qta = $qta;
-}
+    public function getId()
+    {
+        return $this->idProdotto;
+    }
 
-public function setTipoElemento($tipo){
-    $this->tipoElemento = $tipo;
-}
+    public function setTipoElemento($tipo)
+    {
+        $this->tipoElemento = $tipo;
+    }
 
-public function getTipoElemento(){
-    return $this->tipoElemento; 
-}
-public function addProp($idProp) {
-array_push($this->prop, $idProp);
-}
+    public function getTipoElemento()
+    {
+        return $this->tipoElemento;
+    }
 
-public function removeProp($id) {
-$index = $this->trovaProp($id);
-if ($index >= 0) {
-unset($this->prop[$index]);
-array_merge($this->prop);
-}
-}
+    public function getPrezzo()
+    {
+        return $this->prezzo;
+    }
 
-public function setPrezzo($p) {
-$this->prezzo = $p;
-}
-
-public function getPrezzo() {
-return $this->prezzo;
-}
-
-public function setPrezzoIvato($p) {
-$this->prezzoIvato = $p;
-}
-
-public function getPrezzoIvato() {
-return $this->prezzoIvato;
-}
-
-private function trovaProp($idP) {
-for ($i = 0;
-$i < count($this->prop);
-$i++) {
-if ($this->prop[$i] == $idP) {
-return $i;
-}
-}
-return -1;
-}
-
-public function getQta() {
-return $this->qta;
-}
-
-public function getProprieta() {
-return $this->prop;
-}
-
-public function getPercorsoFile() {
-return $this->percorsoFile;
-}
-
-public function setPercorsoFile($percorsoFile) {
-$this->percorsoFile = $percorsoFile;
-}
-
-public function eliminaFile() {
-    error_reporting(E_ERROR | E_PARSE);
-try{
-    unlink("../" . $this->percorsoFile);
-    unlink($this->percorsoFile);
-}catch (Exception $e){
-    header("Location: ../index.php");
-}
-error_reporting(ALL);
-}
-
-}
-
-class Carrello {
-
-private $elementi;
-private $modPagamento;
-private $costoSpedizione;
-private $costiAggiuntivi;
-
-public function __construct() {
-$this->elementi = array();
-$this->costoSpedizione = 0;
-$this->modPagamento = '';
-$this->costiAggiuntivi = 0;
 }
 
-public function aggiungi(ElementoC $elem) {
-array_push($this->elementi, $elem);
-return TRUE;
-}
+class Carrello
+{
 
-public function rimuovi($id) {
+    private $elementi;
 
-$index = $this->trovaElemento($id);
+    public function __construct()
+    {
+        $this->elementi = array();
+    }
 
-if ($index !== -1) {
-$this->elementi[$index]->eliminaFile();
-unset($this->elementi[$index]);
-$this->elementi = array_merge($this->elementi);
-}
-}
+    public function aggiungi(ElementoC $elem)
+    {
+        $conn = mysqli_connect("localhost", "root", "[]x?,U*<VkcbFRF,WM]T", "easy-learning");
+        
+        $id = $elem->getId();
+        $tipo = $elem->getTipoElemento();
+        //verifichiamo se l'elemento è già presente
+        $ind = $this->trovaElemento($id, $tipo);
+        if($ind !== -1){
+            return TRUE;
+        }
+        //verifichiamo se è già presente un insieme che include già l'elemento (niente da inserire)
+        //il tipo è una lezione
+        if($tipo === 0){
+            $result1 = $conn->query("SELECT * FROM lezione WHERE id='$id'");
+            $lez = $result1->fetch_assoc();
+            $id_arg = $lez['arg_lez'];
+            $result2 = $conn->query("SELECT * FROM argomento WHERE id='$id_arg'");
+            $arg = $result2->fetch_assoc();
+            $id_corso = $arg['corso_arg'];
+            $ind = $this->trovaElemento($id_corso, 1);
+            if($ind !== -1){
+                return TRUE;
+            }
+        }
+        
+        //il tipo è un esercizio
+        if($tipo === 2){
+            $result1 = $conn->query("SELECT * FROM esercizio WHERE id='$id'");
+            $lez = $result1->fetch_assoc();
+            $id_arg = $lez['argomento'];
+            $result2 = $conn->query("SELECT * FROM argomento WHERE id='$id_arg'");
+            $arg = $result2->fetch_assoc();
+            $id_corso = $arg['corso_arg'];
+            $ind = $this->trovaElemento($id_corso, 3);
+            if($ind !== -1){
+                return TRUE;
+            }
+        }
+        
+        //verifichiamo se è già presente una lezione o un esercizio e stiamo aggiungendo l'insieme grande
+        //(eliminazione di tutti gli elementi già inseriti che fanno parte dell'insieme che stiamo inserendo)
+        //stiamo aggiungendo tutte le lezioni di un corso (eliminiamo tutte le lezioni singole già eventualmente
+        //inserite
+        if($tipo === 1){
+            $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id'");
+            while($arg = $result1->fetch_assoc()){
+                $id_arg = $arg['id'];
+                $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
+                while($lez = $result2->fetch_assoc()){
+                    $id_lez = $lez['id'];
+                    $ind = $this->trovaElemento($id_lez, 0);
+                    if($ind !== -1){//la lezione esiste già e va cancellata
+                       $this->rimuovi($id_lez, 0); 
+                    }
+                }
+            }
+        }
+        
+        if($tipo === 3){//inseriamo tutti gli esercizi di un corso (eliminiamo quelli singoli)
+            $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id'");
+            while($arg = $result1->fetch_assoc()){
+                $id_arg = $arg['id'];
+                $result2 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
+                while($ex = $result2->fetch_assoc()){
+                    $id_ex = $ex['id'];
+                    $ind = $this->trovaElemento($id_ex, 2);
+                    if($ind !== -1){//la lezione esiste già e va cancellata
+                        $this->rimuovi($id_ex, 2);
+                    }
+                }
+            }
+        }
+        
+        if($tipo === 4){//inseriamo tutte le lezioni e tutti gli esercizi di un corso (eliminiamo tutti i singoli)
+            $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id'");
+            while($arg = $result1->fetch_assoc()){
+                $id_arg = $arg['id'];
+                $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
+                while($lez = $result2->fetch_assoc()){
+                    $id_lez = $lez['id'];
+                    $ind = $this->trovaElemento($id_lez, 0);
+                    if($ind !== -1){//la lezione esiste già e va cancellata
+                        $this->rimuovi($id_lez, 0);
+                    }
+                }
+                $result3 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
+                while($ex = $result3->fetch_assoc()){
+                    $id_ex = $ex['id'];
+                    $ind = $this->trovaElemento($id_ex, 2);
+                    if($ind !== -1){//la lezione esiste già e va cancellata
+                        $this->rimuovi($id_ex, 2);
+                    }
+                }
+            }
+            //cerchiamo gli insiemi (tutte le lezioni/tutti gli esercizi)
+            if($this->trovaElemento($id, 1) !== -1){
+                $this->rimuovi($id, 1);
+            }    
+                
+            if($this->trovaElemento($id, 3)!== -1){
+                $this->rimuovi($id, 3);
+            }
+        }
+        
+        array_push($this->elementi, $elem);
+        return TRUE;
+    }
 
-private function trovaElemento($id) {
-$index = -1;
-for ($i = 0;
-$i < count($this->elementi);
-$i++) {
-$elemento = $this->elementi[$i];
-if ($elemento->getId() == $id) {
-$index = $i;
-break;
-}
-}
-return $index;
-}
+    public function rimuovi($id,$tipo)
+    {
+        $index = $this->trovaElemento($id,$tipo);
 
-public function contenuto() {
-return $this->elementi;
-}
+        if ($index !== - 1) {
+            unset($this->elementi[$index]);
+            $this->elementi = array_merge($this->elementi);
+        }
+    }
 
-public function getTotale() {
-$tot = 0;
-foreach ($this->elementi as $p) {
-$tot += $p->getPrezzo();
-}
-return $tot;
-}
+    private function trovaElemento($id,$tipo)
+    {
+        $index = - 1;
+        for ($i = 0; $i < count($this->elementi); $i ++) {
+            $elemento = $this->elementi[$i];
+            if ($elemento->getId() === $id && $elemento->getTipoElemento() === $tipo) {
+                $index = $i;
+                break;
+            }
+        }
+        return $index;
+    }
 
-public function getTotaleIvato() {
-$tot = 0;
-foreach ($this->elementi as $p) {
-$tot += $p->getPrezzoIvato();
-}
-return $tot;
-}
+    public function contenuto()
+    {
+        return $this->elementi;
+    }
+    
+    public function nElementi(){
+        return count($this->elementi);
+    }
 
-public function getTotaleOrdine() {
-$totP = $this->getTotale();
-$temp = $totP + $this->costiAggiuntivi + $this->costoSpedizione;
-return $temp;
-}
+    public function getTotale()
+    {
+        $tot = 0;
+        foreach ($this->elementi as $p) {
+            $tot += $p->getPrezzo();
+        }
+        return $tot;
+    }
 
-public function getTotaleOrdineIvato() {
-$totP = $this->getTotaleIvato();
-$temp = $totP + $this->costiAggiuntivi + $this->costoSpedizione;
-return $temp;
-}
 
-function vuotaCarrello() {
-for ($index = 0;
-$index < count($this->elementi);
-$index++) {
-$this->elementi[$index]->eliminaFile();
-}
-$this->elementi = array();
-$this->costiAggiuntivi = 0;
-$this->modPagamento = 'bonifico';
-}
 
-function getModPagamento() {
-return $this->modPagamento;
-}
-
-function setModPagamento($mod) {
-$this->modPagamento = $mod;
-}
-
-function setCostoSpedizione($costo) {
-$this->costoSpedizione = $costo;
-}
-
-function getCostoSpedizione() {
-return $this->costoSpedizione;
-}
-
-function getCostiAggiuntivi() {
-return $this->costiAggiuntivi;
-}
-
-function setCostiAggiuntivi($costi) {
-$this->costiAggiuntivi = $costi;
-}
-
+    function vuotaCarrello()
+    {
+        for ($index = 0; $index < count($this->elementi); $index ++) {
+            $this->elementi[$index]->eliminaFile();
+        }
+        $this->elementi = array();
+    }
 }

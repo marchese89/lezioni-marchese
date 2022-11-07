@@ -1,16 +1,17 @@
 <?php
+include 'acquisti/carrello.php';
 session_cache_limiter('nocache');
 session_start();
-include 'acquisti/carrello.php';
+
 include 'config/mysql-config.php';
 
-if (empty($_SESSION['carrello'])) {
+if (!isset($_SESSION['carrello'])) {
     $_SESSION['carrello'] = new Carrello();
 }
 
 $pagina_interna = filter_input(INPUT_GET, "pagina");
 
-if (! empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
+if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
     header("Location: index.html");
 }
 
@@ -72,7 +73,8 @@ if (! empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_inter
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<body onload="carica_lezioni(document.getElementById('argomento').value)">
+<body
+	onload="carica_lezioni(document.getElementById('argomento').value)">
 
 	<div id="cookie">
 		<br> Questo sito utilizza i cookie tecnici (indispensabili per il suo
@@ -89,7 +91,8 @@ if (! empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_inter
 		<tr id="prima_riga">
 			<td colspan=2 id="pr_sinistra"></td>
 			<td align=right id="pr_destra">
-			<?php
+			<a href="carrello.html"><b>Carrello</b></a><?php echo '<b>(' . $_SESSION['carrello']->nElementi() . ')</b>';
+                               
 if (empty($_SESSION['user'])) {
     ?>
     <a href="login.html" class="collegamento"><b>Accedi</b></a>|<a
@@ -98,21 +101,21 @@ if (empty($_SESSION['user'])) {
 } else {
     if ($_SESSION['user'] !== "admin") {
         $user = $_SESSION['user'];
-    
+
         $r1 = $conn->query("SELECT * FROM utente WHERE email='$user'");
         $ut = $r1->fetch_assoc();
         $id = $ut['id'];
         $r2 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
-        if($r2->num_rows > 0){
-        ?>
+        if ($r2->num_rows > 0) {
+            ?>
         <a href="home-user.html"><b>Il mio profilo</b></a>|<a
 				href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
         <?php
-        }else{
+        } else {
             ?>
             <a href="home-insegnante.html"><b>Il mio profilo</b></a>|<a
 				href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
-        <?php     
+        <?php
         }
     } else {
         ?>
@@ -130,14 +133,10 @@ if (empty($_SESSION['user'])) {
 				href="index.html"><img src="images/logo.png" width="600"
 					height="100" title="Home Page" alt="img"></a></th>
 			<th id="c"></th>
-			<th style="font-size: 18pt;" id="s_col">
-			<a href="aree-tematiche.html">Aree Tematiche</a> 
-			<a href="">Svolgimento Esercizi</a> 
-			<a href="">Esercizi Svolti</a>
-				<a href="">Chi Siamo</a>
-				<a href="">Contatti</a>
-				<a href="lavora-con-noi.html">Lavora con noi</a>
-				</th>
+			<th style="font-size: 18pt;" id="s_col"><a href="aree-tematiche.html">Aree
+					Tematiche</a> <a href="">Svolgimento Esercizi</a> <a href="">Esercizi
+					Svolti</a> <a href="">Chi Siamo</a> <a href="">Contatti</a> <a
+				href="lavora-con-noi.html">Lavora con noi</a></th>
 
 		</tr>
 
@@ -157,8 +156,7 @@ if (empty($_SESSION['user'])) {
 			</th>
 		</tr>
 		<tr>
-		
-
+	
 	</table>
 </body>
 </html>

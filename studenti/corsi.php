@@ -21,8 +21,13 @@ $id_mat = $_GET['id_mat'];
 		?>
 
 		<tr>
+		<?php 
+		$result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat'");
+		$materia = $result2->fetch_assoc();
+		$a_t = $materia['area_tematica'];
+		?>
 			<td align="center" id="indietro"><strong><a
-					href="aree-tematiche.html">
+					href="materie-<?php echo $a_t;?>.html">
 					Indietro</a></strong></td>
 		</tr>
 </table>
