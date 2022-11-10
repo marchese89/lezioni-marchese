@@ -1,5 +1,5 @@
 <?php
-include 'acquisti/carrello.php';
+include_once 'acquisti/carrello.php';
 session_cache_limiter('nocache');
 session_start();
 
@@ -71,7 +71,8 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 <script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+<script src="https://js.stripe.com/v3/"></script>
+<script src="pagamenti/checkout.js?ts=<?=time()?>&quot" defer></script>
 </head>
 <body
 	onload="carica_lezioni(document.getElementById('argomento').value)">

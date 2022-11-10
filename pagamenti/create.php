@@ -1,15 +1,16 @@
 <?php
-
+include_once '../acquisti/carrello.php';
 require_once 'stripe-php-9.6.0/init.php';
+
+session_start();
 
 // This is your test secret API key.
 \Stripe\Stripe::setApiKey('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
 
 function calculateOrderAmount(): int {
-    // Replace this constant with a calculation of the order's amount
-    // Calculate the order total on the server to prevent
-    // people from directly manipulating the amount on the client
-    return 1100;
+    
+    return $_SESSION['carrello']->getTotale()*100;
+
 }
 
 header('Content-Type: application/json');

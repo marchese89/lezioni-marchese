@@ -15,7 +15,7 @@ document
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  const { clientSecret } = await fetch("/create.php", {
+  const { clientSecret } = await fetch("pagamenti/create.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
@@ -35,7 +35,8 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "http://localhost:4242/public/checkout.html",
+      //https://localhost/easy-learning/acquisti/acquisto_effettuato.php
+      return_url: "https://localhost/easy-learning/acquisti/acquisto_effettuato.php",
     },
   });
 

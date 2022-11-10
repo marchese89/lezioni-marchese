@@ -16,7 +16,7 @@ RewriteRule ^modifica-dati2.html index.php?pagina=studenti/modifica_dati_p.php
 RewriteRule ^modifica-pass.html index.php?pagina=studenti/cambia_pass.php
 RewriteRule ^risultato-operazione.html index.php?pagina=info_res_operazioni.php
 RewriteRule ^carrello.html index.php?pagina=acquisti/visualizza_carrello.php
-RewriteRule ^alla-cassa.html index.php?pagina=acquisti/vai_alla_cassa.php
+RewriteRule ^acquista.html index.php?pagina=acquisti/acquista.php
 RewriteRule ^dettagli-ordine-([0-9]*)-([0-9]*).html index.php?pagina=acquisti/dettagli_ordine_cliente.php&ordine=$1&return=$2
 RewriteRule ^cookiepolicy.html index.php?pagina=cookie.html
 RewriteRule ^corsi-studente.html index.php?pagina=studenti/corsi_studente.php
@@ -37,3 +37,4 @@ RewriteRule ^aree-tematiche.html index.php?pagina=studenti/aree_tematiche.php
 RewriteRule ^materie-([0-9]*).html index.php?pagina=studenti/materie.php&id_at=$1
 RewriteRule ^corsi-([0-9]*).html index.php?pagina=studenti/corsi.php&id_mat=$1
 RewriteRule ^corso-([0-9]*).html index.php?pagina=studenti/corso.php&id_corso=$1
+RewriteRule ^ordine-effettuato.html index.php?pagina=acquisti/ordine_effettuato.php

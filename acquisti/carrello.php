@@ -31,13 +31,14 @@ class ElementoC
                 while($arg = $result1->fetch_assoc()){
                     $id_arg = $arg['id'];
                     $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
-                    $lex = $result2->fetch_assoc();
-                    $prez = $prez+$lex['prezzo'];
+                    while($lex = $result2->fetch_assoc()){
+                        $prez = $prez+$lex['prezzo'];
+                    }
                 }
                 $this->prezzo = $prez;
                 $result3 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
                 $corso = $result3->fetch_assoc();
-                $this->nome = $corso['nome'];
+                $this->nome = "Tutte le lezioni: " . $corso['nome'];
                 break;
             case 2://esercizio
                 $result1 = $conn->query("SELECT * FROM esercizio WHERE id='$this->idProdotto'");
@@ -51,13 +52,14 @@ class ElementoC
                 while($arg = $result1->fetch_assoc()){
                     $id_arg = $arg['id'];
                     $result2 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
-                    $ex = $result2->fetch_assoc();
-                    $prez = $prez+$ex['prezzo'];
+                    while($ex = $result2->fetch_assoc()){
+                        $prez = $prez+$ex['prezzo'];
+                    }
                 }
                 $this->prezzo = $prez;
                 $result3 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
                 $corso = $result3->fetch_assoc();
-                $this->nome = $corso['nome'];
+                $this->nome = "Tutti gli esercizi: " . $corso['nome'];
                 break;
             case 4://tutte le lezioni e tutti gli esercizi di un corso
                 $prez = 0;
@@ -65,29 +67,27 @@ class ElementoC
                 while($arg = $result1->fetch_assoc()){
                     $id_arg = $arg['id'];
                     $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
-                    $lex = $result2->fetch_assoc();
-                    $prez = $prez+$lex['prezzo'];
+                    while($lex = $result2->fetch_assoc()){
+                        $prez = $prez+$lex['prezzo'];
+                    }
                     $result3 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
-                    $ex = $result3->fetch_assoc();
-                    $prez = $prez+$ex['prezzo'];
+                    while($ex = $result3->fetch_assoc()){
+                        $prez = $prez+$ex['prezzo'];
+                    }
                 }
                 $this->prezzo = $prez;
                 $result4 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
                 $corso = $result4->fetch_assoc();
-                $this->nome = $corso['nome'];
+                $this->nome = "Corso Completo: " .$corso['nome'];
                 break;
             default:
+                break;
         }
     }
 
     public function getId()
     {
         return $this->idProdotto;
-    }
-
-    public function setTipoElemento($tipo)
-    {
-        $this->tipoElemento = $tipo;
     }
 
     public function getTipoElemento()
@@ -98,6 +98,11 @@ class ElementoC
     public function getPrezzo()
     {
         return $this->prezzo;
+    }
+    
+    public function getNome()
+    {
+        return $this->nome;
     }
 
 }
@@ -132,7 +137,11 @@ class Carrello
             $result2 = $conn->query("SELECT * FROM argomento WHERE id='$id_arg'");
             $arg = $result2->fetch_assoc();
             $id_corso = $arg['corso_arg'];
-            $ind = $this->trovaElemento($id_corso, 1);
+            $ind = $this->trovaElemento($id_corso, 1);//tutte le lezioni
+            if($ind !== -1){
+                return TRUE;
+            }
+            $ind = $this->trovaElemento($id_corso, 4);//tutte le lezioni e tutti gli esercizi
             if($ind !== -1){
                 return TRUE;
             }
@@ -146,7 +155,11 @@ class Carrello
             $result2 = $conn->query("SELECT * FROM argomento WHERE id='$id_arg'");
             $arg = $result2->fetch_assoc();
             $id_corso = $arg['corso_arg'];
-            $ind = $this->trovaElemento($id_corso, 3);
+            $ind = $this->trovaElemento($id_corso, 3);//tutti gli esercizi
+            if($ind !== -1){
+                return TRUE;
+            }
+            $ind = $this->trovaElemento($id_corso, 4);//tutte le lezioni e tutti gli esercizi
             if($ind !== -1){
                 return TRUE;
             }
@@ -156,7 +169,7 @@ class Carrello
         //(eliminazione di tutti gli elementi già inseriti che fanno parte dell'insieme che stiamo inserendo)
         //stiamo aggiungendo tutte le lezioni di un corso (eliminiamo tutte le lezioni singole già eventualmente
         //inserite
-        if($tipo === 1){
+        if($tipo === 1){//tutte le lezioni
             $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id'");
             while($arg = $result1->fetch_assoc()){
                 $id_arg = $arg['id'];
@@ -168,6 +181,10 @@ class Carrello
                        $this->rimuovi($id_lez, 0); 
                     }
                 }
+            }
+            $ind = $this->trovaElemento($id, 4);//tutte le lezioni e tutti gli esercizi
+            if($ind !== -1){
+                return TRUE;
             }
         }
         
@@ -183,6 +200,10 @@ class Carrello
                         $this->rimuovi($id_ex, 2);
                     }
                 }
+            }
+            $ind = $this->trovaElemento($id, 4);//tutte le lezioni e tutti gli esercizi
+            if($ind !== -1){
+                return TRUE;
             }
         }
         
@@ -224,11 +245,12 @@ class Carrello
     public function rimuovi($id,$tipo)
     {
         $index = $this->trovaElemento($id,$tipo);
-
         if ($index !== - 1) {
             unset($this->elementi[$index]);
             $this->elementi = array_merge($this->elementi);
+            return TRUE;
         }
+        return FALSE;
     }
 
     private function trovaElemento($id,$tipo)
@@ -236,7 +258,7 @@ class Carrello
         $index = - 1;
         for ($i = 0; $i < count($this->elementi); $i ++) {
             $elemento = $this->elementi[$i];
-            if ($elemento->getId() === $id && $elemento->getTipoElemento() === $tipo) {
+            if ($elemento->getId() == $id && $elemento->getTipoElemento() == $tipo) {
                 $index = $i;
                 break;
             }
