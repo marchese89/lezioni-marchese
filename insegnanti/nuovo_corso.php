@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'config/mysql-config.php';
-include 'script/funzioni-php.php';
+
 ?>
 <tr style="height: 60px">
 	<td>
@@ -15,7 +15,7 @@ include 'script/funzioni-php.php';
 	
 	<?php
 $email = $_SESSION['user'];
-$id_insegnante = trova_id_insegnante($email);
+
 $result = $conn->query("SELECT * FROM materia");
 
 while ($argomento = $result->fetch_assoc()) {
@@ -51,23 +51,24 @@ while ($argomento = $result->fetch_assoc()) {
 
 	<?php
 	$result = $conn->query("SELECT * FROM corso ORDER BY materia ASC");
-	while($argomento = $result->fetch_assoc()){
-	    echo '<tr style="height: 60px"><td>';
-	    $id_mat = $argomento['materia'];
-	    $id_corso = $argomento['id'];
+	
+	while($corso = $result->fetch_assoc()){
+	    echo '<tr style="height: 60px"><td><br>';
+	    $id_mat = $corso['materia'];
+	    $id_corso = $corso['id'];
 	    $result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat' ");
 	    $row2 = $result2->fetch_assoc();
 	    $id_a_t = $row2['area_tematica'];
 	    $result3 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
 	    $row3 = $result3->fetch_assoc();
-	    $result4 = $conn->query("SELECT * FROM lezione WHERE corso='$id_corso'");
+	    $result4 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
 	    $to_delete = FALSE;
 	    if($result4->num_rows > 0){
 	        $to_delete = FALSE;
 	    }else{
 	        $to_delete = TRUE;
 	    }
-	    echo "<label>". $row3['nome']." - " . $row2['nome'] . " - ". $argomento['nome'] . "</label><p>";
+	    echo "<label>". $row3['nome']." - " . $row2['nome'] . " - ". $corso['nome'] . "</label><p>";
 	    ?>
 	    <p>
 	    <form action="insegnanti/modifica_corso.php" method="post" >

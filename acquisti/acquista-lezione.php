@@ -1,6 +1,6 @@
 <?php 
-include_once 'acquisti/carrello.php';
-include_once 'config/mysql-config.php';
+
+include_once '../config/mysql-config.php';
 session_start();
 
 if(isset($_SESSION['user'])){

@@ -13,7 +13,7 @@ $toPrint = "<br>";
 
 while ($argomento = $result->fetch_assoc()) {
     $id_argomento = $argomento['id'];
-    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_argomento'");
+    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_argomento' ORDER BY numero ASC");
     while ($lez = $result2->fetch_assoc()) {
         $toPrint = $toPrint . "<label>";
         $toPrint = $toPrint . "(" . $lez['numero'] . ") - " . $argomento['nome'] ." - ". $lez['titolo'] . " - prezzo: " . $lez['prezzo'] . "&euro;";

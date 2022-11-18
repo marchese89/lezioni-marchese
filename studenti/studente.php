@@ -19,13 +19,13 @@ if ($argomento['stato_account'] === '1') {
 
 
 
-<table id="prev" align="center">
-	<tr>
-		<th colspan="3" style="height: 70px" align="center"><span
-			style="color: #0e83cd; font-size: 24px">Il mio profilo</span><br></th>
+<table id="pannello_controllo" align="center" cellspacing=0 cellpadding=0 width="100%"> 
+	<tr id="titolo">
+		<th style="height: 60px" align="center"><span
+			style="color: #0e83cd; font-size: 24px">Il mio profilo (Studente)</span><br></th>
 	</tr>
-	<tr>
-		<th colspan="3" align="center" style="padding-bottom: 30px">
+	<tr style="height: 60px">
+		<th align="center">
             <?php
 
         $data = $_SESSION['last_login'];
@@ -38,44 +38,45 @@ if ($argomento['stato_account'] === '1') {
 			style="font-size: 14px; color: #0e83cd;">(Ultimo accesso: <?php echo $giorno . '/' . $mese . '/' . $anno . ' ore '. $ora;?>)</span>
 		</th>
 	</tr>
-	<tr>
-		<th width="70" height="100"><img src="images/46.png" width="60" /></th>
-		<th style="color: #0e83cd;">I Miei Dati</th>
+	<tr style="height: 60px">
 		<th>
-			<button class="button" onclick=location.href="modifica-dati.html">Modifica</button>
-
+			<a href="modifica-dati.html" style="font-size: 18px">Modifica Dati Personali</a>
 		</th>
 	</tr>
-	<tr>
-		<th width="70" height="100"><img src="images/pass.png" width="60" /></th>
-		<th style="color: #0e83cd;">Password</th>
+	<tr style="height: 60px">
 		<th>
-			<button class="button" onclick=location.href="modifica-pass.html">Modifica</button>
+			<a href="modifica-pass.html" style="font-size: 18px">Modifica Password</a>
 		</th>
 	</tr>
 
-	<tr>
-		<th width="70" height="100"><img src="images/home5.png" width="60" />
-		</th>
-		<th style="color: #0e83cd;">I miei Corsi</th>
+	<tr style="height: 60px"> 
 		<th>
-			<button class="button" onclick=location.href="corsi-studente.html">Modifica</button>
+			<a href="corsi-studente.html" style="font-size: 18px">I miei Corsi</a>
 		</th>
 	</tr>
-	<tr>
-		<th width="70" height="100"><img src="images/555.png" width="60" /></th>
-		<th width="80%" style="color: #0e83cd;">I miei Ordini</th>
+	<tr style="height: 60px;">
 		<th>
-			<button class="button" onclick=location.href="ordini-utente.html">Visualizza</button>
-
+		<a href="ordini-studente.html" style="font-size: 18px">I miei Ordini</a>
 		</th>
 	</tr>
-	<tr>
-		<th width="70" height="100"><img src="images/75.png" width="60" /></th>
-		<th width="80%" style="color: #0e83cd;">Iscrizione newsletter</th>
+	<tr style="height: 60px;">
 		<th>
-			<button class="button" onclick=location.href="newsletter.html">Modifica</button>
-
+		<a href="richieste-lezioni.html" style="font-size: 18px">Richieste Lezioni</a>
+		</th>
+	</tr>
+	<tr style="height: 60px;">
+		<th>
+		<a href="lezioni-su-richiesta.html" style="font-size: 18px">Lezioni su richiesta acquistate</a>
+		</th>
+	</tr>
+	<tr style="height: 60px;">
+		<th>
+		<a href="richieste-esercizi.html" style="font-size: 18px">Richieste Esercizi</a>
+		</th>
+	</tr>
+	<tr style="height: 60px;">
+		<th>
+		<a href="esercizi-su-richiesta.html" style="font-size: 18px">Esercizi su richiesta acquistati</a>
 		</th>
 	</tr>
 

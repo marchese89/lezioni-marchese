@@ -1,7 +1,4 @@
-<?php
-include 'config/mysql-config.php';
 
-?>
 <table align="center" width="100%" id="pannello_controllo" cellspacing=0 cellpadding=0>
 	
 		<tr id="titolo">

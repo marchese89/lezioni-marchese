@@ -13,9 +13,8 @@ class ElementoC
 
     private $nome;
    
-    public function __construct($id,$tipo_elem)
+    public function __construct($id,$tipo_elem,$conn)
     {
-        $conn = mysqli_connect("localhost", "root", "[]x?,U*<VkcbFRF,WM]T", "easy-learning");
         $this->idProdotto = $id;
         $this->tipoElemento = $tipo_elem;
         switch ($this->tipoElemento){
@@ -26,16 +25,6 @@ class ElementoC
                 $this->prezzo = $lez['prezzo'];
                 break;
             case 1://tutte le lezioni di un corso
-                $prez = 0;
-                $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$this->idProdotto'");
-                while($arg = $result1->fetch_assoc()){
-                    $id_arg = $arg['id'];
-                    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
-                    while($lex = $result2->fetch_assoc()){
-                        $prez = $prez+$lex['prezzo'];
-                    }
-                }
-                $this->prezzo = $prez;
                 $result3 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
                 $corso = $result3->fetch_assoc();
                 $this->nome = "Tutte le lezioni: " . $corso['nome'];
@@ -47,35 +36,11 @@ class ElementoC
                 $this->prezzo = $ex['prezzo'];
                 break;
             case 3://tutti gli esercizi di un corso
-                $prez = 0;
-                $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$this->idProdotto'");
-                while($arg = $result1->fetch_assoc()){
-                    $id_arg = $arg['id'];
-                    $result2 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
-                    while($ex = $result2->fetch_assoc()){
-                        $prez = $prez+$ex['prezzo'];
-                    }
-                }
-                $this->prezzo = $prez;
                 $result3 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
                 $corso = $result3->fetch_assoc();
                 $this->nome = "Tutti gli esercizi: " . $corso['nome'];
                 break;
             case 4://tutte le lezioni e tutti gli esercizi di un corso
-                $prez = 0;
-                $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$this->idProdotto'");
-                while($arg = $result1->fetch_assoc()){
-                    $id_arg = $arg['id'];
-                    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
-                    while($lex = $result2->fetch_assoc()){
-                        $prez = $prez+$lex['prezzo'];
-                    }
-                    $result3 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
-                    while($ex = $result3->fetch_assoc()){
-                        $prez = $prez+$ex['prezzo'];
-                    }
-                }
-                $this->prezzo = $prez;
                 $result4 = $conn->query("SELECT * FROM corso WHERE id='$this->idProdotto'");
                 $corso = $result4->fetch_assoc();
                 $this->nome = "Corso Completo: " .$corso['nome'];
@@ -100,10 +65,16 @@ class ElementoC
         return $this->prezzo;
     }
     
+    public function setPrezzo($prezzo)
+    {
+        $this->prezzo = $prezzo;
+    }
+    
     public function getNome()
     {
         return $this->nome;
     }
+    
 
 }
 
@@ -117,10 +88,8 @@ class Carrello
         $this->elementi = array();
     }
 
-    public function aggiungi(ElementoC $elem)
+    public function aggiungi(ElementoC $elem,$conn)
     {
-        $conn = mysqli_connect("localhost", "root", "[]x?,U*<VkcbFRF,WM]T", "easy-learning");
-        
         $id = $elem->getId();
         $tipo = $elem->getTipoElemento();
         //verifichiamo se l'elemento è già presente
@@ -289,8 +258,9 @@ class Carrello
     function vuotaCarrello()
     {
         for ($index = 0; $index < count($this->elementi); $index ++) {
-            $this->elementi[$index]->eliminaFile();
+            $id = $this->elementi[$index]->getId();
+            $tipo = $this->elementi[$index]->getTipoElemento();
+            $this->rimuovi($id, $tipo);
         }
-        $this->elementi = array();
     }
 }

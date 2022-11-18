@@ -1,9 +1,12 @@
 <?php
+include_once 'config/connection.php';
+include_once 'config/mysql-config.php';
 include_once 'acquisti/carrello.php';
+include_once 'script/funzioni-php.php';
+
 session_cache_limiter('nocache');
 session_start();
 
-include 'config/mysql-config.php';
 
 if (!isset($_SESSION['carrello'])) {
     $_SESSION['carrello'] = new Carrello();
@@ -92,8 +95,8 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 		<tr id="prima_riga">
 			<td colspan=2 id="pr_sinistra"></td>
 			<td align=right id="pr_destra">
-			<a href="carrello.html"><b>Carrello</b></a><?php echo '<b>(' . $_SESSION['carrello']->nElementi() . ')</b>';
-                               
+			
+<?php                                
 if (empty($_SESSION['user'])) {
     ?>
     <a href="login.html" class="collegamento"><b>Accedi</b></a>|<a
@@ -109,6 +112,8 @@ if (empty($_SESSION['user'])) {
         $r2 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
         if ($r2->num_rows > 0) {
             ?>
+        <b>Ciao <?php echo $ut['nome']?></b>
+        <a href="carrello.html"><b>Carrello</b></a><?php echo '<b>(' . $_SESSION['carrello']->nElementi() . ')</b>';?>
         <a href="home-user.html"><b>Il mio profilo</b></a>|<a
 				href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
         <?php
@@ -135,16 +140,18 @@ if (empty($_SESSION['user'])) {
 					height="100" title="Home Page" alt="img"></a></th>
 			<th id="c"></th>
 			<th style="font-size: 18pt;" id="s_col"><a href="aree-tematiche.html">Aree
-					Tematiche</a> <a href="">Svolgimento Esercizi</a> <a href="">Esercizi
-					Svolti</a> <a href="">Chi Siamo</a> <a href="">Contatti</a> <a
+					Tematiche</a>  
+					<a href="svolgimento-lezione.html">Svolgimento Lezioni</a> 
+					<a href="">Svolgimento Esercizi</a>
+					<a href="">Correzione Esercizi</a>
+					<a href="">Chi Siamo</a> <a href="">Contatti</a> <a
 				href="lavora-con-noi.html">Lavora con noi</a></th>
 
 		</tr>
 
 		<tr>
-			<th colspan=3>
-
-				<div id="mostraPagina" style="padding: 0; text-align: center">
+			 <th colspan=3>
+				<!--  <div id="mostraPagina" style="padding: 0; text-align: center">-->
 				<?php
     if (empty($pagina_interna)) {
         $pagina_interna = 'home.php';
@@ -153,11 +160,9 @@ if (empty($_SESSION['user'])) {
         include $pagina_interna;
     } catch (Exception $e) {}
     ?>
-                </div>
+                <!--</div>-->
 			</th>
 		</tr>
-		<tr>
-	
 	</table>
 </body>
 </html>

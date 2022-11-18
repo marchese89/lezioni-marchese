@@ -15,19 +15,22 @@ document
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  const { clientSecret } = await fetch("pagamenti/create.php", {
+	
+	   const { clientSecret } = await fetch("pagamenti/create.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
-  }).then((r) => r.json());
-
-  elements = stripe.elements({ clientSecret });
+  }).then((r) => r.json());	
+  
+ elements = stripe.elements({ clientSecret });
 
   const paymentElement = elements.create("payment");
   paymentElement.mount("#payment-element");
 }
 
 async function handleSubmit(e) {
+
+	
   e.preventDefault();
   setLoading(true);
 

@@ -1,7 +1,4 @@
-<?php 
-include 'config/mysql-config.php';
 
-?>
 <table align="center" width="100%" id="pannello_controllo"
 	cellspacing="0" cellpadding="0">
 	<thead>
@@ -31,6 +28,7 @@ if (! empty($inner) && $inner != 'amministrazione/admin.php') {
 					href="esercizi.html">
 					Esercizi</a></strong></td>
 		</tr>
+		
 		<tr>
 			<td align="center" id="indietro"><strong><a
 					href="home-insegnante.html">

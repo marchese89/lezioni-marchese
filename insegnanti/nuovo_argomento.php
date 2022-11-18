@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'config/mysql-config.php';
-include 'script/funzioni-php.php';
+
 ?>
 <tr style="height: 60px">
 	<td>
@@ -15,7 +15,7 @@ include 'script/funzioni-php.php';
 	
 	<?php
 $email = $_SESSION['user'];
-$id_insegnante = trova_id_insegnante($email);
+
 $result = $conn->query("SELECT * FROM corso");
 
 while ($argomento = $result->fetch_assoc()) {

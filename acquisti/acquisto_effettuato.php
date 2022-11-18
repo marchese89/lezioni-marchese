@@ -1,7 +1,7 @@
-acquisto effettuato!<br>
 <?php 
 date_default_timezone_set('Europe/Rome');
 include_once 'carrello.php';
+include_once '../script/funzioni-php.php';
 include '../config/mysql-config.php';
 session_start();
 
@@ -42,7 +42,9 @@ for ($i = 0; $i < count($contenuto); $i++) {
                 $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
                 while($lez = $result2->fetch_assoc()){
                     $id_lez = $lez['id'];
-                    $conn->query("INSERT into prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_lez','0')");
+                    if(!prodotto_acquistato($id_stud, $id_lez, 0, $conn)){
+                        $conn->query("INSERT into prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_lez','0')");
+                    }
                 }
             }
                      
@@ -59,7 +61,9 @@ for ($i = 0; $i < count($contenuto); $i++) {
                 $result2 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
                 while($ex = $result2->fetch_assoc()){
                     $id_ex = $ex['id'];
-                    $result1 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_ex','2')");
+                    if(!prodotto_acquistato($id_stud, $id_ex, 2, $conn)){
+                        $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_ex','2')");
+                    }
                 }
             }
             
@@ -73,12 +77,16 @@ for ($i = 0; $i < count($contenuto); $i++) {
                 $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
                 while($lez = $result2->fetch_assoc()){
                     $id_lez = $lez['id'];
-                    $result1 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_lez','0')");   
+                    if(!prodotto_acquistato($id_stud, $id_lez, 0, $conn)){
+                        $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_lez','0')");   
+                    }
                 }
                 $result3 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
                 while($ex = $result3->fetch_assoc()){
                     $id_ex = $ex['id'];
-                    $result1 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_ex','2')");
+                    if(!prodotto_acquistato($id_stud, $id_ex, 2, $conn)){
+                        $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo) VALUES ('$id_ordine','$id_ex','2')");
+                    }
                 }
             }
             break;

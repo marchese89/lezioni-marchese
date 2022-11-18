@@ -1,8 +1,3 @@
-<?php
-session_start();
-include 'config/mysql-config.php';
-include 'script/funzioni-php.php';
-?>
 
 <tr style="height: 60px">
 	<td><label style="font-size: 18px">Inserisci nuova Area Tematica</label>

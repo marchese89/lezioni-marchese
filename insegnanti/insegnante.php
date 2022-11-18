@@ -3,30 +3,32 @@ if (! $conn) {
     header("Location: ../index.html");
 }
 $email;
-if(isset($_SESSION['user'])){
+if (isset($_SESSION['user'])) {
     $email = $_SESSION['user'];
 }
-$sql = "SELECT * FROM utente WHERE email='$email'";
-$result = $conn->query($sql);
-$argomento;
+
+$result = $conn->query("SELECT * FROM utente WHERE email='$email'");
+$utente;
 if ($result->num_rows > 0) {
-    $argomento = $result->fetch_assoc();
+    $utente = $result->fetch_assoc();
 }
-if ($argomento['stato_account'] === '1') {
+if ($utente['stato_account'] === '1') {
     if (isset($_SESSION['user'])) {
 
         ?>
 
 
 
-<table id="prev" align="center">
+<table id="pannello_controllo" align="center" cellspacing=0
+	cellpadding=0 width="100%">
 
-	<tr>
+	<tr id="titolo">
 		<th colspan="3" style="height: 70px" align="center"><span
-			style="color: #0e83cd; font-size: 24px">Il mio profilo (insegnante)</span><br></th>
+			style="color: #0e83cd; font-size: 24px">Il mio profilo (insegnante)</span><br>
+		</th>
 	</tr>
-	<tr>
-		<th colspan="3" align="center" style="padding-bottom: 30px">
+	<tr style="height: 60px">
+		<td align="center" style="">
             <?php
 
         $data = $_SESSION['last_login'];
@@ -37,34 +39,26 @@ if ($argomento['stato_account'] === '1') {
         ?>
                             <span
 			style="font-size: 14px; color: #0e83cd;">(Ultimo accesso: <?php echo $giorno . '/' . $mese . '/' . $anno . ' ore '. $ora;?>)</span>
-		</th>
-	</tr>
-	
-	<tr>
-		<th width="70" height="100"><img src="images/46.png" width="60" /></th>
-		<th style="color: #0e83cd;">I Miei Dati</th>
-		<th>
-			<button class="button" onclick=location.href="modifica-dati.html">Modifica</button>
 
-		</th>
-	</tr>
-	<tr>
-		<th width="70" height="100"><img src="images/pass.png" width="60" /></th>
-		<th style="color: #0e83cd;">Password</th>
-		<th>
-			<button class="button" onclick=location.href="modifica-pass.html">Modifica</button>
-		</th>
+		</td>
 	</tr>
 
-	<tr>
-		<th width="70" height="100"><img src="images/home5.png" width="60" />
-		</th>
-		<th style="color: #0e83cd;" width="80%">I miei Corsi</th>
-		<th>
-			<button class="button" onclick=location.href="corsi-insegnante.html">Prosegui</button>
-		</th>
+	<tr style="height: 60px">
+		<td><a href="modifica-dati.html" style="font-size: 18px">Modifica Dati
+				Personali</a></td>
 	</tr>
-
+	<tr style="height: 60px">
+		<td><a href="modifica-pass.html" style="font-size: 18px">Modifica
+				Password</a></td>
+	</tr>
+	<tr style="height: 60px">
+		<td>
+		<a href="corsi-insegnante.html" style="font-size: 18px">I miei Corsi</a>
+		</td>
+	</tr>
+	<tr style="height: 60px">
+		<td><a href="richieste-studenti.html">Richieste Studenti</a></td>
+	</tr>
 </table>
 
 <?php
@@ -85,12 +79,11 @@ if ($argomento['stato_account'] === '1') {
 			<td><p style="color: #0e83cd;">Attivazione Account</p></td>
 		</tr>
 		<tr>
-			<td><input type="text" name = "codice_attivaz"  maxlength="6" size="24" autofocus="true"></td>
+			<td><input type="text" name="codice_attivaz" maxlength="6" size="24"
+				autofocus="true"></td>
 		</tr>
 		<tr style="height: 100px">
-		<td>
-			<input type="submit"  value="Attiva">
-		</td>
+			<td><input type="submit" value="Attiva"></td>
 		</tr>
 	</table>
 </form>
