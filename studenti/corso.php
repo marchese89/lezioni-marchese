@@ -16,15 +16,8 @@ $id_corso = $_GET['id_corso'];
 $studente;
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-
-    $r1 = $conn->query("SELECT * FROM utente WHERE email='$user'");
-    $ut = $r1->fetch_assoc();
-    $id = $ut['id'];
-    $r2 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
-    $id_stud;
-    if ($r2->num_rows > 0) {
-        $st = $r2->fetch_assoc();
-        $id_stud = $st['id'];
+    if (studente($user,$conn)) {
+        $id_stud = trovaIdStudente($user,$conn);
         $studente = TRUE;
     } else {
         $studente = FALSE;
@@ -37,26 +30,25 @@ $corso = $r->fetch_assoc();
 if (! $studente) {
     ?>
 	    <tr style="height: 60px">
-			<td colspan=6 style="font-size: 18px; color: red">Accedi come
+			<td colspan=5 style="font-size: 18px; color: red">Accedi come
 				studente se vuoi fare acquisti!</td>
 		</tr>
 	    <?php
 }
 ?>
 	<tr style="height: 60px">
-			<td colspan=6 style="font-size: 18px"> Corso: "<?php echo $corso['nome'];?>"
+			<td colspan=5 style="font-size: 18px"> Corso: "<?php echo $corso['nome'];?>"
 		</td>
 		</tr>
 		<tr style="height: 60px">
 
-			<td colspan=6><label style="font-size: 18px">Lezioni</label></td>
+			<td colspan=5><label style="font-size: 18px">Lezioni</label></td>
 		</tr>
 
 
 		<tr style="height: 60px;">
 			<td><label><b>Numero</b></label></td>
 			<td><label><b>Titolo</b></label></td>
-			<td><label><b>Argomento</b></label></td>
 			<td><label><b>Insegnante</b></label></td>
 			<td><label><b>Prezzo</b></label></td>
 			<td><label><b>Opzioni</b></label></td>
@@ -64,13 +56,11 @@ if (! $studente) {
 		<?php
 $prezzo_tot = 0;
 $tot_lez = 0;
-$result = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
-while ($argomento = $result->fetch_assoc()) {
-    $id_arg = $argomento['id'];
-    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
-    while ($lez = $result2->fetch_assoc()) {
+$result = $conn->query("SELECT * FROM lezione WHERE corso_lez='$id_corso'");
+while ($lez = $result->fetch_assoc()) {
+
         if ($studente && !prodotto_acquistato($id_stud, $lez['id'], 0, $conn)) { // inseriamo solo se la lezione non è stata già acquistata
-            $id_ins = $lez['insegnante'];
+            $id_ins = $corso['insegnante'];
             $result3 = $conn->query("SELECT * FROM insegnante WHERE id='$id_ins'");
             $ins = $result3->fetch_assoc();
             $id_ut = $ins['utente_i'];
@@ -80,7 +70,6 @@ while ($argomento = $result->fetch_assoc()) {
 		       <tr style="height: 60px">
 			<td><label style="color: black;"><?php echo $lez['numero'];?> </td>
 			<td><?php echo $lez['titolo'];?></td>
-			<td><?php echo $argomento['nome'];?></td>
 			<td><?php echo $utente['nome'] . " ". $utente['cognome'];?> </td>
 			<td><?php echo $lez['prezzo'];$prezzo_tot = $prezzo_tot+$lez['prezzo']; $tot_lez = $tot_lez+$lez['prezzo'];?>&euro; </td>
 			<td><?php if($studente){?> <button class="button"
@@ -89,7 +78,7 @@ while ($argomento = $result->fetch_assoc()) {
 		</tr>
 		       <?php
         } else if(!$studente){
-            $id_ins = $lez['insegnante'];
+            $id_ins = $corso['insegnante'];
             $result3 = $conn->query("SELECT * FROM insegnante WHERE id='$id_ins'");
             $ins = $result3->fetch_assoc();
             $id_ut = $ins['utente_i'];
@@ -100,7 +89,6 @@ while ($argomento = $result->fetch_assoc()) {
 		    <tr style="height: 60px">
 				<td><label style="color: black;"><?php echo $lez['numero'];?> </td>
 				<td><?php echo $lez['titolo'];?></td>
-				<td><?php echo $argomento['nome'];?></td>
 				<td><?php echo $utente['nome'] . " ". $utente['cognome'];?> </td>
 				<td><?php echo $lez['prezzo'];$prezzo_tot = $prezzo_tot+$lez['prezzo']; $tot_lez = $tot_lez+$lez['prezzo'];?>&euro; </td>
 				<td><?php if($studente){?> <button class="button" onclick=location.href="acquisti/aggiungi_al_carrello.php?tipo=lez&id=<?php echo $lez['id'];?>">Acquista</button><?php }?></label></td>
@@ -108,7 +96,7 @@ while ($argomento = $result->fetch_assoc()) {
           <?php 
             
         }
-    }
+    
 }
 ?>
 <tr style="height: 60px">

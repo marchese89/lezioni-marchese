@@ -17,10 +17,7 @@ $id_lezione = $_GET['id'];
 
 $result0 = $conn->query("SELECT * FROM lezione WHERE id='$id_lezione'");
 $lezione = $result0->fetch_assoc();
-$id_argomento = $lezione['arg_lez'];
-$result1 = $conn->query("SELECT * FROM argomento WHERE id='$id_argomento'");
-$argomento = $result1->fetch_assoc();
-$id_corso = $argomento['corso_arg'];
+$id_corso = $lezione['corso_lez'];
 $result = $conn->query("SELECT * FROM corso WHERE id='$id_corso'");
 $r = $result->fetch_assoc();
 $id_mat = $r['materia'];
@@ -29,7 +26,7 @@ $row2 = $result2->fetch_assoc();
 $id_a_t = $row2['area_tematica'];
 $result3 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
 $row3 = $result3->fetch_assoc();
-echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Corso: " . $r['nome'] . " - Argomento: " . $argomento['nome'];
+echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Corso: " . $r['nome'];
 
 ?>
 	</label> <input type="hidden" name="id"
@@ -87,7 +84,7 @@ echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Co
 	<td><label>Lezione</label></td>
 	</tr>
 	<tr style="height: 60px">
-	<td><iframe src="<?php echo $lezione['percorso_file'];?>#view=FitH" width="90%" height="800px"></iframe></td>
+	<td><iframe src="<?php echo $lezione['lezione'];?>#view=FitH" width="90%" height="800px"></iframe></td>
 </tr>
 <tr style="height: 60px">
 		<td><button class="button" onclick=location.href="modifica-file-lezione-<?php echo $id_lezione;?>.html">Modifica File Lezione</button></td>
@@ -100,25 +97,21 @@ echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Co
 		<div id="lezioni_corso">
 		<?php
 
-$id_arg = $_GET['id'];
+$id_lezione = $_GET['id'];
 
-$result0 = $conn->query("SELECT * FROM argomento WHERE id='$id_argomento'");
-$arg = $result0->fetch_assoc();
-$id_corso = $arg['corso_arg'];
-// ORDER BY numero ASC
-$result = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
+$result0 = $conn->query("SELECT * FROM lezione WHERE id='$id_lezione'");
+$lez = $result0->fetch_assoc();
+$id_corso = $lez['corso_lez'];
+
+$result = $conn->query("SELECT * FROM lezione WHERE corso_lez='$id_corso' ORDER BY numero ASC");
 
 $toPrint = "<br>";
 
-while ($argomento = $result->fetch_assoc()) {
-    $id_argomento = $argomento['id'];
-    $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_argomento' ORDER BY numero ASC");
-    while ($lez = $result2->fetch_assoc()) {
+while ($lez = $result->fetch_assoc()) {
         $toPrint = $toPrint . "<label>";
-        $toPrint = $toPrint . "(" . $lez['numero'] . ") - " . $argomento['nome'] . " - " . $lez['titolo'] . " - prezzo: " . $lez['prezzo'] . "&euro;";
+        $toPrint = $toPrint . "(" . $lez['numero'] . ") - " . $lez['titolo'] . " - prezzo: " . $lez['prezzo'] . "&euro;";
         $toPrint = $toPrint . '</label>   ';
         $toPrint = $toPrint . "<br><br>";
-    }
 }
 echo $toPrint;
 ?>

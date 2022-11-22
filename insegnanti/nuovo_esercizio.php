@@ -155,27 +155,12 @@ function carica_corso(id_materia) {
 	  }
 	}
 
-function carica_argomento(id_corso) {
-	  if (id_corso == "") {
-	    document.getElementById("argomento").innerHTML = "";
-	    return;
-	  } else {
-	    var xmlhttp = new XMLHttpRequest();
-	    xmlhttp.onreadystatechange = function() {
-	      if (this.readyState == 4 && this.status == 200) {
-	        document.getElementById("argomento").innerHTML = this.responseText;
-	      }
-	    };
-	    xmlhttp.open("GET","richieste_ajax/carica_argomento.php?id="+id_corso,true);
-	    xmlhttp.send();
-	  }
-	}
 
-function aggiungi_argomento(){
+function aggiungi_corso(){
 	var form = document.getElementById('form_ex');
     var input = document.createElement('input');
-    input.setAttribute('name', 'arg');
-    input.setAttribute('value', document.getElementById('select_argomento').value);
+    input.setAttribute('name', 'corso');
+    input.setAttribute('value', document.getElementById('select_corso').value);
     input.setAttribute('type', 'hidden');
     form.appendChild(input);
 }
@@ -183,7 +168,7 @@ function aggiungi_argomento(){
 <tr style="height: 60px">
 	<td><label style="font-size: 18px">Inserisci nuovo Esercizio (Caricare prima i file!)</label></td>
 </tr>
-<form action="insegnanti/inserisci_esercizio.php" method="post" onsubmit="aggiungi_argomento()" id="form_ex">
+<form action="insegnanti/inserisci_esercizio.php" method="post" onsubmit="aggiungi_corso()" id="form_ex">
 
 	<tr style="height: 60px;">
 
@@ -219,10 +204,7 @@ while ($area_tematica = $result0->fetch_assoc()) {
 		<td>
 			<div id="corso"></div></td>
 	</tr>
-	<tr style="height: 60px;">
-		<td>
-			<div id="argomento"></div></td>
-	</tr>
+
 
 	<tr style="height: 60px">
 		<td><label>Titolo</label><input type="text" name="titolo_esercizio"
@@ -413,6 +395,6 @@ while ($area_tematica = $result0->fetch_assoc()) {
 </form>
 
 <tr>
-	<td align="center" id="indietro"><strong><a href="esercizi.html">
+	<td align="center" id="indietro"><strong><a href="elenco-corsi.html">
 				Indietro</a></strong></td>
 </tr>

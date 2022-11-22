@@ -18,12 +18,12 @@ $email = $_SESSION['user'];
 
 $result = $conn->query("SELECT * FROM materia");
 
-while ($argomento = $result->fetch_assoc()) {
-    $id_a_t = $argomento['area_tematica'];
+while ($materia = $result->fetch_assoc()) {
+    $id_a_t = $materia['area_tematica'];
     $result2 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
     $row2 = $result2->fetch_assoc();
     ?>
-	    <option value="<?php echo $argomento['id'];?>"><?php echo $row2['nome'] . " - ". $argomento['nome'];?></option>
+	    <option value="<?php echo $materia['id'];?>"><?php echo $row2['nome'] . " - ". $materia['nome'];?></option>
 	    <?php
 }
 ?>
@@ -50,25 +50,26 @@ while ($argomento = $result->fetch_assoc()) {
 </tr>
 
 	<?php
-	$result = $conn->query("SELECT * FROM corso ORDER BY materia ASC");
+	$ins = trovaIdInsegnante($email,$conn);
+	$result = $conn->query("SELECT * FROM corso WHERE insegnante='$ins' ORDER BY materia ASC");
 	
 	while($corso = $result->fetch_assoc()){
 	    echo '<tr style="height: 60px"><td><br>';
 	    $id_mat = $corso['materia'];
 	    $id_corso = $corso['id'];
 	    $result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat' ");
-	    $row2 = $result2->fetch_assoc();
-	    $id_a_t = $row2['area_tematica'];
+	    $materia = $result2->fetch_assoc();
+	    $id_a_t = $materia['area_tematica'];
 	    $result3 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
-	    $row3 = $result3->fetch_assoc();
-	    $result4 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
+	    $area_tematica = $result3->fetch_assoc();
+	    $result4 = $conn->query("SELECT * FROM lezione WHERE corso_lez = '$id_corso'");
 	    $to_delete = FALSE;
 	    if($result4->num_rows > 0){
 	        $to_delete = FALSE;
 	    }else{
 	        $to_delete = TRUE;
 	    }
-	    echo "<label>". $row3['nome']." - " . $row2['nome'] . " - ". $corso['nome'] . "</label><p>";
+	    echo "<label>". $area_tematica['nome']." - " . $materia['nome'] . " - ". $corso['nome'] . "</label><p>";
 	    ?>
 	    <p>
 	    <form action="insegnanti/modifica_corso.php" method="post" >

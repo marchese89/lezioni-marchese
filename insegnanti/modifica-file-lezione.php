@@ -9,8 +9,8 @@ $lezione = $result->fetch_assoc();
 
 if (isset($_SESSION['percorsoPDF_L'])) {
     unlink("../" . $lezione['percorso_file']);
-    $percorso_file = $_SESSION['percorsoPDF_L'];
-    $conn->query("UPDATE lezione SET percorso_file = '$percorso_file' WHERE id='$id'");
+    $file_lezione = $_SESSION['percorsoPDF_L'];
+    $conn->query("UPDATE lezione SET lezione = '$file_lezione' WHERE id='$id'");
  
     unset($_SESSION['percorsoPDF_L']);
 }

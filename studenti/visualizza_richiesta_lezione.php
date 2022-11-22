@@ -49,7 +49,7 @@ $id = $_GET['id'];
 	       <?php echo $ut['nome'] . " " . $ut['cognome'];?>
 	       </td>
 	       <td><?php echo $svolgimento['prezzo']?> &euro;</td>
-	       <td><button onclick=location.herf="acquisti/acquista-lezione.php?id=<?php echo $svolgimento['id'];?>">Acquista</button></td>
+	       <td><button onclick=location.href="acquisti/aggiungi_al_carrello.php?id=<?php echo $svolgimento['id'];?>&tipo=lez_r&ret=<?php echo  $id;?>">Acquista</button></td>
 	       </tr>
 	       <?php 
 	   }

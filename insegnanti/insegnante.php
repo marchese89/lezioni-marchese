@@ -53,7 +53,7 @@ if ($utente['stato_account'] === '1') {
 	</tr>
 	<tr style="height: 60px">
 		<td>
-		<a href="corsi-insegnante.html" style="font-size: 18px">I miei Corsi</a>
+		<a href="elenco-corsi.html" style="font-size: 18px">I miei Corsi</a>
 		</td>
 	</tr>
 	<tr style="height: 60px">

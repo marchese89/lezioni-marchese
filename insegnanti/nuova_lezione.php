@@ -127,8 +127,9 @@ function visualizza_pdfPL(img){
 }
 
 
-function carica_lezioni(id_argomento) {
-	  if (id_argomento == "") {
+function carica_lezioni(id_corso) {
+	document.getElementById("lezioni_corso").innerHTML = "CIAO";
+	  if (id_corso == "") {
 	    document.getElementById("lezioni_corso").innerHTML = "";
 	    return;
 	  } else {
@@ -138,7 +139,7 @@ function carica_lezioni(id_argomento) {
 	        document.getElementById("lezioni_corso").innerHTML = this.responseText;
 	      }
 	    };
-	    xmlhttp.open("GET","richieste_ajax/lezioni_corso.php?id="+id_argomento,true);
+	    xmlhttp.open("GET","richieste_ajax/lezioni_corso.php?id="+id_corso,true);
 	    xmlhttp.send();
 	  }
 	}
@@ -150,16 +151,13 @@ function carica_lezioni(id_argomento) {
 	<tr style="height: 60px;">
 
 		<td><label>Area Tematica - Materia - Corso - Argomento</label> <select
-			name="argomento" id="argomento" onchange="carica_lezioni(this.value)">
-				
+			name="corso" id="corso" onchange="carica_lezioni(this.value)">
+
 	<?php
 $email = $_SESSION['user'];
-
-$result0 = $conn->query("SELECT * FROM argomento");
-while ($argomento = $result0->fetch_assoc()) {
-    $id_corso = $argomento['corso_arg'];
-    $result1 = $conn->query("SELECT * FROM corso WHERE id='$id_corso'");
-    $corso = $result1->fetch_assoc();
+$ins = trovaIdInsegnante($email,$conn);
+$result0 = $conn->query("SELECT * FROM corso WHERE insegnante = '$ins'");
+while ($corso = $result0->fetch_assoc()) {
     $id_mat = $corso['materia'];
     $result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat'");
     $materia = $result2->fetch_assoc();
@@ -167,7 +165,7 @@ while ($argomento = $result0->fetch_assoc()) {
     $result3 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
     $area_tematica = $result3->fetch_assoc();
     ?>
-	    <option value="<?php echo $argomento['id'];?>"><?php echo  $area_tematica['nome'] . " - ". $materia['nome']. " - " . $corso['nome'] . " - " . $argomento['nome'];?></option>
+	    <option value="<?php echo $corso['id'];?>"><?php echo  $area_tematica['nome'] . " - ". $materia['nome']. " - " . $corso['nome'];?></option>
 	    <?php
 }
 ?>
