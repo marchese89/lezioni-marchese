@@ -69,6 +69,9 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             }
 
             break;
+        case 5:
+            echo 'id: ' . $id;
+            break;
         default:
             break;
     }
@@ -76,4 +79,4 @@ for ($i = 0; $i < count($contenuto); $i ++) {
 
 $_SESSION['carrello']->vuotaCarrello();
 
-header('Location: ../ordine-effettuato.html')?>
+//header('Location: ../ordine-effettuato.html')?>

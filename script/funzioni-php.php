@@ -46,6 +46,12 @@ function trovaIdInsegnante($email,$conn):int{
     return $insegnante['id'];
 }
 
+function trovaIdInsegnanteDaCorso($id_corso,$conn):int{
+    $result1 = $conn->query("SELECT * FROM corso WHERE id = '$id_corso'");
+    $corso = $result1->fetch_assoc();
+    return $corso['insegnante'];
+}
+
 function trovaArgomentoLezione($id_lez,$conn):int{
     $result = $conn->query("SELECT * FROM lezione WHERE id='$id_lez'");
     $lez = $result->fetch_assoc();

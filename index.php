@@ -72,6 +72,7 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 <script type="text/javascript"
 	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
 <script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
+<script type="text/javascript" src="script/javascript-comune.js?ts=<?=time()?>&quot"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
@@ -136,8 +137,8 @@ if (empty($_SESSION['user'])) {
 		</tr>
 		<tr id="seconda_riga">
 			<th style="margin-left: 0; align: center;" id="p_col"><a
-				href="index.html"><img src="images/logo.png" width="600"
-					height="100" title="Home Page" alt="img"></a></th>
+				href="index.html"><img src="images/logo.png" width="50%"
+					height="70" title="Home Page" alt="img"></a></th>
 			<th id="c"></th>
 			<th style="font-size: 18pt;" id="s_col"><a href="aree-tematiche.html">Aree
 					Tematiche</a>  

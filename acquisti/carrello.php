@@ -46,13 +46,10 @@ class ElementoC
                 $this->nome = "Corso Completo: " . $corso['nome'];
                 break;
             case 5:
-                $result = $conn->query("SELECT * FROM svolgimento_lezioni WHERE id='$this->idProdotto'");
-                $svolg_lez = $result->fetch_assoc();
-                $id_rich = $svolg_lez['richiesta'];
-                $result1 = $conn->query("SELECT * FROM richieste_lezioni WHERE id='$id_rich'");
+                $result1 = $conn->query("SELECT * FROM richieste_lezioni WHERE id='$this->idProdotto'");
                 $rich = $result1->fetch_assoc();
                 $this->nome = "Lezione su richiesta: " . $rich['titolo'];
-                $this->prezzo = $svolg_lez['prezzo'];
+                $this->prezzo = $rich['prezzo'];
                 break;
             default:
                 break;

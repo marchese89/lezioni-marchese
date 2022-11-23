@@ -8,9 +8,9 @@ $id = $_POST['id'];
 $prezzo = $_POST['prezzo_s'];
 
 $svolgimento = $_SESSION['percorsoPDF_SL'];
-$insegnante = trovaIdInsegnante($_SESSION['user'],$conn);
 
-$conn->query("INSERT INTO svolgimento_lezioni (richiesta,ins,svolgimento,prezzo) VALUES ('$id','$insegnante','$svolgimento','$prezzo')");
+
+$conn->query("UPDATE richieste_lezioni SET svolgimento = '$svolgimento', prezzo = '$prezzo' WHERE id = '$id'");
 
 unset($_SESSION['percorsoPDF_SL']);
 unset($_SESSION['pdfSLCaricato']);

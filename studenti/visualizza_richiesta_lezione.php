@@ -26,7 +26,7 @@ $id = $_GET['id'];
 	<tr>
 	<tr style="height: 60px">
 	<td  colspan=3>
-	<label>Soluzioni</label>
+	<label>Soluzione</label>
 	</td>
 	</tr>
 	<tr style="height: 60px">
@@ -35,9 +35,9 @@ $id = $_GET['id'];
 	<td><label>Operazioni</label></td>
 	</tr>
 	<?php
-	   $result = $conn->query("SELECT * FROM svolgimento_lezioni WHERE richiesta='$id'");
-	   while($svolgimento = $result->fetch_assoc()){
-	       $id_ins = $svolgimento['ins'];
+	   $result = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id'");
+	   while($richiesta = $result->fetch_assoc()){
+	       $id_ins = $richiesta['insegnante'];
 	       $result2 = $conn->query("SELECT * FROM insegnante WHERE id = '$id_ins'");
 	       $ins = $result2->fetch_assoc();
 	       $id_ut = $ins['utente_i'];
@@ -48,8 +48,8 @@ $id = $_GET['id'];
 	       <tr style="height: 60px"><td>
 	       <?php echo $ut['nome'] . " " . $ut['cognome'];?>
 	       </td>
-	       <td><?php echo $svolgimento['prezzo']?> &euro;</td>
-	       <td><button onclick=location.href="acquisti/aggiungi_al_carrello.php?id=<?php echo $svolgimento['id'];?>&tipo=lez_r&ret=<?php echo  $id;?>">Acquista</button></td>
+	       <td><?php echo $richiesta['prezzo']?> &euro;</td>
+	       <td><button onclick=location.href="acquisti/aggiungi_al_carrello.php?id=<?php echo $richiesta['id'];?>&tipo=lez_r&ret=<?php echo  $id;?>">Acquista</button></td>
 	       </tr>
 	       <?php 
 	   }

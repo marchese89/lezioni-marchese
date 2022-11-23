@@ -67,42 +67,40 @@ function visualizza_pdfSL(img){
 }
 
 </script>
+<?php 
+	
+	$result = $conn->query("SELECT * FROM richieste_lezioni WHERE id='$id'");
+	$richiesta = $result->fetch_assoc();
+	
+	?>
 <table id="pannello_controllo" align="center" cellspacing=0 cellpadding=0 width="100%"> 
 	<tr id="titolo">
 		<th style="height: 60px" align="center"><span
-			style="color: #0e83cd; font-size: 24px">Richiesta Lezione <?php echo $id;?></span><br></th>
+			style="color: #0e83cd; font-size: 24px">Richiesta Lezione "<?php echo $richiesta['titolo'];?>"</span><br></th>
 	</tr>
 	<tr style="height: 60px">
 	<td>
 	<label>Traccia</label>
 	</td>
 	</tr>
-	<?php 
 	
-	$result = $conn->query("SELECT * FROM richieste_lezioni WHERE id='$id'");
-	$richiesta = $result->fetch_assoc();
-	
-	?>
 	<tr>
 	<td>
 	<iframe src="<?php echo $richiesta['traccia'];?>#view=FitH" width="90%" height="800px"></iframe>
 	</td>
 	</tr>
 	<?php 
-	$insegnante = trovaIdInsegnante($_SESSION['user'],$conn);
-	$result2 = $conn->query("SELECT * FROM svolgimento_lezioni WHERE richiesta='$id' AND ins='$insegnante'");
-	$svolgimento;
-	if($result2->num_rows > 0){
-	    $svolgimento = $result2->fetch_assoc();
+	if($richiesta['svolgimento'] != NULL){
+	    $svolgimento = $richiesta['svolgimento']
 	    ?>
 	    <tr style="height: 60px">
 	<td>
-	<label>Svolgimento (prezzo: <?php echo $svolgimento['prezzo']?>&euro;)</label>
+	<label>Svolgimento (prezzo: <?php echo $richiesta['prezzo']?>&euro;)</label>
 	</td>
 	</tr>
 	<tr>
 	<td>
-	<iframe src="<?php echo $svolgimento['svolgimento'];?>#view=FitH" width="90%" height="800px"></iframe>
+	<iframe src="<?php echo $svolgimento;?>#view=FitH" width="90%" height="800px"></iframe>
 	</td>
 	</tr>
 	<tr style="height: 60px">

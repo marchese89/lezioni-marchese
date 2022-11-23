@@ -7,17 +7,16 @@ session_start();
 $id = $_POST['id'];
 
 $svolgimento = $_SESSION['percorsoPDF_SL'];
-$insegnante = trovaIdInsegnante($_SESSION['user'],$conn);
 
 //troviamo l'id della soluzione precedente
-$result = $conn->query("SELECT * FROM svolgimento_lezioni WHERE richiesta='$id' AND ins='$insegnante'");
-$svolg = $result->fetch_assoc();
-$id_svolg = $svolg['id'];
+$result = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id'");
+$richiesta = $result->fetch_assoc();
+$id_richiesta = $richiesta['id'];
 
 
-unlink("../" . $svolg['svolgimento']);
+unlink("../" . $richiesta['svolgimento']);
 
-$conn->query("UPDATE svolgimento_lezioni SET svolgimento = '$svolgimento' WHERE id = '$id_svolg'");
+$conn->query("UPDATE richieste_lezioni SET svolgimento = '$svolgimento' WHERE id = '$id_richiesta'");
 
 unset($_SESSION['percorsoPDF_SL']);
 unset($_SESSION['pdfSLCaricato']);

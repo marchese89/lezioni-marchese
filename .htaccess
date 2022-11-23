@@ -50,7 +50,7 @@ RewriteRule ^richieste-studenti.html index.php?pagina=insegnanti/richieste_stude
 RewriteRule ^lezioni-richieste.html index.php?pagina=insegnanti/lezioni-richieste.php
 RewriteRule ^visualizza-richiesta-lezione-i-([0-9]*).html index.php?pagina=insegnanti/visualizza_richiesta_lezione_i.php&id=$1
 RewriteRule ^modifica-svolgimento-lezione-([0-9]*).html index.php?pagina=insegnanti/modifica_svolgimento_lezione.php&id=$1
-
+RewriteRule ^lezioni-su-richiesta.html index.php?pagina=studenti/lezioni_su_richiesta_acquistate.php
 
 
 
