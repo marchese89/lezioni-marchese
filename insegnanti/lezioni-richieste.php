@@ -1,7 +1,7 @@
 <table id="pannello_controllo" align="center" cellspacing=0
 	cellpadding=0 width="100%">
 	<tr id="titolo">
-		<th colspan=4>Lezioni Richieste dagli Studenti</th>
+		<th colspan=4>Richieste degli Studenti</th>
 	</tr>
 	<tr style="height: 60px">
 	<td style="width: 40%"><label>Id</label></td>

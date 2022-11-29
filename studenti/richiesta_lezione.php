@@ -126,12 +126,17 @@ if(studente($_SESSION['user'],$conn)){
 		<tr>
 		<tr style="height: 60px">
 		<td>
-		<label>Inserisci un file "traccia" per richiedere lo svolgimento di una leziione su commissione</label>
+		<label>Inserisci un file "traccia" per richiedere lo svolgimento di una lezione su commissione,</label>
 		</td>
 		</tr>
 		<tr style="height: 60px">
 		<td>
-		<label>Gli insegnanti interessati svolgeranno la lezione che comparirà sul tuo profilo studente</label>
+		<label>lo svolgimento o la correzione di un esercizio</label>
+		</td>
+		</tr>
+		<tr style="height: 60px">
+		<td>
+		<label>L'insegnante interessato produrr&agrave; una risposta che sar&agrave; visibile sul tuo profilo studente</label>
 		</td>
 		</tr>
 		<tr style="height: 60px">

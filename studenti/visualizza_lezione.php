@@ -17,9 +17,24 @@ $lez = $result->fetch_assoc();
 	  <label><?php echo $lez['titolo']?></label>
 	</td>
 	</tr>
+	<tr style="height: 60px">
+	<td>
+	  <label>Presentazione</label>
+	</td>
+	</tr>
 	<tr>
 	<td>
-		<iframe src="<?php echo $lez['percorso_file'];?>#view=FitH" width="90%" height="800px"></iframe>
+		<iframe src="<?php echo $lez['presentazione'];?>#view=FitH" width="90%" height="800px"></iframe>
+	</td>
+	</tr>
+	<tr style="height: 60px">
+	<td>
+	  <label>Lezione</label>
+	</td>
+	</tr>
+	<tr>
+	<td>
+		<iframe src="<?php echo $lez['lezione'];?>#view=FitH" width="90%" height="800px"></iframe>
 	</td>
 	</tr>
 	<tr>

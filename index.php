@@ -91,7 +91,7 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 
 	</div>
 
-	<table id="pagina_iniziale" cellaspacing=0 cellpaddin=0>
+	<table id="pagina_iniziale" cellaspacing=0 cellpaddin=0 >
 
 		<tr id="prima_riga">
 			<td colspan=2 id="pr_sinistra"></td>
@@ -142,9 +142,7 @@ if (empty($_SESSION['user'])) {
 			<th id="c"></th>
 			<th style="font-size: 18pt;" id="s_col"><a href="aree-tematiche.html">Aree
 					Tematiche</a>  
-					<a href="svolgimento-lezione.html">Svolgimento Lezioni</a> 
-					<a href="">Svolgimento Esercizi</a>
-					<a href="">Correzione Esercizi</a>
+					<a href="lezioni-su-richiesta.html">Lezioni su Richiesta</a> 
 					<a href="">Chi Siamo</a> <a href="">Contatti</a> <a
 				href="lavora-con-noi.html">Lavora con noi</a></th>
 
@@ -152,7 +150,7 @@ if (empty($_SESSION['user'])) {
 
 		<tr>
 			 <th colspan=3>
-				<!--  <div id="mostraPagina" style="padding: 0; text-align: center">-->
+				
 				<?php
     if (empty($pagina_interna)) {
         $pagina_interna = 'home.php';
@@ -161,7 +159,7 @@ if (empty($_SESSION['user'])) {
         include $pagina_interna;
     } catch (Exception $e) {}
     ?>
-                <!--</div>-->
+                
 			</th>
 		</tr>
 	</table>

@@ -25,7 +25,7 @@ if ($argomento['stato_account'] === '1') {
 			style="color: #0e83cd; font-size: 24px">Il mio profilo (Studente)</span><br></th>
 	</tr>
 	<tr style="height: 60px">
-		<th align="center">
+		<td align="center">
             <?php
 
         $data = $_SESSION['last_login'];
@@ -36,48 +36,38 @@ if ($argomento['stato_account'] === '1') {
         ?>
                             <span
 			style="font-size: 14px; color: #0e83cd;">(Ultimo accesso: <?php echo $giorno . '/' . $mese . '/' . $anno . ' ore '. $ora;?>)</span>
-		</th>
+		</td>
 	</tr>
 	<tr style="height: 60px">
-		<th>
+		<td>
 			<a href="modifica-dati.html" style="font-size: 18px">Modifica Dati Personali</a>
-		</th>
+		</td>
 	</tr>
 	<tr style="height: 60px">
-		<th>
+		<td>
 			<a href="modifica-pass.html" style="font-size: 18px">Modifica Password</a>
-		</th>
+		</td>
 	</tr>
 
 	<tr style="height: 60px"> 
-		<th>
-			<a href="corsi-studente.html" style="font-size: 18px">I miei Corsi</a>
-		</th>
+		<td>
+			<a href="corsi-studente.html" style="font-size: 18px">Corsi Acquistati</a>
+		</td>
 	</tr>
 	<tr style="height: 60px;">
-		<th>
+		<td>
 		<a href="ordini-studente.html" style="font-size: 18px">I miei Ordini</a>
-		</th>
+		</td>
 	</tr>
 	<tr style="height: 60px;">
-		<th>
-		<a href="richieste-lezioni.html" style="font-size: 18px">Richieste Lezioni</a>
-		</th>
+		<td>
+		<a href="richieste-studenti.html" style="font-size: 18px">Richieste Agli Insegnanti</a>
+		</td>
 	</tr>
 	<tr style="height: 60px;">
-		<th>
-		<a href="lezioni-su-richiesta.html" style="font-size: 18px">Lezioni su richiesta acquistate</a>
-		</th>
-	</tr>
-	<tr style="height: 60px;">
-		<th>
-		<a href="richieste-esercizi.html" style="font-size: 18px">Richieste Esercizi</a>
-		</th>
-	</tr>
-	<tr style="height: 60px;">
-		<th>
-		<a href="esercizi-su-richiesta.html" style="font-size: 18px">Esercizi su richiesta acquistati</a>
-		</th>
+		<td>
+		<a href="lezioni-su-richiesta-acquistate.html" style="font-size: 18px">Lezioni su richiesta acquistate</a>
+		</td>
 	</tr>
 
 </table>

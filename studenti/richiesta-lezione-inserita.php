@@ -9,7 +9,7 @@
 </tr>
 <tr style="height: 60px">
 <td>
-<label style="font-size: 18px">Nel tuo profilo potrai visualizzarla insieme agli eventuali svolgimenti dei nosttri insegnanti</label>
+<label style="font-size: 18px">Nel tuo profilo potrai visualizzarla insieme allo svolgimento dell'insegnante</label>
 </td>
 </tr>
 

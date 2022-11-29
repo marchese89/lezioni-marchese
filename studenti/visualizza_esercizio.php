@@ -22,12 +22,12 @@ $ex = $result->fetch_assoc();
 		<iframe src="<?php echo $ex['traccia'];?>#view=FitH" width="90%" height="800px"></iframe>
 	</td>
 	</tr>
-	<tr>
 	<tr style="height: 60px">
 	<td>
 	<label>Svolgimento</label>
 	</td>
 	</tr>
+	<tr>
 	<td>
 		<iframe src="<?php echo $ex['svolgimento'];?>#view=FitH" width="90%" height="800px"></iframe>
 	</td>

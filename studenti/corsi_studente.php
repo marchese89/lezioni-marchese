@@ -58,7 +58,7 @@ foreach ($corsi as $c) {
 		$id_a_t = $mat['area_tematica'];
 		$result4 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
 		$at = $result4->fetch_assoc();
-		?><label><b><?php echo $at['nome']?></b></label> - <label><b><?php echo $mat['nome']?></b></label> - <a href="corso-studente-<?php echo $corso['id'];?>.html"><?php echo $corso['nome']?></a>
+		?><label><b><?php echo $at['nome']?></b></label> -> <label><b><?php echo $mat['nome']?></b></label> -> <a href="corso-studente-<?php echo $corso['id'];?>.html"><?php echo $corso['nome']?></a>
 		</td>
 	</tr>
 		    <?php

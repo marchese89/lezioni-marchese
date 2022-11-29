@@ -40,17 +40,18 @@ RewriteRule ^corsi-studente.html index.php?pagina=studenti/corsi_studente.php
 RewriteRule ^ordini-studente.html index.php?pagina=studenti/ordini_studente.php
 RewriteRule ^corso-studente-([0-9]*).html index.php?pagina=studenti/corso_studente.php&id_corso=$1
 RewriteRule ^visualizza-lezione-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_lezione.php&corso=$1&id=$2
+RewriteRule ^visualizza-presentazione-lezione-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_presentazione_lezione.php&corso=$1&id=$2
 RewriteRule ^visualizza-esercizio-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_esercizio.php&corso=$1&id=$2
+RewriteRule ^visualizza-traccia-esercizio-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_traccia_esercizio.php&corso=$1&id=$2
 RewriteRule ^modifica-file-p-lezione-([0-9]*).html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/modifica_file_p_lezione.php&id=$1
-RewriteRule ^svolgimento-lezione.html index.php?pagina=studenti/richiesta_lezione.php
+RewriteRule ^lezioni-su-richiesta.html index.php?pagina=studenti/richiesta_lezione.php
 RewriteRule ^richiesta-lezione-inserita.html index.php?pagina=studenti/richiesta-lezione-inserita.php
-RewriteRule ^richieste-lezioni.html index.php?pagina=studenti/richieste_lezioni.php
+RewriteRule ^richieste-studenti.html index.php?pagina=studenti/richieste_studenti.php
 RewriteRule ^visualizza-richiesta-lezione-([0-9]*).html index.php?pagina=studenti/visualizza_richiesta_lezione.php&id=$1
-RewriteRule ^richieste-studenti.html index.php?pagina=insegnanti/richieste_studenti.php
 RewriteRule ^lezioni-richieste.html index.php?pagina=insegnanti/lezioni-richieste.php
 RewriteRule ^visualizza-richiesta-lezione-i-([0-9]*).html index.php?pagina=insegnanti/visualizza_richiesta_lezione_i.php&id=$1
 RewriteRule ^modifica-svolgimento-lezione-([0-9]*).html index.php?pagina=insegnanti/modifica_svolgimento_lezione.php&id=$1
-RewriteRule ^lezioni-su-richiesta.html index.php?pagina=studenti/lezioni_su_richiesta_acquistate.php
-
-
-
+RewriteRule ^lezioni-su-richiesta-acquistate.html index.php?pagina=studenti/lezioni_su_richiesta_acquistate.php
+RewriteRule ^visualizza_traccia-([0-9]*).html index.php?pagina=studenti/visualizza_traccia.php&id=$1
+RewriteRule ^visualizza_svolgimento-([0-9]*).html index.php?pagina=studenti/visualizza_svolgimento.php&id=$1
+RewriteRule ^visualizza-fattura-([0-9]*).html index.php?pagina=studenti/visualizza_fattura.php&id=$1

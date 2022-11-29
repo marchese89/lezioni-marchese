@@ -27,17 +27,14 @@ if ($tipo === 'corso') {
     $id_corso = $_GET['id'];
     $elem = new ElementoC($id_corso, 1, $conn);
     $prez = 0;
-    $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
-    while ($arg = $result1->fetch_assoc()) {
-        $id_arg = $arg['id'];
-        $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
-        while ($lez = $result2->fetch_assoc()) {
-            $id_lez = $lez['id'];
-            if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
-                $prez = $prez + $lez['prezzo'];
-            }
+    $result2 = $conn->query("SELECT * FROM lezione WHERE corso_lez = '$id_corso'");
+    while ($lez = $result2->fetch_assoc()) {
+        $id_lez = $lez['id'];
+        if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
+            $prez = $prez + $lez['prezzo'];
         }
     }
+
     $elem->setPrezzo($prez);
     $carrello->aggiungi($elem, $conn);
 }
@@ -47,11 +44,8 @@ if ($tipo === 'ex') {
     $elem = new ElementoC($id_ex, 2, $conn);
     $carrello->aggiungi($elem, $conn);
     $result1 = $conn->query("SELECT * FROM esercizio WHERE id='$id_ex'");
-    $lez = $result1->fetch_assoc();
-    $arg = $lez['argomento'];
-    $result2 = $conn->query("SELECT * FROM argomento WHERE id='$arg'");
-    $argom = $result2->fetch_assoc();
-    $idCorso = $argom['corso_arg'];
+    $ex = $result1->fetch_assoc();
+    $idCorso = $ex['corso_ex'];
 }
 // tutti gli esercizi
 if ($tipo === 'all_ex') {
@@ -59,17 +53,16 @@ if ($tipo === 'all_ex') {
     $id_corso = $_GET['id'];
     $elem = new ElementoC($id_corso, 3, $conn);
     $prez = 0;
-    $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
-    while ($arg = $result1->fetch_assoc()) {
-        $id_arg = $arg['id'];
-        $result2 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
-        while ($ex = $result2->fetch_assoc()) {
-            $id_ex = $ex['id'];
-            if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
-                $prez = $prez + $ex['prezzo'];
-            }
+
+    $id_arg = $arg['id'];
+    $result2 = $conn->query("SELECT * FROM esercizio WHERE corso_ex = '$id_corso'");
+    while ($ex = $result2->fetch_assoc()) {
+        $id_ex = $ex['id'];
+        if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
+            $prez = $prez + $ex['prezzo'];
         }
     }
+
     $elem->setPrezzo($prez);
 
     $carrello->aggiungi($elem, $conn);
@@ -80,24 +73,22 @@ if ($tipo === 'all') {
     $id_corso = $_GET['id'];
     $elem = new ElementoC($id_corso, 4, $conn);
     $prez = 0;
-    $result1 = $conn->query("SELECT * FROM argomento WHERE corso_arg='$id_corso'");
-    while ($arg = $result1->fetch_assoc()) {
-        $id_arg = $arg['id'];
-        $result2 = $conn->query("SELECT * FROM lezione WHERE arg_lez='$id_arg'");
-        while ($lez = $result2->fetch_assoc()) {
-            $id_lez = $lez['id'];
-            if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
-                $prez = $prez + $lez['prezzo'];
-            }
-        }
-        $result3 = $conn->query("SELECT * FROM esercizio WHERE argomento='$id_arg'");
-        while ($ex = $result3->fetch_assoc()) {
-            $id_ex = $ex['id'];
-            if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
-                $prez = $prez + $ex['prezzo'];
-            }
+
+    $result2 = $conn->query("SELECT * FROM lezione WHERE corso_lez = '$id_corso'");
+    while ($lez = $result2->fetch_assoc()) {
+        $id_lez = $lez['id'];
+        if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
+            $prez = $prez + $lez['prezzo'];
         }
     }
+    $result3 = $conn->query("SELECT * FROM esercizio WHERE corso_ex = '$id_corso'");
+    while ($ex = $result3->fetch_assoc()) {
+        $id_ex = $ex['id'];
+        if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
+            $prez = $prez + $ex['prezzo'];
+        }
+    }
+
     $elem->setPrezzo($prez);
 
     $carrello->aggiungi($elem, $conn);
@@ -110,7 +101,6 @@ if ($tipo === 'lez_r') {
     $elem = new ElementoC($id_lez, 5, $conn);
 
     $carrello->aggiungi($elem, $conn);
-    
 }
 
 if ($tipo === 'lez_r') {

@@ -23,7 +23,12 @@ function generaCodice($length = 6)
 $datiValidi = TRUE;
 $nome = str_replace("'", "''", $_POST['nome']);
 $cognome = str_replace("'", "''", $_POST['cognome']);
-
+$via = str_replace("'", "''", $_POST['via']);
+$n_civico = $_POST['n_civico'];
+$citta = str_replace("'", "''", $_POST['citta']);
+$provincia = $_POST['provincia'];
+$cap = $_POST['cap'];
+$cf = strtoupper($_POST['cf']);
 $email1 = $_POST['email1'];
 $password1 = password_hash($_POST['pass1'], PASSWORD_DEFAULT);
 $codiceA = generaCodice();
@@ -38,7 +43,7 @@ if ($result) {
     $r = $conn->query("SELECT * FROM utente WHERE email='$email1'");
     $ut = $r->fetch_assoc();
     $id = $ut['id'];
-    $r2 = $conn->query("INSERT INTO studente(utente_s) VALUES('$id')");
+    $r2 = $conn->query("INSERT INTO studente(utente_s,via,n_civico,citta,provincia,cap,cf) VALUES('$id','$via','$n_civico','$citta','$provincia','$cap','$cf')");
     if ($r2) {
         $conn->query("COMMIT");
 

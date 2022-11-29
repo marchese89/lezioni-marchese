@@ -13,12 +13,12 @@ if (! empty($_GET['return'])) {
 <form
 	action="amministrazione/risultato_registrazione.php<?php if(!empty($ritorno)){echo '?return=ok';}?>"
 	method="post">
-	<table width="100%" cellspacing="0" cellpadding="0"
+	<table width="60%" cellspacing="0" cellpadding="0"
 		align="center"
 		style="border-collapse: collapse;" 
 		RULES=none FRAME=none>
 		<tr>
-			<th valign="center" height="100" style="font-size: 24px;color: #0e83cd;">Iscrizione</th>
+			<th valign="center" height="100" style="font-size: 24px;color: #0e83cd;" colspan="2">Iscrizione</th>
 		</tr>
 		<tr>
 
@@ -33,8 +33,7 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p>
 			</td>
-			</tr>
-			<tr>
+			
 			<td valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Cognome</p>
 				<p>
@@ -44,6 +43,83 @@ if (! empty($_GET['return'])) {
                                     var cognome_ = new LiveValidation('cognome', {onlyOnSubmit: true});
                                     cognome_.add(Validate.Presence);
                                     cognome_.add(Validate.SoloTesto);
+                                </script>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="middle" align="center" height="60" width="98">
+				<p style="color: #0e83cd">Indirizzo (via/piazza)</p>
+				<p>
+					<input type="text" id="via" name="via" maxlength="255"
+						size="30">
+					<script type="text/javascript">
+                                    var via_ = new LiveValidation('via', {onlyOnSubmit: true});
+                                    via_.add(Validate.Presence);
+                                    via_.add(Validate.SoloTesto);
+                                </script>
+				</p>
+			</td>
+			<td valign="middle" align="center" height="60" width="98">
+				<p style="color: #0e83cd">N.Civico</p>
+				<p>
+					<input type="text" id="n_civico" name="n_civico" maxlength="6"
+						size="30">
+					<script type="text/javascript">
+                                    var n_civico_ = new LiveValidation('n_civico', {onlyOnSubmit: true});
+                                    n_civico_.add(Validate.Presence);
+                                </script>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="middle" align="center" height="60" width="98">
+				<p style="color: #0e83cd">Citt&agrave;</p>
+				<p>
+					<input type="text" id="citta" name="citta" maxlength="255"
+						size="30">
+					<script type="text/javascript">
+                                    var citta_ = new LiveValidation('citta', {onlyOnSubmit: true});
+                                    citta_.add(Validate.Presence);
+                                    citta_.add(Validate.SoloTesto);
+                                </script>
+				</p>
+			</td>
+			<td valign="middle" align="center" height="60" width="98">
+				<p style="color: #0e83cd">Provincia</p>
+				<p>
+					<input type="text" id="provincia" name="provincia" maxlength="2"
+						size="30">
+					<script type="text/javascript">
+                                    var provincia_ = new LiveValidation('provincia', {onlyOnSubmit: true});
+                                    provincia_.add(Validate.Presence);
+                                    provincia_.add(Validate.SoloTesto);
+                                </script>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="middle" align="center" height="60" width="98">
+				<p style="color: #0e83cd">CAP</p>
+				<p>
+					<input type="text" id="cap" name="cap" maxlength="5"
+						size="30">
+					<script type="text/javascript">
+                                    var cap_ = new LiveValidation('cap', {onlyOnSubmit: true});
+                                    cap_.add(Validate.Presence);
+                                    cap_.add(Validate.InteriPositivi);
+                                </script>
+				</p>
+			</td>
+			<td valign="middle" align="center" height="60" width="98">
+				<p style="color: #0e83cd">Codice Fiscale</p>
+				<p>
+					<input type="text" id="cf" name="cf" maxlength="16"
+						size="30">
+					<script type="text/javascript">
+                                    var cf_ = new LiveValidation('cf', {onlyOnSubmit: true});
+                                    cf_.add(Validate.Presence);
+                                    cf_.add(Validate.CodiceFiscale);
                                 </script>
 				</p>
 			</td>
@@ -62,8 +138,6 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p>
 			</td>
-			</tr>
-			<tr>
 			<td valign="middle" align="center" height="60" width="78">
 				<p style="color: #0e83cd">Conferma Email</p>
 				<p>
@@ -92,8 +166,6 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p>
 			</td>
-			</tr>
-			<tr>
 			<td valign="middle" align="center" height="80" width="78">
 				<p style="color: #0e83cd">Conferma Password</p>
 				<p>
@@ -109,8 +181,8 @@ if (! empty($_GET['return'])) {
 
 		</tr>
 		<tr>
-			<th colspan="2" height="130px" style="color: #0e83cd">Informativa sul trattamento dei dati
-				personali<br> <textarea rows="8" cols="40" disabled>Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
+			<th colspan="2" height="300px" style="color: #0e83cd">Informativa sul trattamento dei dati
+				personali<br> <textarea rows="10" cols="50" disabled>Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
 1. I dati personali da Lei/Voi forniti o acquisiti nell&apos;ambito della nostra attivit&agrave; saranno oggetto di trattamento improntato ai principi di correttezza, liceit&agrave;, trasparenza e di tutela della Sua/Vostra riservatezza e dei Suoi/Vostri diritti.
 2. Il trattamento di tali dati personali sar&agrave; finalizzato agli adempimenti degli obblighi contrattuali o derivanti da incarico conferito dall&apos;interessato ed in particolare all&apos;invio telematico di ulteriori informazioni commerciali e materiale pubblicitario sulle novit&agrave; dei prodotti dei titolari di questo sito o eventuali fatture.
 3. Il trattamento potr&agrave; essere effettuato anche con l&apos;ausilio di strumenti elettronici con modalit&agrave; idonee a garantire la sicurezza e riservatezza dei dati.
