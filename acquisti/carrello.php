@@ -251,9 +251,9 @@ class Carrello
     function vuotaCarrello()
     {
         for ($index = 0; $index < count($this->elementi); $index ++) {
-            $id = $this->elementi[$index]->getId();
-            $tipo = $this->elementi[$index]->getTipoElemento();
-            $this->rimuovi($id, $tipo);
+            unset($this->elementi[$index]);
         }
+        unset($this->elementi);
+        $this->elementi = array();
     }
 }

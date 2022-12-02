@@ -67,7 +67,7 @@ function progressHandler1(event) {
     _("status").innerHTML = "caricato al " + Math.round(percent) + "% ... attendere";
 }
 function completeHandler1(event) {
-    location.reload();
+	location.reload();
 }
 function errorHandler1(event) {
     _("status").innerHTML = "Caricamento Fallito";
@@ -83,7 +83,7 @@ function progressHandler2(event) {
     _("status2").innerHTML = "caricato al " + Math.round(percent) + "% ... attendere";
 }
 function completeHandler2(event) {
-    location.reload();
+	location.reload();
 }
 function errorHandler2(event) {
     _("status2").innerHTML = "Caricamento Fallito";

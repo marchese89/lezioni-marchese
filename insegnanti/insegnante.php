@@ -59,6 +59,14 @@ if ($utente['stato_account'] === '1') {
 	<tr style="height: 60px">
 		<td><a href="lezioni-richieste.html">Richieste Studenti</a></td>
 	</tr>
+	<tr style="height: 60px">
+		<td><a href="chat-studenti.html">Chat Studenti</a></td>
+	</tr>
+	<tr style="height: 60px">
+		<td>
+		<a href="vendite-insegnante.html" style="font-size: 18px">Vendite</a>
+		</td>
+	</tr>
 </table>
 
 <?php

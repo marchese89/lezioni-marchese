@@ -59,6 +59,29 @@ function trovaIdInsegnanteDaCorso($id_corso, $conn): int
     return $corso['insegnante'];
 }
 
+function trovaIdInsegnanteDaLezione($id_lezione,$conn): int
+{
+    $result = $conn->query("SELECT * FROM lezione WHERE id = '$id_lezione'");
+    $lezione = $result->fetch_assoc();
+    $id_corso = $lezione['corso_lez'];
+    return trovaIdInsegnanteDaCorso($id_corso, $conn);
+}
+
+function trovaIdInsegnanteDaEsercizio($id_ex,$conn): int
+{
+    $result = $conn->query("SELECT * FROM esercizio WHERE id = '$id_ex'");
+    $esercizio = $result->fetch_assoc();
+    $id_corso = $esercizio['corso_ex'];
+    return trovaIdInsegnanteDaCorso($id_corso, $conn);
+}
+
+function trovaIdInsegnanteDaLezioneSuRichiesta($id_lezione, $conn): int
+{
+    $result = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id_lezione'");
+    $lezione = $result->fetch_assoc();
+    return $lezione['insegnante'];
+}
+
 function trovaArgomentoLezione($id_lez, $conn): int
 {
     $result = $conn->query("SELECT * FROM lezione WHERE id='$id_lez'");

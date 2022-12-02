@@ -160,8 +160,9 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             $lezione = $result->fetch_assoc();
             $prezzo = $lezione['prezzo'];
             $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','0','$prezzo')");
+            $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','0','$id_stud')");
             $html = $html . '<tr><td align="center">
-            <font size=4 >Lezione&nbsp;' . $lezione['titolo'] .'</font>
+            <font size=4 >Lezione:&nbsp;' . $lezione['titolo'] .'</font>
             </td>
             <td align="center">
             <font size=4 >' . $lezione['prezzo'] . '&euro;</font>
@@ -181,8 +182,9 @@ for ($i = 0; $i < count($contenuto); $i ++) {
                 $prezzo = $lez['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
                     $conn->query("INSERT into prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_lez','0','$prezzo')");
+                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_lez','0','$id_stud')");
                     $html = $html . '<tr><td align="center">
-            <font size=4 >Lezione&nbsp;' . $lez['titolo'] .'</font>
+            <font size=4 >Lezione:&nbsp;' . $lez['titolo'] .'</font>
             </td>
             <td align="center">
             <font size=4 >' . $lez['prezzo'] . '&euro;</font>
@@ -193,17 +195,20 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             <td align="center">
             <font size=4 ><b>' . $lez['prezzo'] . '&euro;</b></font></td>
             </tr>';
+                    $prezzo_totale = $prezzo_totale + $lez['prezzo'];
                 }
+                
             }
-            $prezzo_totale = $prezzo_totale + $lez['prezzo'];
+            
             break;
         case 2: // esercizio
             $result = $conn->query("SELECT * FROM esercizio WHERE id = '$id'");
             $esercizio = $result->fetch_assoc();
             $prezzo = $esercizio['prezzo'];
             $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','2','$prezzo')");
+            $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','2','$id_stud')");
             $html = $html . '<tr><td align="center">
-            <font size=4 >Esercizio&nbsp;' . $esercizio['titolo'] .'</font>
+            <font size=4 >Esercizio:&nbsp;' . $esercizio['titolo'] .'</font>
             </td>
             <td align="center">
             <font size=4 >' . $esercizio['prezzo'] . '&euro;</font>
@@ -223,8 +228,9 @@ for ($i = 0; $i < count($contenuto); $i ++) {
                 $prezzo = $ex['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
                     $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_ex','2','$prezzo')");
+                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_ex','2','$id_stud')");
                     $html = $html . '<tr><td align="center">
-            <font size=4 >Esercizio&nbsp;' . $ex['titolo'] .'</font>
+            <font size=4 >Esercizio:&nbsp;' . $ex['titolo'] .'</font>
             </td>
             <td align="center">
             <font size=4 >' . $ex['prezzo'] . '&euro;</font>
@@ -235,9 +241,10 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             <td align="center">
             <font size=4 ><b>' . $ex['prezzo'] . '&euro;</b></font></td>
             </tr>';
+                    $prezzo_totale = $prezzo_totale + $ex['prezzo'];
                 }
             }
-            $prezzo_totale = $prezzo_totale + $ex['prezzo'];
+            
             break;
         case 4: // tutte le lezioni e tutti gli esercizi di un corso
             $result2 = $conn->query("SELECT * FROM lezione WHERE corso_lez = '$id'");
@@ -246,8 +253,9 @@ for ($i = 0; $i < count($contenuto); $i ++) {
                 $prezzo = $lez['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
                     $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_lez','0','$prezzo')");
+                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_lez','0','$id_stud')");
                     $html = $html . '<tr><td align="center">
-            <font size=4 >Lezione&nbsp;' . $lez['titolo'] .'</font>
+            <font size=4 >Lezione:&nbsp;' . $lez['titolo'] .'</font>
             </td>
             <td align="center">
             <font size=4 >' . $lez['prezzo'] . '&euro;</font>
@@ -267,8 +275,9 @@ for ($i = 0; $i < count($contenuto); $i ++) {
                 $prezzo = $ex['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
                     $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_ex','2','$prezzo')");
+                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_ex','2','$id_stud')");
                     $html = $html . '<tr><td align="center">
-            <font size=4 >Esercizio&nbsp;' . $ex['titolo'] .'</font>
+            <font size=4 >Esercizio:&nbsp;' . $ex['titolo'] .'</font>
             </td>
             <td align="center">
             <font size=4 >' . $ex['prezzo'] . '&euro;</font>
@@ -286,20 +295,24 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             break;
         case 5:
             $conn->query("UPDATE richieste_lezioni SET evasa = '1' WHERE id = '$id'");
+            
             $res = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id'");
             $richiesta = $res->fetch_assoc();
+            $prezzo = $richiesta['prezzo'];
             $html = $html . '<tr><td align="center">
-            <font size=4 >Lezion/Esercizio su richiesta&nbsp;' . $richiesta['titolo'] .'</font>
+            <font size=4 >Lezione/Esercizio su richiesta:&nbsp;' . $richiesta['titolo'] .'</font>
             </td>
             <td align="center">
-            <font size=4 >' . $richiesta['prezzo'] . '&euro;</font>
+            <font size=4 >' . $prezzo . '&euro;</font>
             </td>
             <td align="center">
             <font size=4 >1</font>
             </td>
             <td align="center">
-            <font size=4 ><b>' . $richiesta['prezzo'] . '&euro;</b></font></td>
+            <font size=4 ><b>' . $prezzo . '&euro;</b></font></td>
             </tr>';
+            $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','5','$prezzo')");
+            $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','5','$id_stud')");
             $prezzo_totale = $prezzo_totale + $richiesta['prezzo'];
             break;
         default:

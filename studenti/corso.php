@@ -95,13 +95,17 @@ while ($lez = $result->fetch_assoc()) {
         }
     
 }
+if($tot_lez > 0){
 ?>
+
 <tr style="height: 60px">
 			<td colspan=3 align="right"><label style="font-size: 16px">Acquista tutte le lezioni  (<?php echo $tot_lez;?> &euro;)  </label></td>
 			<td><?php if($studente){?><button class="button"
 					onclick=location.href="acquisti/aggiungi_al_carrello.php?tipo=corso&id=<?php echo $id_corso;?>">Acquista</button><?php }?></td>
 		</tr>
-
+<?php 
+}
+?>
 
 		<tr style="height: 60px">
 			<td colspan=4><label style="font-size: 16px">Esercizi</label></td>
@@ -138,6 +142,7 @@ while ($ex = $result->fetch_assoc()) {
     
     }
 }
+if($tot_ex > 0){
 ?>
 	<tr>
 		
@@ -149,12 +154,19 @@ while ($ex = $result->fetch_assoc()) {
 		
 		</td>
 		</tr>
+		<?php 
+        }
+        if($tot_lez > 0 || $tot_ex > 0){
+		?>
 		<tr style="height: 60px">
 			<td colspan=3 align="right"><label style="font-size: 16px">Acquista tutte le lezioni e tutti gli esercizi  (<?php echo $prezzo_tot;?> &euro;)  </label></td>
 			<td><?php if($studente){?><button class="button"
 					onclick=location.href="acquisti/aggiungi_al_carrello.php?tipo=all&id=<?php echo $id_corso;?>">Acquista</button><?php }?>
 		</td>
 		</tr>
+		<?php 
+        }
+		?>
 	</table>
 	<table width=100% align=center>
 	<?php

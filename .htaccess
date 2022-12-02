@@ -55,3 +55,5 @@ RewriteRule ^lezioni-su-richiesta-acquistate.html index.php?pagina=studenti/lezi
 RewriteRule ^visualizza_traccia-([0-9]*).html index.php?pagina=studenti/visualizza_traccia.php&id=$1
 RewriteRule ^visualizza_svolgimento-([0-9]*).html index.php?pagina=studenti/visualizza_svolgimento.php&id=$1
 RewriteRule ^visualizza-fattura-([0-9]*).html index.php?pagina=studenti/visualizza_fattura.php&id=$1
+RewriteRule ^vendite-insegnante.html index.php?pagina=insegnanti/vendite_insegnante.php
+RewriteRule ^chat-studenti.html index.php?pagina=insegnanti/elenco_chat_studenti.php
