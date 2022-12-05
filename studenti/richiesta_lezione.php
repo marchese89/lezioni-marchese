@@ -144,6 +144,11 @@ if(studente($_SESSION['user'],$conn)){
 		<label>A quel punto potrai decidere quale acquistare</label>
 		</td>
 		</tr>
+		<tr style="height: 60px">
+		<td>
+		<label>Sono inclusi nel prezzo eventuali chiarimenti via chat (disponibili dopo l'acquisto)</label>
+		</td>
+		</tr>
 		<tr style="text-align: center">
 		<th style="text-align: center; alignment-adjust: central">
            <?php

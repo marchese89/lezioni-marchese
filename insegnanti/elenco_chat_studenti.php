@@ -2,13 +2,17 @@
 	cellpadding=0 rules=row border=0>
 
 	<tr id="titolo">
-		<th colspan=5>Chat con gli studenti</th>
+		<th colspan=6>Chat con gli studenti</th>
+	</tr>
+	<tr style="height: 60px">
+	<td colspan=6><label>Legenda:  verde:ok, rosso: richiede risposta, blu: chat non avviata</label></td>
 	</tr>
 	<tr style="height: 60px">
 	<td><label>Id</label></td>
 	<td><label>Tipo Prodotto</label></td>
 	<td><label>Titolo</label></td>
 	<td><label>Studente</label></td>
+	<td><label>Stato</label></td>
 	<td><label>Operazioni</label></td>
 	</tr>
 	<?php 
@@ -16,6 +20,10 @@
 	
 	$result = $conn->query("SELECT * FROM chat");
 	while($chat = $result->fetch_assoc()){
+	   //vediamo di chi è l'ultimo messaggio
+	   $id_chat  =  $chat['id'];
+	   $rr1  = $conn->query("SELECT * FROM messaggi_chat WHERE id_chat = '$id_chat' ORDER BY data DESC");
+	   $ultimo_messaggio =  $rr1->fetch_assoc();
 	   $id_prodotto = $chat['id_prodotto'];
 	   $tipo_prodotto = $chat['tipo_prodotto'];
 	   $id_stud = $chat['id_studente'];
@@ -36,7 +44,16 @@
 	               <td>Lezione</td>
 	               <td><?php echo $lezione['titolo']?></td>
 	               <td><?php echo $studente['nome']. " " . $studente['cognome']; ?></td>
-	               <td><button onclick=location.href="">Visualizza Chat</button></td>
+	               <td><img src="<?php 
+	               if($rr1->num_rows == 0){
+	                   echo 'images/blue_spot.png';
+	               }else if($ultimo_messaggio['autore'] == 0){
+	                   echo 'images/red_spot.png';}
+	               else if($ultimo_messaggio['autore'] == 1){
+	                   echo 'images/green_spot.png';
+	               }
+	                   ?>" style="width: 50px;height:50px" ></td>
+	               <td><button onclick=location.href="chat-con-studenti-<?php echo $id_chat;?>.html">Visualizza Chat</button></td>
 	               </tr>
 	               <?php
 	           }
@@ -52,7 +69,16 @@
 	               <td>Esercizio</td>
 	               <td><?php echo $esercizio['titolo']?></td>
 	               <td><?php echo $studente['nome']. " " . $studente['cognome']; ?></td>
-	               <td><button onclick=location.href="">Visualizza Chat</button></td>
+	               <td><img src="<?php 
+	               if($rr1->num_rows == 0){
+	                   echo 'images/blue_spot.png';
+	               }else if($ultimo_messaggio['autore'] == 0){
+	                   echo 'images/red_spot.png';}
+	                   else if($ultimo_messaggio['autore'] == 1){
+	                       echo 'images/green_spot.png';
+	                   }
+	               ?>" style="width: 50px;height:50px" ></td>
+	               <td><button onclick=location.href="chat-con-studenti-<?php echo $id_chat;?>.html">Visualizza Chat</button></td>
 	               </tr>
 	               <?php
 	           }
@@ -65,10 +91,19 @@
 	               ?>
 	               <tr style="height: 60px">
 	               <td><?php echo $id_prodotto;?></td>
-	               <td>Esercizio</td>
+	               <td>Lezione su Richiesta</td>
 	               <td><?php echo $lezione['titolo']?></td>
 	               <td><?php echo $studente['nome']. " " . $studente['cognome']; ?></td>
-	               <td><button onclick=location.href="" >Visualizza Chat</button></td>
+	               <td><img src="<?php 
+	               if($rr1->num_rows == 0){
+	                   echo 'images/blue_spot.png';
+	               }else if($ultimo_messaggio['autore'] == 0){
+	                   echo 'images/red_spot.png';}
+	                   else if($ultimo_messaggio['autore'] == 1){
+	                       echo 'images/green_spot.png';
+	                   }
+	               ?>" style="width: 50px;height:50px" ></td>
+	               <td><button onclick=location.href="chat-con-studenti-<?php echo $id_chat;?>.html" >Visualizza Chat</button></td>
 	               </tr>
 	               <?php
 	           }
@@ -81,7 +116,7 @@
 
 	?>
 	<tr>
-			<td align="center" id="indietro" colspan=5><strong><a
+			<td align="center" id="indietro" colspan=6><strong><a
 					href="home-insegnante.html">
 					Indietro</a></strong></td>
 		</tr>

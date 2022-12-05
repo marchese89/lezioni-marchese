@@ -39,15 +39,18 @@ function invia_messaggio(testo) {
 	    xmlhttp.send();
 	  }
 	}
-
-
-function aggiungi_corso(){
-	var form = document.getElementById('form_ex');
-    var input = document.createElement('input');
-    input.setAttribute('name', 'corso');
-    input.setAttribute('value', document.getElementById('select_corso').value);
-    input.setAttribute('type', 'hidden');
-    form.appendChild(input);
+function invia_feefback(studente,prodotto,tipo_prodotto,punteggio) {
+	
+	   var xmlhttp = new XMLHttpRequest();
+	    xmlhttp.onreadystatechange = function() {
+	      if (this.readyState == 4 && this.status == 200) {
+	        document.getElementById("stars").innerHTML = this.responseText;
+	      }
+	    };
+	    //aut=0 -> studente
+	    xmlhttp.open("GET","richieste_ajax/invia_feedback.php?stud="+studente+"&prod="+prodotto+"&tipo_prod="+tipo_prodotto+"&punt="+punteggio,true);
+	    xmlhttp.send();
+	  
 }
 
 </script>
@@ -74,12 +77,38 @@ function aggiungi_corso(){
 		<td><iframe src="<?php echo $lez['lezione'];?>#view=FitH" width="90%"
 				height="800px"></iframe></td>
 	</tr>
+		<tr style="height: 60px">
+		<td><label>Valutazione </label>
+		<?php
+$rr1 = $conn->query("SELECT * FROM feedback WHERE studente = '$id_stud' AND prodotto = '$id_lez' AND tipo_prodotto = '0'");
+$f = 0;
+if ($rr1->num_rows > 0) {
+    $feed = $rr1->fetch_assoc();
+    $f = $feed['punteggio'];
+}
+?>
+		<div class="stars" id="stars">
+				<a <?php if($f > 0){?> style="opacity: 100%;" <?php }?>
+					onclick="invia_feefback(<?php echo $id_stud?>,<?php echo $id_lez?>,0,1)"
+				>⭐</a>
+				<a <?php if($f > 1){?> style="opacity: 100%;" <?php }?>
+					onclick="invia_feefback(<?php echo $id_stud?>,<?php echo $id_lez?>,0,2)"
+					>⭐</a>
+				<a <?php if($f > 2){?> style="opacity: 100%;" <?php }?>
+					onclick="invia_feefback(<?php echo $id_stud?>,<?php echo $id_lez?>,0,3)"
+					>⭐</a>
+				<a <?php if($f > 3){?> style="opacity: 100%;" <?php }?>
+					onclick="invia_feefback(<?php echo $id_stud?>,<?php echo $id_lez?>,0,4)"
+					>⭐</a>
+				<a <?php if($f > 4){?> style="opacity: 100%;" <?php }?>
+					onclick="invia_feefback(<?php echo $id_stud?>,<?php echo $id_lez?>,0,5)"
+					>⭐</a>
+			</div>
+	
+	</tr>
 	<tr style="height: 60px">
 		<td><label>Chat Chiarimenti sulla lezione</label></td>
 	</tr>
-	<?php
-// codice messaggi precendenti
-?>
 	<tr style="width: 100%">
 		<td style="width: 100%" align="right">
 			<div id="messaggi"  style="width: 100%"></div>
