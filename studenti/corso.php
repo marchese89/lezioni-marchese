@@ -45,6 +45,7 @@ if (! $studente) {
 ?>
 	<tr style="height: 60px">
 			<td colspan=4 style="font-size: 18px"> Corso: "<?php echo $corso['nome'];?>" di <?php echo $utente['nome'] . " " . $utente['cognome'];?>
+		&nbsp;, Feedback: <?php echo number_format(punteggioInsegnante($id_corso, $conn),2);?>/5
 		</td>
 		</tr>
 		<tr style="height: 60px">

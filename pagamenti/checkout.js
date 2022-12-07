@@ -33,16 +33,15 @@ async function handleSubmit(e) {
 	
   e.preventDefault();
   setLoading(true);
-
+  
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      //https://localhost/easy-learning/acquisti/acquisto_effettuato.php
       return_url: "https://localhost/easy-learning/acquisti/acquisto_effettuato.php",
     },
   });
-
+  
   // This point will only be reached if there is an immediate error when
   // confirming the payment. Otherwise, your customer will be redirected to
   // your `return_url`. For some payment methods like iDEAL, your customer will

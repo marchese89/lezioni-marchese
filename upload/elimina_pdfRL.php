@@ -9,4 +9,4 @@ unset($_SESSION['percorsoPDF_RL']);
 unset($_SESSION['pdfRLCaricato']);
 
 
-header('Location: ../svolgimento-lezione.html');
+header('Location: ../lezioni-su-richiesta.html');

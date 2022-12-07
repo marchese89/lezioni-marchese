@@ -36,6 +36,7 @@ RewriteRule ^materie-([0-9]*).html index.php?pagina=studenti/materie.php&id_at=$
 RewriteRule ^corsi-([0-9]*).html index.php?pagina=studenti/corsi.php&id_mat=$1
 RewriteRule ^corso-([0-9]*).html index.php?pagina=studenti/corso.php&id_corso=$1
 RewriteRule ^ordine-effettuato.html index.php?pagina=acquisti/ordine_effettuato.php
+RewriteRule ^ordine-fallito.html index.php?pagina=acquisti/ordine_fallito.php
 RewriteRule ^corsi-studente.html index.php?pagina=studenti/corsi_studente.php
 RewriteRule ^ordini-studente.html index.php?pagina=studenti/ordini_studente.php
 RewriteRule ^corso-studente-([0-9]*).html index.php?pagina=studenti/corso_studente.php&id_corso=$1

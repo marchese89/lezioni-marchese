@@ -59,7 +59,39 @@ function trovaIdInsegnanteDaCorso($id_corso, $conn): int
     return $corso['insegnante'];
 }
 
-function trovaIdInsegnanteDaLezione($id_lezione,$conn): int
+function punteggioInsegnante($id_corso, $conn): float
+{
+    $id_ins = trovaIdInsegnanteDaCorso($id_corso, $conn);
+    $result = $conn->query("SELECT  * FROM feedback");
+    $cont = 0;
+    $somma = 0;
+    while($feed = $result->fetch_assoc()){
+        $tipo = $feed['tipo_prodotto'];
+        $id_prod = $feed['prodotto'];
+        $punteggio = $feed['punteggio'];
+        $ins_prod = 0;
+        switch ($tipo) {
+            case 0:
+                $ins_prod = trovaIdInsegnanteDaLezione($id_prod, $conn);
+                break;
+            case 2:
+                $ins_prod = trovaIdInsegnanteDaEsercizio($id_prod, $conn);
+                break;
+            case 5:
+                $ins_prod = trovaIdInsegnanteDaLezioneSuRichiesta($id_prod, $conn);
+                break;
+            default:
+            break;
+        }
+        if($id_ins == $ins_prod){
+            $cont = $cont + 1;
+            $somma =$somma + $punteggio;
+        }
+    }
+    return $somma/$cont;
+}
+
+function trovaIdInsegnanteDaLezione($id_lezione, $conn): int
 {
     $result = $conn->query("SELECT * FROM lezione WHERE id = '$id_lezione'");
     $lezione = $result->fetch_assoc();
@@ -67,7 +99,7 @@ function trovaIdInsegnanteDaLezione($id_lezione,$conn): int
     return trovaIdInsegnanteDaCorso($id_corso, $conn);
 }
 
-function trovaIdInsegnanteDaEsercizio($id_ex,$conn): int
+function trovaIdInsegnanteDaEsercizio($id_ex, $conn): int
 {
     $result = $conn->query("SELECT * FROM esercizio WHERE id = '$id_ex'");
     $esercizio = $result->fetch_assoc();

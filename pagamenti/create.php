@@ -16,10 +16,6 @@ function calculateOrderAmount(): int {
 header('Content-Type: application/json');
 
 try {
-    // retrieve JSON from POST body
-    $jsonStr = file_get_contents('php://input');
-    $jsonObj = json_decode($jsonStr);
-
     // Create a PaymentIntent with amount and currency
     $paymentIntent = \Stripe\PaymentIntent::create([
         'amount' => calculateOrderAmount(),

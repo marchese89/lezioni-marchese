@@ -2,27 +2,47 @@
 date_default_timezone_set('Europe/Rome');
 include_once 'carrello.php';
 include_once '../script/funzioni-php.php';
-include '../config/mysql-config.php';
+include_once '../config/mysql-config.php';
 require_once '../dompdf/autoload.inc.php';
+require_once '../pagamenti/stripe-php-9.6.0/init.php';
+
 use Dompdf\Dompdf;
 session_start();
 
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES fattura WRITE,utente READ,studente READ,lezione READ,esercizio READ,richieste_lezioni WRITE,ordine WRITE,prodotti_ordine WRITE,chat WRITE");
+$conn->query("BEGIN");
+$rollback = FALSE;
 $dompdf = new Dompdf();
 $data = date("Y-m-d H:i:s");
 $data_ = stampa_data($data);
 $dataFattura = $data_['giorno'].'/'. $data_['mese']. '/' . $data_['anno'];
 $rr = $conn->query("SELECT * FROM fattura");
-$n_f = $rr->fetch_assoc();
-$ultimo = $n_f['numero'];
+$u_f = $rr->fetch_assoc();
+$ultimo = $u_f['numero'];
+$data_ultima_f = $u_f['data'];
+$data2 = stampa_data($data_ultima_f);
+$numeroFattura  = 1;
+if($data_['anno'] == $data2['anno']){
 $numeroFattura = $ultimo+1;
-$conn->query("UPDATE fattura SET numero = '$numeroFattura' WHERE numero = '$ultimo'");
+}
+$r = $conn->query("UPDATE fattura SET numero = '$numeroFattura' AND data = '$data' WHERE numero = '$ultimo'");
+if(!$r){
+    $rollback = TRUE;
+}
 // recuperiamo le informazioni relative al cliente
 
 $id_stud = trovaIdStudente($_SESSION['user'], $conn);
 $r0 = $conn->query("SELECT * FROM studente WHERE id = '$id_stud'");
+if(!$r0){
+    $rollback = TRUE;
+}
 $studente = $r0->fetch_assoc();
 $id_utente = $studente['utente_s'];
 $r1 = $conn->query("SELECT * FROM utente WHERE id = '$id_utente'");
+if(!$r1){
+    $rollback = TRUE;
+}
 $utente = $r1->fetch_assoc();
 $html = '
 <table width="100%" cellspacing="0" cellpadding="0"
@@ -143,8 +163,13 @@ $numeroFattura .'</td>
 
 // inseriamo l'ordine
 $result3 = $conn->query("INSERT INTO ordine(cliente,data) VALUES ('$id_stud','$data')");
-
+if(!$result3){
+    $rollback = TRUE;
+}
 $result4 = $conn->query("SELECT * FROM ordine WHERE cliente='$id_stud' AND data='$data'");
+if(!$result4){
+    $rollback = TRUE;
+}
 $ordine = $result4->fetch_assoc();
 $id_ordine = $ordine['id'];
 
@@ -157,10 +182,19 @@ for ($i = 0; $i < count($contenuto); $i ++) {
     switch ($tipo) {
         case 0: // lezione
             $result = $conn->query("SELECT * FROM lezione WHERE id = '$id'");
+            if(!$result){
+                $rollback = TRUE;
+            }
             $lezione = $result->fetch_assoc();
             $prezzo = $lezione['prezzo'];
-            $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','0','$prezzo')");
-            $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','0','$id_stud')");
+            $r4 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','0','$prezzo')");
+            if(!$r4){
+                $rollback = TRUE;
+            }
+            $r4 = $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','0','$id_stud')");
+            if(!$r4){
+                $rollback = TRUE;
+            }
             $html = $html . '<tr><td align="center">
             <font size=4 >Lezione:&nbsp;' . $lezione['titolo'] .'</font>
             </td>
@@ -177,12 +211,21 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             break;
         case 1: // tutte le lezioni di un corso
             $result2 = $conn->query("SELECT * FROM lezione WHERE corso_lez='$id'");
+            if(!$result2){
+                $rollback = TRUE;
+            }
             while ($lez = $result2->fetch_assoc()) {
                 $id_lez = $lez['id'];
                 $prezzo = $lez['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
-                    $conn->query("INSERT into prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_lez','0','$prezzo')");
-                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_lez','0','$id_stud')");
+                    $r5 = $conn->query("INSERT into prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_lez','0','$prezzo')");
+                    if(!$r5){
+                        $rollback = TRUE;
+                    }
+                    $r5 = $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_lez','0','$id_stud')");
+                    if(!$r5){
+                        $rollback = TRUE;
+                    }
                     $html = $html . '<tr><td align="center">
             <font size=4 >Lezione:&nbsp;' . $lez['titolo'] .'</font>
             </td>
@@ -205,8 +248,14 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             $result = $conn->query("SELECT * FROM esercizio WHERE id = '$id'");
             $esercizio = $result->fetch_assoc();
             $prezzo = $esercizio['prezzo'];
-            $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','2','$prezzo')");
-            $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','2','$id_stud')");
+            $r6 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','2','$prezzo')");
+            if(!$r6){
+                $rollback = TRUE;
+            }
+            $r6 = $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','2','$id_stud')");
+            if(!$r6){
+                $rollback = TRUE;
+            }
             $html = $html . '<tr><td align="center">
             <font size=4 >Esercizio:&nbsp;' . $esercizio['titolo'] .'</font>
             </td>
@@ -227,8 +276,14 @@ for ($i = 0; $i < count($contenuto); $i ++) {
                 $id_ex = $ex['id'];
                 $prezzo = $ex['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
-                    $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_ex','2','$prezzo')");
-                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_ex','2','$id_stud')");
+                    $r7 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_ex','2','$prezzo')");
+                    if(!$r7){
+                        $rollback = TRUE;
+                    }
+                    $r7 = $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_ex','2','$id_stud')");
+                    if(!$r7){
+                        $rollback = TRUE;
+                    }
                     $html = $html . '<tr><td align="center">
             <font size=4 >Esercizio:&nbsp;' . $ex['titolo'] .'</font>
             </td>
@@ -252,8 +307,14 @@ for ($i = 0; $i < count($contenuto); $i ++) {
                 $id_lez = $lez['id'];
                 $prezzo = $lez['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_lez, 0, $conn)) {
-                    $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_lez','0','$prezzo')");
-                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_lez','0','$id_stud')");
+                    $r8 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_lez','0','$prezzo')");
+                    if(!$r8){
+                        $rollback = TRUE;
+                    }
+                    $r8 = $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_lez','0','$id_stud')");
+                    if(!$r8){
+                        $rollback = TRUE;
+                    }
                     $html = $html . '<tr><td align="center">
             <font size=4 >Lezione:&nbsp;' . $lez['titolo'] .'</font>
             </td>
@@ -274,8 +335,14 @@ for ($i = 0; $i < count($contenuto); $i ++) {
                 $id_ex = $ex['id'];
                 $prezzo = $ex['prezzo'];
                 if (! prodotto_acquistato($id_stud, $id_ex, 2, $conn)) {
-                    $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_ex','2','$prezzo')");
-                    $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_ex','2','$id_stud')");
+                    $r9 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id_ex','2','$prezzo')");
+                    if(!$r9){
+                        $rollback = TRUE;
+                    }
+                    $r9 = $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id_ex','2','$id_stud')");
+                    if(!$r9){
+                        $rollback = TRUE;
+                    }
                     $html = $html . '<tr><td align="center">
             <font size=4 >Esercizio:&nbsp;' . $ex['titolo'] .'</font>
             </td>
@@ -294,9 +361,14 @@ for ($i = 0; $i < count($contenuto); $i ++) {
 
             break;
         case 5:
-            $conn->query("UPDATE richieste_lezioni SET evasa = '1' WHERE id = '$id'");
-            
+            $r10 = $conn->query("UPDATE richieste_lezioni SET evasa = '1' WHERE id = '$id'");
+            if(!$r10){
+                $rollback = TRUE;
+            }
             $res = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id'");
+            if(!$res){
+                $rollback = TRUE;
+            }
             $richiesta = $res->fetch_assoc();
             $prezzo = $richiesta['prezzo'];
             $html = $html . '<tr><td align="center">
@@ -311,8 +383,14 @@ for ($i = 0; $i < count($contenuto); $i ++) {
             <td align="center">
             <font size=4 ><b>' . $prezzo . '&euro;</b></font></td>
             </tr>';
-            $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','5','$prezzo')");
-            $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','5','$id_stud')");
+            $r11 = $conn->query("INSERT INTO prodotti_ordine(id_ordine,prodotto,tipo,prezzo) VALUES ('$id_ordine','$id','5','$prezzo')");
+            if(!$r11){
+                $rollback = TRUE;
+            }
+            $r11 = $conn->query("INSERT INTO chat(id_prodotto,tipo_prodotto,id_studente) VALUES ('$id','5','$id_stud')");
+            if(!$r11){
+                $rollback = TRUE;
+            }
             $prezzo_totale = $prezzo_totale + $richiesta['prezzo'];
             break;
         default:
@@ -405,9 +483,34 @@ for ($i = 0; $i < count($contenuto); $i ++) {
  $pdf = $dompdf->output();
  file_put_contents('../fatture/' . $number. '.pdf', $pdf);
  $percorso_fattura = 'fatture/' . $number. '.pdf';
- $conn->query("UPDATE ordine SET fattura = '$percorso_fattura' WHERE id = '$id_ordine'");
-
+ $r12 = $conn->query("UPDATE ordine SET fattura = '$percorso_fattura' WHERE id = '$id_ordine'");
+ if(!$r12){
+     $rollback = TRUE;
+ }
+ $output;
+ if($rollback){
+     unlink('../fatture/' . $number. '.pdf');
+     //rimborso totale
+     $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+     $stripe->refunds->create(['payment_intent' => $_GET['payment_intent']]);
+     header('Location: ../ordine-fallito.html');
+ }else{
+     $r = $conn->query("COMMIT");
+     if(!$r){
+         unlink('../fatture/' . $number. '.pdf');
+         //rimborso totale
+         $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+         $stripe->refunds->create(['payment_intent' => $_GET['payment_intent']]);
+         header('Location: ../ordine-fallito.html');
+     }
+     $conn->query("UNLOCK TABLES");
+     $_SESSION['carrello']->vuotaCarrello();
+     header('Location: ../ordine-effettuato.html');
+ }
  
-$_SESSION['carrello']->vuotaCarrello();
+ 
 
-header('Location: ../ordine-effettuato.html')?>
+
+
+
+ ?>

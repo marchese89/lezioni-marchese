@@ -99,7 +99,7 @@ function carica_corso(id_materia) {
 	        document.getElementById("corso").innerHTML = this.responseText;
 	      }
 	    };
-	    xmlhttp.open("GET","richieste_ajax/carica_corsi_materia.php?id="+id_materia,true);
+	    xmlhttp.open("GET","richieste_ajax/carica_corsi_materia2.php?id="+id_materia,true);
 	    xmlhttp.send();
 	  }
 	}

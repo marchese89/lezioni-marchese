@@ -24,7 +24,15 @@
 	    echo $d['giorno']. '-'. $d['mese']. '-'. $d['anno']. '-'. $d['ora'];
 	    ?>
 	    </td>
-	    <td><?php if($richiesta['evasa'] == 1){echo "SI";}else{echo "NO";}?></td>
+	    <td>
+	    <img src="<?php 
+	               if($richiesta['evasa'] == 1){
+	                   echo 'images/green_spot.png';
+	               }else{
+	                   echo 'images/red_spot.png';
+	               }
+	                   ?>" style="width: 50px;height:50px" >
+	    </td>
 	    <td>
 	    <button onclick=location.href="visualizza-richiesta-lezione-i-<?php echo $richiesta['id'];?>.html">Visualizza</button>
 	    </td>
@@ -32,4 +40,9 @@
 	    <?php 
 	}
 	?>
+		<tr>
+			<td align="center" id="indietro" colspan=6><strong><a
+					href="home-insegnante.html">
+					Indietro</a></strong></td>
+		</tr>
 </table>

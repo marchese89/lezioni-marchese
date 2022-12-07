@@ -1,12 +1,11 @@
 <?php
-include_once 'config/connection.php';
+
 include_once 'config/mysql-config.php';
 include_once 'acquisti/carrello.php';
 include_once 'script/funzioni-php.php';
 
 session_cache_limiter('nocache');
 session_start();
-
 
 if (!isset($_SESSION['carrello'])) {
     $_SESSION['carrello'] = new Carrello();
@@ -72,11 +71,8 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 <script type="text/javascript"
 	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
 <script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
-<script type="text/javascript" src="script/javascript-comune.js?ts=<?=time()?>&quot"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://js.stripe.com/v3/"></script>
-<script src="pagamenti/checkout.js?ts=<?=time()?>&quot" defer></script>
+
+
 </head>
 <body
 	onload="carica_lezioni(document.getElementById('corso').value)"

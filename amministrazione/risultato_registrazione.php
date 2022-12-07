@@ -20,7 +20,7 @@ function generaCodice($length = 6)
     }
     return $codiceAtt;
 }
-$datiValidi = TRUE;
+
 $nome = str_replace("'", "''", $_POST['nome']);
 $cognome = str_replace("'", "''", $_POST['cognome']);
 $via = str_replace("'", "''", $_POST['via']);
@@ -34,9 +34,8 @@ $password1 = password_hash($_POST['pass1'], PASSWORD_DEFAULT);
 $codiceA = generaCodice();
 $data = date("Y-m-d H:i:s");
 
-$sql0 = "INSERT INTO utente (email,password,nome,cognome,codice_attivaz,data_iscrizione,stato_account) VALUES('$email1','$password1','$nome','$cognome','$codiceA','$data','0')";
 $result = - 1;
-$result = $conn->query($sql0);
+$result = $conn->query("INSERT INTO utente (email,password,nome,cognome,codice_attivaz,data_iscrizione,stato_account) VALUES('$email1','$password1','$nome','$cognome','$codiceA','$data','0')");
 
 $testoMailReg = "Gentile cliente\ngrazie per essersi registrato.\nPer attivare il suo account inserisca" . " il codice " . $codiceA . " dopo aver effettuato l'accesso\nEasy Learning";
 if ($result) {
