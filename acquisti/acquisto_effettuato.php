@@ -20,13 +20,21 @@ $dataFattura = $data_['giorno'].'/'. $data_['mese']. '/' . $data_['anno'];
 $rr = $conn->query("SELECT * FROM fattura");
 $u_f = $rr->fetch_assoc();
 $ultimo = $u_f['numero'];
+echo 'numero ultima fattura: '. $ultimo . '<br>';
 $data_ultima_f = $u_f['data'];
 $data2 = stampa_data($data_ultima_f);
 $numeroFattura  = 1;
+echo 'data[anno]: ' . $data_['anno']. '<br>';
+echo 'data2[anno]: ' . $data2['anno']. '<br>';
 if($data_['anno'] == $data2['anno']){
 $numeroFattura = $ultimo+1;
 }
-$r = $conn->query("UPDATE fattura SET numero = '$numeroFattura' AND data = '$data' WHERE numero = '$ultimo'");
+echo 'numero fattura: ' . $numeroFattura. '<br>';
+$r0 = $conn->query("DELETE FROM fattura WHERE numero = '$ultimo'");
+if(!$r0){
+    $rollback = TRUE;
+}
+$r = $conn->query("INSERT INTO fattura (numero,data) VALUES('$numeroFattura','$data')");
 if(!$r){
     $rollback = TRUE;
 }
@@ -489,6 +497,8 @@ for ($i = 0; $i < count($contenuto); $i ++) {
  }
  $output;
  if($rollback){
+     $conn->query("ROLLBACK");
+     $conn->query("UNLOCK TABLES");
      unlink('../fatture/' . $number. '.pdf');
      //rimborso totale
      $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
@@ -496,21 +506,19 @@ for ($i = 0; $i < count($contenuto); $i ++) {
      header('Location: ../ordine-fallito.html');
  }else{
      $r = $conn->query("COMMIT");
+     $conn->query("UNLOCK TABLES");
      if(!$r){
+         $conn->query("ROLLBACK");
+         $conn->query("UNLOCK TABLES");
          unlink('../fatture/' . $number. '.pdf');
          //rimborso totale
          $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
          $stripe->refunds->create(['payment_intent' => $_GET['payment_intent']]);
          header('Location: ../ordine-fallito.html');
      }
-     $conn->query("UNLOCK TABLES");
      $_SESSION['carrello']->vuotaCarrello();
      header('Location: ../ordine-effettuato.html');
  }
  
- 
-
-
-
 
  ?>

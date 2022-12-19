@@ -3,11 +3,12 @@ session_start();
 include 'config/mysql-config.php';
 
 ?>
-<tr style="height: 60px">
-	<td>
-	<label style="font-size: 18px">Inserisci nuovo corso</label>
-	</td>
-</tr>
+<table id="pannello_controllo" >
+	<tr id="titolo">
+		<th>Inserisci nuovo corso
+		</th>
+	</tr>
+
 <form action="insegnanti/inserisci_corso.php" method="post" >
 <tr style="height: 60px; " >
 
@@ -97,6 +98,7 @@ while ($materia = $result->fetch_assoc()) {
 	    
 <tr>
 			<td align="center" id="indietro" ><strong><a
-					href="elenco-corsi.html">
+					href="corsi.html">
 					Indietro</a></strong></td>
 		</tr>
+</table>

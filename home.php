@@ -124,7 +124,7 @@ if (!$conn) {
     </style>
   </head>
   <body>
-    <div class="slideshow-container">
+    <!--  <div class="slideshow-container">
     <?php 
         $result = $conn->query("SELECT * FROM lezione");
         while($lezione =  $result->fetch_assoc()){
@@ -212,7 +212,8 @@ if (!$conn) {
 
     
 <div>
-<table style="width: 100%; font-size: 28pt;font-family: cursive;">
+-->
+<table style="width: 100%; font-size: 28pt;font-family: cursive;" id="pannello_controllo">
 <tr style="height: 100px;align-content: center"><td><b>Sei uno <font color="green">studente</font>?</b></td></tr>
 <tr style="height: 100px"><td><b>Hai bisogno di aiuto con lo <font color="green">studio</font>?</b><td></td></tr>
 <tr style="height: 100px"><td><b>Acquista i nostri <font color="green">corsi</font> o le <font color="green">lezioni singole</font>,</b></tr>

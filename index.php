@@ -69,7 +69,7 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 	type="text/css">
 <script type="text/javascript" src="script/jquery-2.1.1.js"></script>
 <script type="text/javascript"
-	src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
+	src="script/validazione_campi/livevalidation_standalone.compressed.js?ts=<?=time()?>&quot"></script>
 <script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
 
 
@@ -145,10 +145,8 @@ if (empty($_SESSION['user'])) {
 
 		</tr>
 
-		<tr>
-			 <th colspan=3>
-				
-				<?php
+	</table>
+					<?php
     if (empty($pagina_interna)) {
         $pagina_interna = 'home.php';
     }
@@ -156,9 +154,5 @@ if (empty($_SESSION['user'])) {
         include $pagina_interna;
     } catch (Exception $e) {}
     ?>
-                
-			</th>
-		</tr>
-	</table>
 </body>
 </html>

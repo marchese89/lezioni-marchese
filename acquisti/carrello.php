@@ -15,6 +15,9 @@ class ElementoC
 
     public function __construct($id, $tipo_elem, $conn)
     {
+        mysqli_autocommit($conn, FALSE);
+        $conn->query("LOCK TABLES lezione READ, esercizio READ, corso READ,richieste_lezioni READ");
+        $conn->query("BEGIN");
         $this->idProdotto = $id;
         $this->tipoElemento = $tipo_elem;
         switch ($this->tipoElemento) {
@@ -54,6 +57,8 @@ class ElementoC
             default:
                 break;
         }
+        $conn->query("COMMIT");
+        $conn->query("UNLOCK TABLES");
     }
 
     public function getId()
@@ -101,6 +106,9 @@ class Carrello
         if ($ind !== - 1) {
             return TRUE;
         }
+        mysqli_autocommit($conn, FALSE);
+        $conn->query("LOCK TABLES lezione READ, esercizio READ");
+        $conn->query("BEGIN");
         // verifichiamo se è già presente un insieme che include già l'elemento (niente da inserire)
         // il tipo è una lezione
         if ($tipo === 0) {
@@ -200,7 +208,10 @@ class Carrello
                 return TRUE;
             }
         }
-
+        
+        $conn->query("COMMIT");
+        $conn->query("UNLOCK TABLES");
+        
         array_push($this->elementi, $elem);
         return TRUE;
     }

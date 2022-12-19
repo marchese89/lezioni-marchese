@@ -5,15 +5,29 @@ $prod = $_GET['prod'];
 $tipo_prod = $_GET['tipo_prod'];
 $punt = $_GET['punt'];
 
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES feedback WRITE");
+$conn->query("BEGIN");
 
 $r = $conn->query("SELECT * FROM feedback WHERE studente = '$stud' AND prodotto = '$prod' AND tipo_prodotto = '$tipo_prod'");
 if($r->num_rows > 0){
-    $conn->query("UPDATE feedback SET punteggio = '$punt' WHERE studente = '$stud' AND prodotto = '$prod' AND tipo_prodotto = '$tipo_prod'");
-    
-    
+    $r = $conn->query("UPDATE feedback SET punteggio = '$punt' WHERE studente = '$stud' AND prodotto = '$prod' AND tipo_prodotto = '$tipo_prod'");
+    if($r){
+        $conn->query("COMMIT");
+    }else {
+        $conn->query("ROLLBACK");
+    }
 }else{
-    $conn->query("INSERT feedback (studente,prodotto,tipo_prodotto,punteggio) VALUES ('$stud', '$prod', '$tipo_prod', '$punt')");
+    $r = $conn->query("INSERT feedback (studente,prodotto,tipo_prodotto,punteggio) VALUES ('$stud', '$prod', '$tipo_prod', '$punt')");
+    
+    if($r){
+        $conn->query("COMMIT");
+    }else {
+        $conn->query("ROLLBACK");
+    }
 }
+
+$conn->query("UNLOCK TABLES");
 
 $toPrint = '<a ';
 if($punt > 0){

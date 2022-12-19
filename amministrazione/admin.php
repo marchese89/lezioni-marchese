@@ -1,14 +1,13 @@
 
 
 
-<table align="center" width="100%" id="pannello_controllo"
-	cellspacing="0" cellpadding="0">
-	<thead>
+<table align="center"  id="pannello_controllo">
+	
 		<tr id="titolo">
 			<th>Pannello Amministratore</th>
 		</tr>
-	</thead>
-	<tbody>
+
+
 		<div id="inner">
 	<?php
 $inner;
@@ -21,7 +20,7 @@ if (! empty($inner) && $inner != 'amministrazione/admin.php') {
     ?>
 		<tr>
 			<td align="center"><strong>
-			<a href="">Vendite</a></strong></td>
+			<a href="vendite.html">Vendite</a></strong></td>
 		</tr>
 
 		<tr>
@@ -42,6 +41,5 @@ if (! empty($inner) && $inner != 'amministrazione/admin.php') {
 }
 ?>
 		</div>
-	</tbody>
 </table>
 

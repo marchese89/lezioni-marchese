@@ -8,10 +8,19 @@ $tipo_prod =  $_GET['tipo_prod'];
 $id_stud = $_GET['id_stud'];
 $autore =  $_GET['aut'];//0->studente, 1->insegnante
 $testo = str_replace("'", "''", $_GET['testo']);
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES chat READ, messaggi_chat WRITE");
+$conn->query("BEGIN");
 $result = $conn->query("SELECT * FROM chat WHERE id_prodotto = '$id_prod' AND tipo_prodotto = '$tipo_prod' AND id_studente = '$id_stud'");
 $chat = $result->fetch_assoc();
 $id_chat = $chat['id'];
-$conn->query("INSERT INTO messaggi_chat(id_chat,messaggio,autore,data) VALUES ('$id_chat','$testo','$autore','$data')");
 
+$r = $conn->query("INSERT INTO messaggi_chat(id_chat,messaggio,autore,data) VALUES ('$id_chat','$testo','$autore','$data')");
 
+if ($r) {
+    $conn->query("COMMIT");
+} else {
+    $conn->query("ROLLBACK");
+}
+$conn->query("UNLOCK TABLES");
 ?>

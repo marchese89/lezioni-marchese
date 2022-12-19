@@ -18,7 +18,7 @@
 	<?php 
 	$id_ins = trovaIdInsegnante($_SESSION['user'], $conn);
 	
-	$result = $conn->query("SELECT * FROM chat");
+	$result = $conn->query("SELECT * FROM chat ORDER BY id DESC");
 	while($chat = $result->fetch_assoc()){
 	   //vediamo di chi è l'ultimo messaggio
 	   $id_chat  =  $chat['id'];

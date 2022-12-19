@@ -1,5 +1,4 @@
-<table align="center" width="100%" id="pannello_controllo" cellspacing=0
-	cellpadding=0>
+<table align="center" id="pannello_controllo" >
 
 	<tr id="titolo">
 		<th colspan="3" >Ordini Effettuati</th>

@@ -10,11 +10,19 @@ $prezzo_lezione = $_POST['prezzo_lezione'];
 $lezione = $_SESSION['percorsoPDF_L'];
 $presentazione = $_SESSION['percorsoPDF_PL'];
 
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES lezione WRITE");
+$conn->query("BEGIN");
+$r = $conn->query("INSERT INTO lezione(titolo,numero,corso_lez,presentazione,lezione,prezzo) VALUES ('$titolo','$numero','$corso','$presentazione','$lezione','$prezzo_lezione')");
+if ($r) {
+    unset($_SESSION['percorsoPDF_L']);
+    unset($_SESSION['percorsoPDF_PL']);
+    $conn->query("COMMIT");
+} else {
+    $conn->query("ROLLBACK");
+}
+$conn->query("UNLOCK TABLES");
 
-$conn->query("INSERT INTO lezione(titolo,numero,corso_lez,presentazione,lezione,prezzo) VALUES ('$titolo','$numero','$corso','$presentazione','$lezione','$prezzo_lezione')");
-
-unset($_SESSION['percorsoPDF_L']);
-unset($_SESSION['percorsoPDF_PL']);
 
 header("Location: ../nuova-lezione.html");
 ?>

@@ -8,11 +8,11 @@ if(isset($_SESSION['user'])){
 }
 $sql = "SELECT * FROM utente WHERE email='$email'";
 $result = $conn->query($sql);
-$argomento;
+$utente;
 if ($result->num_rows > 0) {
-    $argomento = $result->fetch_assoc();
+    $utente = $result->fetch_assoc();
 }
-if ($argomento['stato_account'] === '1') {
+if ($utente['stato_account'] === '1') {
     if (isset($_SESSION['user'])) {
 
         ?>
@@ -22,7 +22,7 @@ if ($argomento['stato_account'] === '1') {
 <table id="pannello_controllo" align="center" cellspacing=0 cellpadding=0 width="100%"> 
 	<tr id="titolo">
 		<th style="height: 60px" align="center"><span
-			style="color: #0e83cd; font-size: 24px">Il mio profilo (Studente)</span><br></th>
+			style="color: #0e83cd; font-size: 24px">Il mio profilo: <?php echo $utente['nome'] . " ". $utente['cognome'];?>  (Studente)</span><br></th>
 	</tr>
 	<tr style="height: 60px">
 		<td align="center">
@@ -85,6 +85,7 @@ if ($argomento['stato_account'] === '1') {
 } else {
     ?>
 <form action="amministrazione/attiva_account.php" method="post">
+    <input type="hidden" name="aut" value="stud" >
 	<table id="prev" style="width: 100%">
 		<tr>
 			<td><p style="color: #0e83cd;">Attivazione Account</p></td>

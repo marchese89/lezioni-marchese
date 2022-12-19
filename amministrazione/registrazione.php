@@ -9,21 +9,48 @@ if (! empty($_GET['return'])) {
     $ritorno = $_GET['return'];
 }
 ?>
+<script>
+    function mostraPassword1() {
+    	  var x = document.getElementById("pass1");
+    	  if (x.type === "password") {
+    	    x.type = "text";
+    	  } else {
+    	    x.type = "password";
+    	  }
+    	}
+    function mostraPassword2() {
+  	  var x = document.getElementById("pass2");
+  	  if (x.type === "password") {
+  	    x.type = "text";
+  	  } else {
+  	    x.type = "password";
+  	  }
+  	}
 
+    function modifica_pass(){
+    	var x = document.getElementById("pass1");
+    	if (x.type === "text") {
+    	    x.type = "password";
+    	  }
+    	var y = document.getElementById("pass2");
+    	if (x.type === "text") {
+      	    x.type = "password";
+      	  }
+    }
+    </script>
 <form
 	action="amministrazione/risultato_registrazione.php<?php if(!empty($ritorno)){echo '?return=ok';}?>"
-	method="post">
-	<table width="60%" cellspacing="0" cellpadding="0"
-		align="center"
-		style="border-collapse: collapse;" 
-		RULES=none FRAME=none>
+	method="post" onsubmit="modifica_pass()">
+	<table width="40%" cellspacing="0" cellpadding="0" align="center"
+		style="border-collapse: collapse;" RULES=none FRAME=none>
 		<tr>
-			<th valign="center" height="100" style="font-size: 24px;color: #0e83cd;" colspan="2">Iscrizione</th>
+			<th valign="center" height="100"
+				style="font-size: 24px; color: #0e83cd;" colspan="2">Iscrizione</th>
 		</tr>
 		<tr>
 
 			<td valign="middle" align="center" height="60" width="98">
-				<p style="color: #0e83cd" >Nome</p>
+				<p style="color: #0e83cd">Nome</p>
 				<p>
 					<input type="text" id="nome" name="nome" maxlength="45" size="30">
 					<script type="text/javascript">
@@ -33,7 +60,7 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p>
 			</td>
-			
+
 			<td valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Cognome</p>
 				<p>
@@ -51,8 +78,7 @@ if (! empty($_GET['return'])) {
 			<td valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Indirizzo (via/piazza)</p>
 				<p>
-					<input type="text" id="via" name="via" maxlength="255"
-						size="30">
+					<input type="text" id="via" name="via" maxlength="255" size="30">
 					<script type="text/javascript">
                                     var via_ = new LiveValidation('via', {onlyOnSubmit: true});
                                     via_.add(Validate.Presence);
@@ -102,8 +128,7 @@ if (! empty($_GET['return'])) {
 			<td valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">CAP</p>
 				<p>
-					<input type="text" id="cap" name="cap" maxlength="5"
-						size="30">
+					<input type="text" id="cap" name="cap" maxlength="5" size="30">
 					<script type="text/javascript">
                                     var cap_ = new LiveValidation('cap', {onlyOnSubmit: true});
                                     cap_.add(Validate.Presence);
@@ -114,8 +139,7 @@ if (! empty($_GET['return'])) {
 			<td valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Codice Fiscale</p>
 				<p>
-					<input type="text" id="cf" name="cf" maxlength="16"
-						size="30">
+					<input type="text" id="cf" name="cf" maxlength="16" size="30">
 					<script type="text/javascript">
                                     var cf_ = new LiveValidation('cf', {onlyOnSubmit: true});
                                     cf_.add(Validate.Presence);
@@ -159,12 +183,14 @@ if (! empty($_GET['return'])) {
 				<p style="color: #0e83cd">Password</p>
 				<p>
 					<input type="password" id="pass1" name="pass1" maxlength="45"
-						size="30">
+						size="30"><i class="bi bi-eye-slash" id="togglePassword"></i>
 					<script type="text/javascript">
                                     var pass1_ = new LiveValidation('pass1', {onlyOnSubmit: true});
                                     pass1_.add(Validate.Presence);
+                                    pass1_.add(Validate.Pass);
                                 </script>
-				</p>
+				</p> <input type="checkbox" onclick="mostraPassword1()">Mostra
+				Password
 			</td>
 			<td valign="middle" align="center" height="80" width="78">
 				<p style="color: #0e83cd">Conferma Password</p>
@@ -176,13 +202,31 @@ if (! empty($_GET['return'])) {
                                     pass2_.add(Validate.Presence);
                                     pass2_.add(Validate.Confirmation, {match: 'pass1'});
                                 </script>
-				</p>
+				</p> <input type="checkbox" onclick="mostraPassword2()">Mostra
+				Password
+				<p>
+			
 			</td>
 
 		</tr>
 		<tr>
-			<th colspan="2" height="300px" style="color: #0e83cd">Informativa sul trattamento dei dati
-				personali<br> <textarea rows="10" cols="50" disabled>Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
+			<td colspan="2"><label>La password deve essere lunga alemno 10
+					caratteri,
+					<p>contenere almeno una lettera maiuscola e una minuscola,
+					
+					<p>un numero, e uno tra i seguenti caratteri speciali: @ # ! ? . ,
+						; :
+					
+					<p>non deve inoltre contenere più di due cifre uguali ripetute o
+						più di due lettere ripetute
+					
+			</label></td>
+		</tr>
+		<tr>
+			<th colspan="2" height="300px" style="color: #0e83cd">Informativa sul
+				trattamento dei dati personali<br>
+			<p>
+					<textarea rows="10" cols="50" disabled>Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
 1. I dati personali da Lei/Voi forniti o acquisiti nell&apos;ambito della nostra attivit&agrave; saranno oggetto di trattamento improntato ai principi di correttezza, liceit&agrave;, trasparenza e di tutela della Sua/Vostra riservatezza e dei Suoi/Vostri diritti.
 2. Il trattamento di tali dati personali sar&agrave; finalizzato agli adempimenti degli obblighi contrattuali o derivanti da incarico conferito dall&apos;interessato ed in particolare all&apos;invio telematico di ulteriori informazioni commerciali e materiale pubblicitario sulle novit&agrave; dei prodotti dei titolari di questo sito o eventuali fatture.
 3. Il trattamento potr&agrave; essere effettuato anche con l&apos;ausilio di strumenti elettronici con modalit&agrave; idonee a garantire la sicurezza e riservatezza dei dati.
@@ -210,13 +254,13 @@ c) l&apos;attestazione che le operazioni di cui alle lettere a) e b) sono state 
 a) per motivi legittimi al trattamento dei dati personali che lo riguardano, ancorch&eacute; pertinenti allo scopo della raccolta;
 b) al trattamento di dati personali che lo riguardano a fini di invio di materiale pubblicitario o di vendita diretta o per il compimento di ricerche di mercato o di comunicazione commerciali
                             </textarea>
-
+			
 			</th>
 		</tr>
 		<tr>
-			<th colspan="2" height="40px" style="color: #0e83cd">Ho letto l'informativa <input
-				type="checkbox" style="font-size: x-large" name="info" id="info"> &nbsp; <script
-					type="text/javascript">
+			<th colspan="2" height="40px" style="color: #0e83cd">Ho letto
+				l'informativa <input type="checkbox" style="font-size: x-large"
+				name="info" id="info"> &nbsp; <script type="text/javascript">
                                     var info_ = new LiveValidation('info', {onlyOnSubmit: true});
                                     info_.add(Validate.Acceptance);
                                 </script>

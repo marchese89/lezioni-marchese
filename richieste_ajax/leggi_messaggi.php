@@ -7,6 +7,9 @@ $id_prod = $_GET['id_prod'];
 $tipo_prod =  $_GET['tipo_prod'];
 $id_stud = $_GET['id_stud'];
 
+$conn->query("LOCK TABLES chat READ, messaggi_chat READ");
+$conn->query("BEGIN");
+
 $result = $conn->query("SELECT * FROM chat WHERE id_prodotto = '$id_prod' AND tipo_prodotto = '$tipo_prod' AND id_studente = '$id_stud'");
 $chat = $result->fetch_assoc();
 $id_chat = $chat['id'];
@@ -25,5 +28,8 @@ while($messaggio = $result2->fetch_assoc()){
     $toPrint = $toPrint . $messaggio['messaggio'] . '</td></tr>';
 }
 $toPrint = $toPrint . "</table><br>";
+
+$conn->query("UNLOCK TABLES");
+
 echo $toPrint;
 ?>

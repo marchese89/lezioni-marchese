@@ -150,7 +150,7 @@ function carica_lezioni(id_corso) {
 <form action="insegnanti/inserisci_lezione.php" method="post">
 	<tr style="height: 60px;">
 
-		<td><label>Area Tematica - Materia - Corso - Argomento</label> <select
+		<td><label>Area Tematica - Materia - Corso</label> <select
 			name="corso" id="corso" onchange="carica_lezioni(this.value)">
 
 	<?php
@@ -372,6 +372,6 @@ while ($corso = $result0->fetch_assoc()) {
 	</td>
 </tr>
 <tr>
-	<td align="center" id="indietro"><strong><a href="elenco-corsi.html">
+	<td id="indietro"><strong><a href="elenco-corsi.html">
 				Indietro</a></strong></td>
 </tr>

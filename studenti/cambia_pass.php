@@ -3,69 +3,99 @@ if(!$conn || empty($_SESSION['user'])){
     header("Location: ../index.html");
 }
 ?>
+<script>
+function cambiaPassUtente() {
 
+	
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        	document.getElementById("vecchiaPass").value = "";
+        	document.getElementById("pass1").value = "";
+        	document.getElementById("pass2").value = "";
+            document.getElementById("res").innerHTML = xmlhttp.responseText;
+        }
+    }
+    var form = document.forms['cambia_pw'];
+    var queryString = "";
+    for (var i = 0; i < form.length; i++) {
+        if (i !== 0) {
+            queryString = queryString + '&' + document.forms['cambia_pw'][i].name + '=' + document.forms['cambia_pw'][i].value;
+        } else {
+            queryString = queryString + document.forms['cambia_pw'][i].name + '=' + document.forms['cambia_pw'][i].value;
+        }
+    }
+
+    xmlhttp.open("POST", "richieste_ajax/cambia_pw_cliente.php", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send(queryString);
+
+}
+</script>
 
 <form name="cambia_pw">
-    <table width="1030" align="center" id="tabella"  style="height: 646px">
-        <tr>
-            <th height="80" colspan="2" width="50%" style="font-size: 26px; color: #0e83cd;">
+    <table id="pannello_controllo" align="center" cellspacing=0 cellpadding=0>
+        <tr id="titolo">
+            <th colspan="2">
                 Modifica Password
             </th>
         </tr>
         <tr>
-            <th  height="70" align="right">
+            <td  align="right">
                 <label style="color: #0e83cd;">Vecchia Password: </label>
-            </th>
-            <th align="left">
-                <input type="password" name="vecchiaPass">
-            </th>
+            </td>
+            <td align="left">
+                <input type="password" name="vecchiaPass" id="vecchiaPass">
+            </td>
         </tr>
         <tr>
-            <th  height="70" align="right">
+            <td  align="right">
                 <label style="color: #0e83cd;">Nuova Password: </label>
-            </th>
-            <th align="left">
+            </td>
+            <td align="left">
                 <input type="password" name="nuovaPass" id="pass1">
                 <script type="text/javascript">
                     var pass1_ = new LiveValidation('pass1', {onlyOnSubmit: true});
                     pass1_.add(Validate.Presence);
                 </script>
-            </th>
+            </td>
         </tr>
         <tr>
-            <th  height="70" align="right">
+            <td align="right">
                 <label style="color: #0e83cd;">Conferma Password: </label>
-            </th>
-            <th align="left">
+            </td>
+            <td align="left">
                 <input type="password" name="confermaPass" id="pass2">
                 <script type="text/javascript">
                     var pass2_ = new LiveValidation('pass2', {onlyOnSubmit: true});
                     pass2_.add(Validate.Presence);
                     pass2_.add(Validate.Confirmation, {match: 'pass1'});
                 </script>
-            </th>
+            </td>
 
         </tr>
         <tr>
-            <th colspan="2">
+            <td colspan="2">
                 <input type="button" value="Modifica" onclick="cambiaPassUtente()">
                 <br>
 
-            </th>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
             </td>
         </tr>
-        <tr height="70" valign="bottom">
-            <th colspan="2">
-                <a href="home-user.html" class="collegamento">indietro</a>
-
-                <br>
-
-            </th>
+        <tr>
+        <td colspan="2">
+        <div id="res"></div>
+        </td>
         </tr>
+        <tr>
+		<td align="center" id="indietro" colspan="2"><strong><a href="home-user.html">
+					Indietro</a></strong></td>
+	</tr>
 
     </table>
 </form>

@@ -7,19 +7,18 @@ session_start();
 $id = $_POST['id'];
 $prezzo = $_POST['prezzo_s'];
 
-$insegnante = trovaIdInsegnante($_SESSION['user'],$conn);
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES richieste_lezioni WRITE");
+$conn->query("BEGIN");
 
-//troviamo l'id della soluzione precedente
-$result = $conn->query("SELECT * FROM svolgimento_lezioni WHERE richiesta='$id' AND ins='$insegnante'");
-$svolg = $result->fetch_assoc();
-$id_svolg = $svolg['id'];
+$r = $conn->query("UPDATE richieste_lezioni SET  prezzo = '$prezzo' WHERE id = '$id'");
 
-
-
-unset($path);
-
-$conn->query("UPDATE svolgimento_lezioni SET  prezzo = '$prezzo' WHERE id = '$id_svolg'");
-
+if ($r) {
+    $conn->query("COMMIT");
+} else {
+    $conn->query("ROLLBACK");
+}
+$conn->query("UNLOCK TABLES");
 
 header("Location: ../visualizza-richiesta-lezione-i-". $id .".html");
 

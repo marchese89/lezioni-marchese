@@ -19,12 +19,11 @@ if ($utente['stato_account'] === '1') {
 
 
 
-<table id="pannello_controllo" align="center" cellspacing=0
-	cellpadding=0 width="100%">
+<table id="pannello_controllo" >
 
 	<tr id="titolo">
 		<th colspan="3" style="height: 70px" align="center"><span
-			style="color: #0e83cd; font-size: 24px">Il mio profilo (insegnante)</span><br>
+			style="color: #0e83cd; font-size: 24px">Il mio profilo <?php echo $utente['nome'] . " ". $utente['cognome'];?>  (insegnante)</span><br>
 		</th>
 	</tr>
 	<tr style="height: 60px">
@@ -44,16 +43,16 @@ if ($utente['stato_account'] === '1') {
 	</tr>
 
 	<tr style="height: 60px">
-		<td><a href="modifica-dati.html" style="font-size: 18px">Modifica Dati
+		<td><a href="modifica-dati-insegnante.html" style="font-size: 18px">Modifica Dati
 				Personali</a></td>
 	</tr>
 	<tr style="height: 60px">
-		<td><a href="modifica-pass.html" style="font-size: 18px">Modifica
+		<td><a href="modifica-pass-insegnante.html" style="font-size: 18px">Modifica
 				Password</a></td>
 	</tr>
 	<tr style="height: 60px">
 		<td>
-		<a href="elenco-corsi.html" style="font-size: 18px">I miei Corsi</a>
+		<a href="corsi.html" style="font-size: 18px">Corsi</a>
 		</td>
 	</tr>
 	<tr style="height: 60px">
@@ -82,6 +81,7 @@ if ($utente['stato_account'] === '1') {
 } else {
     ?>
 <form action="amministrazione/attiva_account.php" method="post">
+	<input type="hidden" name="aut" value="ins" >
 	<table id="prev" style="width: 100%">
 		<tr>
 			<td><p style="color: #0e83cd;">Attivazione Account</p></td>

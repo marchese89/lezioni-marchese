@@ -1,5 +1,10 @@
 <?php
 $id_chat = $_GET['id_chat'];
+
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES lezione READ, esercizio READ, richieste_lezioni READ");
+$conn->query("BEGIN");
+
 $result = $conn->query("SELECT * FROM chat WHERE id = '$id_chat'");
 $chat = $result->fetch_assoc();
 $tipo_prodotto = $chat['tipo_prodotto'];
@@ -21,6 +26,8 @@ if ($tipo_prodotto == 5) {
     $result = $conn->query("SELECT * FROM richieste_lezioni WHERE id='$id_prodotto'");
     $lez_rich = $result->fetch_assoc();
 }
+$conn->query("COMMIT");
+$conn->query("UNLOCK TABLES");
 ?>
 <script type="text/javascript">
 setInterval(leggi_messaggi, 1000);
@@ -48,7 +55,6 @@ function invia_messaggio(testo) {
 	    var xmlhttp = new XMLHttpRequest();
 	    xmlhttp.onreadystatechange = function() {
 	      if (this.readyState == 4 && this.status == 200) {
-	        //document.getElementById("messaggi").innerHTML = this.responseText;
 	      }
 	    };
 	    //aut=1 -> insegnante

@@ -11,7 +11,9 @@ $tipo = $_GET['tipo'];
 $idCorso;
 
 $id_stud = trovaIdStudente($_SESSION['user'], $conn);
-
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES lezione READ, esercizio READ");
+$conn->query("BEGIN");
 // singola lezione
 if ($tipo === 'lez') {
     $id_lez = $_GET['id'];
@@ -102,6 +104,9 @@ if ($tipo === 'lez_r') {
 
     $carrello->aggiungi($elem, $conn);
 }
+
+$conn->query("COMMIT");
+$conn->query("UNLOCK TABLES");
 
 if ($tipo === 'lez_r') {
     header("Location: ../visualizza-richiesta-lezione-" . $_GET['ret'] . ".html");

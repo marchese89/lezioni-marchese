@@ -9,11 +9,19 @@ $prezzo = $_POST['prezzo_s'];
 
 $svolgimento = $_SESSION['percorsoPDF_SL'];
 
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES richieste_lezioni WRITE");
+$conn->query("BEGIN");
+$r = $conn->query("UPDATE richieste_lezioni SET svolgimento = '$svolgimento', prezzo = '$prezzo' WHERE id = '$id'");
+if ($r) {
+    unset($_SESSION['percorsoPDF_SL']);
+    unset($_SESSION['pdfSLCaricato']);
+    $conn->query("COMMIT");
+} else {
+    $conn->query("ROLLBACK");
+}
+$conn->query("UNLOCK TABLES");
 
-$conn->query("UPDATE richieste_lezioni SET svolgimento = '$svolgimento', prezzo = '$prezzo' WHERE id = '$id'");
-
-unset($_SESSION['percorsoPDF_SL']);
-unset($_SESSION['pdfSLCaricato']);
 
 header("Location: ../visualizza-richiesta-lezione-i-". $id .".html");
 

@@ -34,67 +34,6 @@ function cambiaPass() {
 
 }
 
-//ricalcola il prezzo di un ordine quando si è già alla cassa in base alla mod. di pagamento
-function ricalcolaPrezzo2(metodo) {
-
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            document.getElementById("prezzoF").innerHTML = xmlhttp.responseText;
-        }
-    }
-
-    var queryString = "metodo=" + metodo;
-
-    xmlhttp.open("POST", "richieste_ajax/aggiorna_prezzo.php", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(queryString);
-
-}
-
-
-
-
-function richiediTabellaPrezzi() {
-
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        var xmlhttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        var xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            //var res = $.trim(xmlhttp.responseText);
-            document.getElementById("prezzario").innerHTML = xmlhttp.responseText;
-            $('#prezzario').show();
-        }
-    }
-    var form = document.forms['dati_prodotto'];
-    var queryString = "";
-
-    for (var j = 0; j < form.length; j++) {
-        if (j !== 0) {
-            queryString = queryString + '&' + document.forms['dati_prodotto'][j].name + '=' + document.forms['dati_prodotto'][j].value;
-        } else {
-            queryString = queryString + document.forms['dati_prodotto'][j].name + '=' + document.forms['dati_prodotto'][j].value;
-        }
-    }
-    xmlhttp.open("POST", "richieste_ajax/generaTabellaPrezzi.php", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(queryString);
-
-}
-
-
-
 
 function ajaxUploadSupport() {
 
@@ -146,12 +85,9 @@ function _(el) {
     return document.getElementById(el);
 }
 
-function progressHandler(event) {
-    _("loaded_n_total").innerHTML = "Caricati " + event.loaded + " byte di " + event.total;
-    var percent = (event.loaded / event.total) * 100;
-    _("progressBar").value = Math.round(percent);
-    _("status").innerHTML = "caricato al " + Math.round(percent) + "% ... attendere";
-}
+
+
+/*
 function completeHandler(event) {
     //_("status").innerHTML = event.target.responseText;
     _("loaded_n_total").innerHTML = "";
@@ -171,12 +107,8 @@ function completeHandler(event) {
     //_("progressBar").value = 100;
     //location.reload();
 }
-function errorHandler(event) {
-    _("status").innerHTML = "Caricamento Fallito";
-}
-function abortHandler(event) {
-    _("status").innerHTML = "Caricamento Annullato";
-}
+*/
+
 
 function submitForm(supportAjaxUpload, formID) {
 
@@ -263,36 +195,6 @@ function timer_sessione() {
     xmlhttp.send();
 }
 
-
-function cambiaPassUtente() {
-
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            document.getElementById("tabella").innerHTML = xmlhttp.responseText;
-        }
-    }
-    var form = document.forms['cambia_pw'];
-    var queryString = "";
-    for (var i = 0; i < form.length; i++) {
-        if (i !== 0) {
-            queryString = queryString + '&' + document.forms['cambia_pw'][i].name + '=' + document.forms['cambia_pw'][i].value;
-        } else {
-            queryString = queryString + document.forms['cambia_pw'][i].name + '=' + document.forms['cambia_pw'][i].value;
-        }
-    }
-
-    xmlhttp.open("POST", "richieste_ajax/cambia_pw_cliente.php", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(queryString);
-
-}
 
 function accettaCookie() {
 

@@ -18,51 +18,43 @@ if ($result->num_rows > 0) {
 ?>
 
 
-<table id="prev" cellspacing="0" cellspadding="0" width="1030" align="center" style="height: 646px">
-    <tr style="height: 100px">
-        <td align="center" colspan="4" style="color: #0e83cd;font-size: 26px">
+<table id="pannello_controllo" cellspacing="0" cellspadding="0" align="center" style="width: 100%">
+    <tr style="height: 70px" id="titolo">
+        <th align="center" colspan="4" style="color: #0e83cd;font-size: 26px">
             Modifica Dati Profilo
-        </td>
+        </th>
     </tr>
-    <tr align="center" style="height: 80px">
+    <tr align="center" style="height: 60px">
         <td nowrap>
             <label for="labeltesto" style="color: #0e83cd">Nome: </label>
-            <label id="firstName"> <?php echo $argomento['nome']; ?></label>&nbsp;&nbsp;
+            <?php echo $argomento['nome']; ?>
         </td>
 	</tr>
-	<tr>
+	<tr style="height: 60px">
         <td style="padding-right: 50" nowrap>
             <label for="labeltesto" style="color: #0e83cd">Cognome: </label>
-            <label id="cognome"><?php echo $argomento['cognome']; ?></label>&nbsp;&nbsp;
+            <?php echo $argomento['cognome']; ?>
         </td>
     </tr>
 
-    <tr align="center" style="height: 80px">
+    <tr align="center" style="height: 60px">
 
-        <th nowrap>
-            <label for="labeltesto" style="color: #0e83cd">Email: </label>
-            <label id="vatNumber"> <?php echo $argomento['email']; ?></label>
-        </th>
         <td nowrap>
-            &nbsp;
+            <label for="labeltesto" style="color: #0e83cd">Email: </label>
+            <?php echo $argomento['email']; ?>
         </td>
 
     </tr>
-    <tr align="center" height="100">
+    <tr align="center" style="height: 60px">
 
-        <th colspan="3">
+        <td>
         <button class="button" onclick=location.href="modifica-dati2.html">Modifica Dati</button>
-        </th>
+        </td>
     </tr>
-    <tr valign="bottom" >
-        <th style="padding-bottom: 20px">
-            <a href="home-user.html" class="collegamento">Indietro</a>
-
-
-        </th>
-
-    </tr>
-
+	<tr>
+		<td align="center" id="indietro" ><strong><a href="home-user.html">
+					Indietro</a></strong></td>
+	</tr>
 
 
 

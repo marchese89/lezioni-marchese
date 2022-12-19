@@ -16,6 +16,10 @@ function generaPass($length = 8) {
     return $pass;
 }
 
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES utente WRITE,amministratore WRITE");
+$conn->query("BEGIN");
+
 $sql = "SELECT * FROM utente WHERE email='$email'";
 $res = $conn->query($sql);
 if ($res->num_rows > 0) {
@@ -24,6 +28,7 @@ if ($res->num_rows > 0) {
     $passCriptata = password_hash($nuovaPass, PASSWORD_DEFAULT);
     $sql2 = "UPDATE utente SET password='$passCriptata' WHERE email='$email'";
     if ($conn->query($sql2)) {
+        $conn->query("COMMIT");
         $testoEmail = "Gentile ". $utente['nome'] . " ". $utente['cognome']. ",<br>la sua nuova password &egrave;: " .
                 $nuovaPass . ".<br><br>la preghiamo di modificarla al tuo prossimo accesso.<br>Cordialmente,<br><br>VolantiniManifesti";
         
@@ -54,7 +59,7 @@ if ($res->num_rows > 0) {
         $nuovaPass = generaPass();
         $passCriptata = password_hash($nuovaPass, PASSWORD_DEFAULT);
         if ($conn->query("UPDATE amministratore SET password='$passCriptata' WHERE email='$emailAdmin'")) {
-            
+        $conn->query("COMMIT");
         $to = $emailAdmin;
         $subject = "Recupero Password";
         $sender = "recupera-credenziali@volantinimanifesti.it";
@@ -76,6 +81,6 @@ if ($res->num_rows > 0) {
         $_SESSION['recupero_credenziali'] = "noemail";
     }
 }
-
+$conn->query("UNLOCK TABLES");
 header("Location: ../index.php?pagina=info_res_operazioni.php");
 

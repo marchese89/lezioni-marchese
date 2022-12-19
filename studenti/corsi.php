@@ -3,7 +3,7 @@ include 'config/mysql-config.php';
 
 $id_mat = $_GET['id_mat'];
 ?>
-<table align="center" width="100%" id="pannello_controllo" cellspacing=0 cellpadding=0>
+<table align="center" id="pannello_controllo" cellspacing=0 cellpadding=0>
 	
 		<tr id="titolo">
 			<th>Corsi</th>

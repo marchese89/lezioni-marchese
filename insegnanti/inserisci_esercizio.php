@@ -12,10 +12,20 @@ $prezzo = $_POST['prezzo_esercizio'];
 $traccia = $_SESSION['percorsoPDF_TE'];
 $svolgimento = $_SESSION['percorsoPDF_SE'];
 
-$result = $conn->query("INSERT INTO esercizio(titolo,traccia,svolgimento,corso_ex,prezzo,insegn) VALUES ('$titolo','$traccia','$svolgimento','$corso','$prezzo','$id_ins')");
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES esercizio WRITE");
+$conn->query("BEGIN");
+$r = $conn->query("INSERT INTO esercizio(titolo,traccia,svolgimento,corso_ex,prezzo,insegn) VALUES ('$titolo','$traccia','$svolgimento','$corso','$prezzo','$id_ins')");
 
-unset($_SESSION['percorsoPDF_TE']);
-unset($_SESSION['percorsoPDF_SE']);
+if ($r) {
+    unset($_SESSION['percorsoPDF_TE']);
+    unset($_SESSION['percorsoPDF_SE']);
+    $conn->query("COMMIT");
+} else {
+    $conn->query("ROLLBACK");
+}
+$conn->query("UNLOCK TABLES");
+
 
 header("Location: ../nuovo-esercizio.html");
 ?>

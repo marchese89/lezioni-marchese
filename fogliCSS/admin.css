@@ -9,9 +9,8 @@ em {
 }
 
 table#pannello_controllo{
-    font-size: 12px;
+    font-size: 14px;
     margin: 0px auto;
-    max-height: 646px;
     border-radius: 7px 7px 7px 7px;
     -moz-border-radius: 7px 7px 7px 7px;
     -webkit-border-radius: 7px 7px 7px 7px;
@@ -21,6 +20,9 @@ table#pannello_controllo{
     background: linear-gradient(#e1e1e1, white); /* Standard syntax */
     color: #000;
     text-decoration: none;
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
 }	
 
 
@@ -35,7 +37,7 @@ table#pannello_controllo tr#titolo th {
     color: #0e83cd;
     font-weight: bold;
     padding: 0px 5px;
-    height: 60px;
+    height: 70px;
     font-size: 24px;
 }
 
@@ -52,9 +54,13 @@ table#pannello_controllo td {
     -moz-border-radius: 4px 4px 4px 4px;
     -webkit-border-radius: 4px 4px 4px 4px;
     padding: 0px 8px;
-    
+    font-weight: bold;
+    text-align: center;
 }
 
+table#pannello_controllo tr{
+	height: 60px;
+}
 
 
 

@@ -3,11 +3,12 @@ include_once 'acquisti/carrello.php';
 include_once 'config/mysql-config.php';
 session_start();
 
-mysqli_autocommit($conn, FALSE);
-$conn->query("LOCK TABLES utente READ,studente READ");
-$conn->query("BEGIN");
+
 
 if(isset($_SESSION['user'])){
+
+    $conn->query("LOCK TABLES utente READ,studente READ");
+    $conn->query("BEGIN");
     $email = $_SESSION['user'];
     if($email == 'admin'){
         header("Location: registrati.html");
@@ -16,6 +17,7 @@ if(isset($_SESSION['user'])){
     $utente = $result1->fetch_assoc();
     $id_ut = $utente['id'];
     $result2 = $conn->query("SELECT * FROM studente WHERE utente_s='$id_ut'");
+
     $conn->query("UNLOCK TABLES");
     if($result2->num_rows == 0){//l'utente non è uno studente
         header('Location: registrati.html');

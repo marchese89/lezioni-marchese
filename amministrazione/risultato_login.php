@@ -7,6 +7,9 @@ $pass = $_POST['password'];
 if (isset($_GET['return'])) {
     $return = $_GET['return'];
 }
+mysqli_autocommit($conn, FALSE);
+$conn->query("LOCK TABLES utente READ,amministratore READ");
+$conn->query("BEGIN");
 $sql = "SELECT * FROM amministratore WHERE email='$email'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -70,5 +73,6 @@ if ($_SESSION['loginCorretto']) {
 } else {
     $redirezione = 'Location: ../login.html';
 }
-
+$conn->query("COMMIT");
+$conn->query("UNLOCK TABLES");
 header($redirezione);

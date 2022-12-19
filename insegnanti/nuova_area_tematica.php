@@ -1,4 +1,8 @@
-
+<table id="pannello_controllo" >
+	<tr id="titolo">
+		<th>Nuova Area Tematica
+		</th>
+	</tr>
 <tr style="height: 60px">
 	<td><label style="font-size: 18px">Inserisci nuova Area Tematica</label>
 	</td>
@@ -64,6 +68,7 @@ while ($argomento = $result->fetch_assoc()) {
 		
 
 <tr>
-	<td align="center" id="indietro"><strong><a href="elenco-corsi.html">
+	<td align="center" id="indietro"><strong><a href="corsi.html">
 				Indietro</a></strong></td>
 </tr>
+</table>

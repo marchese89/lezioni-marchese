@@ -3,10 +3,11 @@ session_start();
 include 'config/mysql-config.php';
 
 ?>
-<tr style="height: 60px">
-	<td><label style="font-size: 18px">Inserisci nuova Materia</label>
-	</td>
-</tr>
+<table id="pannello_controllo" >
+	<tr id="titolo">
+		<th>Inserisci nuova Materia
+		</th>
+	</tr>
 
 <form action="insegnanti/inserisci_materia.php" method="post">
 	<tr style="height: 60px">
@@ -17,9 +18,9 @@ $email = $_SESSION['user'];
 
 $result = $conn->query("SELECT * FROM area_tematica");
 
-while ($argomento = $result->fetch_assoc()) {
+while ($area_tematica = $result->fetch_assoc()) {
     ?>
-	    <option value="<?php echo $argomento['id'];?>"><?php echo $argomento['nome'];?></option>
+	    <option value="<?php echo $area_tematica['id'];?>"><?php echo $area_tematica['nome'];?></option>
 	    <?php
     $i ++;
 }
@@ -50,12 +51,12 @@ while ($argomento = $result->fetch_assoc()) {
 
 	<?php
 	$result = $conn->query("SELECT * FROM materia");
-	while($argomento = $result->fetch_assoc()){
+	while($materia = $result->fetch_assoc()){
 	    echo '<tr style="height: 60px"><td>';
-	    $id_a_t = $argomento['area_tematica'];
+	    $id_a_t = $materia['area_tematica'];
 	    $result2 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
 	    $row2 = $result2->fetch_assoc();
-	    $id_mat = $argomento['id'];
+	    $id_mat = $materia['id'];
 	    $result3 = $conn->query("SELECT * FROM corso WHERE materia='$id_mat'");
 	    $to_delete;
 	    if($result3->num_rows > 0){
@@ -63,7 +64,7 @@ while ($argomento = $result->fetch_assoc()) {
 	    }else{
 	        $to_delete = TRUE;
 	    }
-	    echo "<p><label> " . $row2['nome']. " - ". $argomento['nome'] . "</label>";
+	    echo "<p><label> " . $row2['nome']. " - ". $materia['nome'] . "</label>";
 	    ?>
 	    <p>
 	    <form action="insegnanti/modifica_materia.php" method="post" >
@@ -90,5 +91,6 @@ while ($argomento = $result->fetch_assoc()) {
 	?>
 
 	<tr>
-		<td align="center" id="indietro"><strong><a href="elenco-corsi.html"> Indietro</a></strong></td>
+		<td align="center" id="indietro"><strong><a href="corsi.html"> Indietro</a></strong></td>
 	</tr>
+	</table>

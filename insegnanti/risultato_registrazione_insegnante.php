@@ -20,7 +20,7 @@ if (! isset($_SESSION['percorsoFoto']) | ! isset($_SESSION['percorsoFotoDI']) | 
 }
 
 mysqli_autocommit($conn, FALSE);
-$conn->query("LOCK TABLES utente WRITE,studente WRITE");
+$conn->query("LOCK TABLES utente WRITE,insegnante WRITE");
 $conn->query("BEGIN");
 
 function generaCodice($length = 6)
