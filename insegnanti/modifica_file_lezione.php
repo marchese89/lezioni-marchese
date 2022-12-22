@@ -1,7 +1,5 @@
 <?php
-session_start();
-include 'config/mysql-config.php';
-
+$corso = $_GET['id_corso'];
 ?>
 <script type="text/javascript">
 function cliccaFile(){
@@ -69,10 +67,11 @@ function visualizza_pdfL(img){
 
 
 </script>
+<table id="pannello_controllo" >
 
-<tr style="height: 60px">
-	<td><label style="font-size: 18px">Modifica File Lezione</label></td>
-</tr>
+	<tr id="titolo">
+		<th>Modifica File Lezione</th>
+	</tr>
 
 	<tr style="text-align: center">
 		<th style="text-align: center; alignment-adjust: central">
@@ -110,7 +109,7 @@ function visualizza_pdfL(img){
 				<label><font color="green">File Lezione caricato correttamente</font></label>
 			
 			<p>
-				<button value="elimina" onclick=location.href="upload/elimina_pdfL.php?id=<?php echo $_GET['id'];?>">elimina</button>
+				<button value="elimina" onclick=location.href="upload/elimina_pdfL.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>">elimina</button>
                         <?php
         } else {
             unset($_SESSION['pdfLCaricato']);
@@ -140,7 +139,7 @@ function visualizza_pdfL(img){
                     <?php
             if ($_SESSION['motivo_errore_pdfL'] === 'File gi&agrave; presente' && ! empty($_SESSION['pdf_to_deleteL'])) {
                 ?>
-                          <button onclick=location.href="upload/elimina_pdfL.php?id=<?php echo $_GET['id'];?>">elimina</button>
+                          <button onclick=location.href="upload/elimina_pdfL.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>">elimina</button>
                     <?php
             }
         }
@@ -149,10 +148,11 @@ function visualizza_pdfL(img){
 		</th>
 	</tr>
 	<tr style="height: 60px"> 
-		<td> <button onclick=location.href="insegnanti/modifica-file-lezione.php?id=<?php echo $_GET['id'];?>">Modifica</button></td>
+		<td> <button onclick=location.href="insegnanti/modifica-file-lezione.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>">Modifica</button></td>
 	</tr>
 
 <tr>
 	<td align="center" id="indietro"><strong><a
-			href="modifica-lezione-<?php echo $_GET['id'];?>.html"> Indietro</a></strong></td>
+			href="modifica-lezione-<?php echo $corso;?>-<?php echo $_GET['id'];?>.html"> Indietro</a></strong></td>
 </tr>
+</table>

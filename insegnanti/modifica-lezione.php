@@ -3,6 +3,7 @@
 include '../config/mysql-config.php';
 
 $id = $_POST['id'];
+$corso = $_GET['id_corso'];
 $titolo = $_POST['titolo_lezione'];
 $numero = $_POST['numero_lezione'];
 $prezzo_lezione = $_POST['prezzo_lezione'];
@@ -22,6 +23,6 @@ if ($r) {
 }
 $conn->query("UNLOCK TABLES");
 
-header("Location: ../modifica-lezione-". $id .".html");
+header("Location: ../modifica-lezione-". $corso . "-"  . $id .".html");
 
 ?>

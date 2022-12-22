@@ -22,6 +22,9 @@ $lez = $result->fetch_assoc();
 		<td><iframe src="<?php echo $lez['presentazione'];?>#view=FitH"
 				width="90%" height="800px"></iframe></td>
 	</tr>
+	<tr>
+		<td><button onclick=location.href="modifica-presentazione-lezione-<?php echo $lez-['id'];?>.html">Modifica</button></td>
+	</tr>
 	<tr style="height: 60px">
 		<td><label>Lezione</label></td>
 	</tr>

@@ -2,7 +2,7 @@
 include '../config/mysql-config.php';
 
 $id = $_GET['id'];
-
+$corso = $_GET['id_corso'];
 $result = $conn->query("SELECT * FROM lezione WHERE id='$id'");
 $lezione = $result->fetch_assoc();
 
@@ -20,5 +20,5 @@ if ($r) {
 }
 $conn->query("UNLOCK TABLES");
 
-header("Location: ../nuova-lezione.html");
+header("Location: ../corso-ins-". $corso .".html.html");
 ?>

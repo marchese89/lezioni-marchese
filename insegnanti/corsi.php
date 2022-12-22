@@ -17,12 +17,6 @@
 	<td align="center"><strong><a href="elenco-corsi.html">Elenco Corsi</a></strong></td>
 </tr>
 <tr>
-	<td align="center"><strong><a href="nuova-lezione.html">Nuova Lezione</a></strong></td>
-</tr>
-<tr>
-	<td align="center"><strong><a href="nuovo-esercizio.html">Nuovo Esercizio</a></strong></td>
-</tr>
-<tr>
 			<td align="center" id="indietro"><strong><a
 					href="home-insegnante.html">
 					Indietro</a></strong></td>

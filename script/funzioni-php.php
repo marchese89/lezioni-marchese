@@ -149,6 +149,15 @@ function trovaMateriaCorso($id_corso, $conn): int
     return $corso['materia'];
 }
 
+function trovaAreaTematicaMateria($id_materia, $conn): int
+{
+    $conn->query("LOCK TABLES materia READ");
+    $result = $conn->query("SELECT * FROM materia WHERE id='$id_materia'");
+    $materia = $result->fetch_assoc();
+    $conn->query("UNLOCK TABLES");
+    return $materia['area_tematica'];
+}
+
 function trovaCorsoLezione($id_lez, $conn): int
 {
     $conn->query("LOCK TABLES lezione READ");

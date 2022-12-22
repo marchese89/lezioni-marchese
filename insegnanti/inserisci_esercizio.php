@@ -27,5 +27,5 @@ if ($r) {
 $conn->query("UNLOCK TABLES");
 
 
-header("Location: ../nuovo-esercizio.html");
+header("Location: ../corso-ins-". $corso . ".html");
 ?>

@@ -2,6 +2,7 @@
 session_start();
 
 include '../config/mysql-config.php';
+$corso = $_GET['id_corso'];
 $id = $_GET['id'];
 
 mysqli_autocommit($conn, FALSE);
@@ -25,6 +26,6 @@ if (isset($_SESSION['percorsoPDF_L'])) {
 
 $conn->query("UNLOCK TABLES");
 
-header("Location: ../modifica-lezione-". $id .".html");
+header("Location: ../modifica-lezione-". $corso . "-" . $id . ".html");
 
 ?>

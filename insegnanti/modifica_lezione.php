@@ -1,16 +1,18 @@
 <?php
-session_start();
-include 'config/mysql-config.php';
-
+$corso = $_GET['id_corso'];
 ?>
+<table id="pannello_controllo" >
 
-<tr style="height: 60px">
-	<td><label style="font-size: 18px">Modifica Lezione</label></td>
-</tr>
+	<tr id="titolo">
+		<th>Modifica Lezione</th>
+	</tr>
+
+
 <form action="insegnanti/modifica-lezione.php" method="post">
-	<tr style="height: 60px;">
+<input type="hidden" name="id_corso" value="<?php echo $corso;?>">
+	<tr>
 
-		<td><label>
+		<td>
 				
 	<?php
 $id_lezione = $_GET['id'];
@@ -26,15 +28,15 @@ $row2 = $result2->fetch_assoc();
 $id_a_t = $row2['area_tematica'];
 $result3 = $conn->query("SELECT * FROM area_tematica WHERE id='$id_a_t'");
 $row3 = $result3->fetch_assoc();
-echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Corso: " . $r['nome'];
+echo "<label>Area Tematica:</label> " . $row3['nome'] . " - <label>Materia:</label> " . $row2['nome'] . " - <label>Corso:</label> " . $r['nome'];
 
 ?>
-	</label> <input type="hidden" name="id"
+	 <input type="hidden" name="id"
 			value="<?php echo $_GET['id']?>"></td>
 
 	</tr>
 
-	<tr style="height: 60px">
+	<tr>
 		<td><label>Numero</label><input type="text" name="numero_lezione"
 			id="numero_lezione" maxlength="45" size="24" autofocus="true"
 			value="<?php echo $lezione['numero'];?>"> <script
@@ -45,7 +47,7 @@ echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Co
                                 </script></td>
 	</tr>
 
-	<tr style="height: 60px">
+	<tr>
 		<td><label>Titolo</label><input type="text" name="titolo_lezione"
 			id="titolo_lezione" maxlength="45" size="24" autofocus="true"
 			value="<?php echo $lezione['titolo'];?>"> <script
@@ -56,7 +58,7 @@ echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Co
                                 </script></td>
 	</tr>
 
-	<tr style="height: 60px">
+	<tr>
 		<td><label>Prezzo</label><input type="text" name="prezzo_lezione"
 			id="prezzo_lezione" maxlength="45" size="24" autofocus="true"
 			value="<?php echo $lezione['prezzo'];?>"> <b> &euro;</b> <script
@@ -67,58 +69,32 @@ echo "Area Tematica: " . $row3['nome'] . " - Materia: " . $row2['nome'] . " - Co
                                 </script></td>
 	</tr>
 	
-	<tr style="height: 60px">
+	<tr>
 		<td><input type="submit" value="Modifica Lezione"></td>
 	</tr>
 </form>
-	<tr style="height: 60px">
+	<tr>
 	<td><label>Presentazione Lezione</label></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 	<td><iframe src="<?php echo $lezione['presentazione'];?>#view=FitH" width="90%" height="800px"></iframe></td>
 </tr>
-<tr style="height: 60px">
-		<td><button class="button" onclick=location.href="modifica-file-p-lezione-<?php echo $id_lezione;?>.html">Modifica Presentazione Lezione</button></td>
+<tr>
+		<td><button class="button" onclick=location.href="modifica-file-p-lezione-<?php echo $corso;?>-<?php echo $id_lezione;?>.html">Modifica Presentazione Lezione</button></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 	<td><label>Lezione</label></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 	<td><iframe src="<?php echo $lezione['lezione'];?>#view=FitH" width="90%" height="800px"></iframe></td>
 </tr>
-<tr style="height: 60px">
-		<td><button class="button" onclick=location.href="modifica-file-lezione-<?php echo $id_lezione;?>.html">Modifica File Lezione</button></td>
-	</tr>
-<tr style="height: 60px">
-	<td><label style="font-size: 18px">Elenco lezioni Corso</label></td>
-</tr>
-<tr style="height: 60px">
-	<td>
-		<div id="lezioni_corso">
-		<?php
-
-$id_lezione = $_GET['id'];
-
-$result0 = $conn->query("SELECT * FROM lezione WHERE id='$id_lezione'");
-$lez = $result0->fetch_assoc();
-$id_corso = $lez['corso_lez'];
-
-$result = $conn->query("SELECT * FROM lezione WHERE corso_lez='$id_corso' ORDER BY numero ASC");
-
-$toPrint = "<br>";
-
-while ($lez = $result->fetch_assoc()) {
-        $toPrint = $toPrint . "<label>";
-        $toPrint = $toPrint . "(" . $lez['numero'] . ") - " . $lez['titolo'] . " - prezzo: " . $lez['prezzo'] . "&euro;";
-        $toPrint = $toPrint . '</label>   ';
-        $toPrint = $toPrint . "<br><br>";
-}
-echo $toPrint;
-?>
-		</div>
-	</td>
-</tr>
 <tr>
-	<td align="center" id="indietro"><strong><a href="nuova-lezione.html">
+		<td><button class="button" onclick=location.href="modifica-file-lezione-<?php echo $corso;?>-<?php echo $id_lezione;?>.html">Modifica File Lezione</button></td>
+	</tr>
+	<tr>
+		<td><button class="button" onclick=location.href="insegnanti/elimina_lezione.php?id_corso=<?php echo $corso;?>&id=<?php echo $id_lezione;?>">Elimina Lezione</button></td>
+	</tr>
+	<td align="center" id="indietro"><strong><a href="corso-ins-<?php echo $corso;?>.html">
 				Indietro</a></strong></td>
 </tr>
+</table>

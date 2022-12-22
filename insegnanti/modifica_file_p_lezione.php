@@ -1,7 +1,5 @@
 <?php
-session_start();
-include 'config/mysql-config.php';
-
+$corso = $_GET['id_corso'];
 ?>
 <script type="text/javascript">
 function cliccaFile(){
@@ -108,7 +106,7 @@ function visualizza_pdfPL(img){
 				<label><font color="green">File Lezione caricato correttamente</font></label>
 			
 			<p>
-				<button value="elimina" onclick=location.href="upload/elimina_pdfPL.php?id=<?php echo $_GET['id'];?>&return=1">elimina</button>
+				<button value="elimina" onclick=location.href="upload/elimina_pdfPL.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>&return=1">elimina</button>
                         <?php
         } else {
             unset($_SESSION['pdfPLCaricato']);
@@ -138,7 +136,7 @@ function visualizza_pdfPL(img){
                     <?php
             if ($_SESSION['motivo_errore_pdfPL'] === 'File gi&agrave; presente' && ! empty($_SESSION['pdf_to_deletePL'])) {
                 ?>
-                          <button onclick=location.href="upload/elimina_pdfPL.php?id=<?php echo $_GET['id'];?>&return=1">elimina</button>
+                          <button onclick=location.href="upload/elimina_pdfPL.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>&return=1">elimina</button>
                     <?php
             }
         }
@@ -151,10 +149,10 @@ function visualizza_pdfPL(img){
 		</th>
 	</tr>
 	<tr style="height: 60px">
-		<td><button onclick=location.href="insegnanti/modifica-file-p-lezione.php?id=<?php echo $_GET['id'];?>">Modifica</button></td>
+		<td><button onclick=location.href="insegnanti/modifica-file-p-lezione.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>">Modifica</button></td>
 	</tr>
 
 <tr>
 	<td align="center" id="indietro"><strong><a
-			href="modifica-lezione-<?php echo $_GET['id'];?>.html"> Indietro</a></strong></td>
+			href="modifica-lezione-<?php echo $corso;?>-<?php echo $_GET['id'];?>.html"> Indietro</a></strong></td>
 </tr>

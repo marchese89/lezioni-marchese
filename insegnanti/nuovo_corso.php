@@ -4,15 +4,15 @@ include 'config/mysql-config.php';
 
 ?>
 <table id="pannello_controllo" >
-	<tr id="titolo">
-		<th>Inserisci nuovo corso
+	<tr id="titolo" >
+		<th colspan="6">Inserisci nuovo corso
 		</th>
 	</tr>
 
 <form action="insegnanti/inserisci_corso.php" method="post" >
-<tr style="height: 60px; " >
+<tr>
 
-	<td><label>Area Tematica - Materia</label> <select name="materia"  >
+	<td colspan="6"><label>Area Tematica - Materia</label> <select name="materia"  >
 	
 	<?php
 $email = $_SESSION['user'];
@@ -32,30 +32,40 @@ while ($materia = $result->fetch_assoc()) {
 		</select></td>
 		
 </tr>
-
-<tr style="height: 60px">
-	<td><label>Nome Corso</label><input type="text" name="nome_corso"
+<tr><td colspan="2"><label>Nome</label></td><td colspan="2"><label>Input</label></td><td colspan="2"><label>Operazioni</label></td></tr>
+<tr>
+	<td colspan="2" >Nuovo Corso</td><td colspan="2"><input type="text" name="nome_corso"
 		id="nome_corso" maxlength="45" size="24" autofocus="true"> <script
 			type="text/javascript">
                                     var nome_corso = new LiveValidation('nome_corso', {onlyOnSubmit: true});
                                     nome_corso.add(Validate.Presence);
                                     nome_corso.add(Validate.TestoEnumeri);
                                 </script>
+                                </td>
+                                <td>
 		<input type="submit" value="Inserisci Corso">
+		</td>
 	</td>
-</tr>
+
 </form>
-
-<tr style="height: 60px">
-	<td><label style="font-size: 18px">Corsi Inseriti</label></td>
 </tr>
-
+<tr>
+	<td colspan="6"><label style="font-size: 18px">Corsi Inseriti</label></td>
+</tr>
+<tr>
+<td><label>Area Tematica</label></td>
+<td><label>Materia</label></td>
+<td><label>Corso</label></td>
+<td><label>Input</label></td>
+<td colspan="2"><label>Operazioni</label></td></tr>
 	<?php
 	$ins = trovaIdInsegnante($email,$conn);
 	$result = $conn->query("SELECT * FROM corso WHERE insegnante='$ins' ORDER BY materia ASC");
 	
 	while($corso = $result->fetch_assoc()){
-	    echo '<tr style="height: 60px"><td><br>';
+	    ?>
+	    <tr>
+	    <?php 
 	    $id_mat = $corso['materia'];
 	    $id_corso = $corso['id'];
 	    $result2 = $conn->query("SELECT * FROM materia WHERE id='$id_mat' ");
@@ -70,11 +80,20 @@ while ($materia = $result->fetch_assoc()) {
 	    }else{
 	        $to_delete = TRUE;
 	    }
-	    echo "<label>". $area_tematica['nome']." - " . $materia['nome'] . " - ". $corso['nome'] . "</label><p>";
 	    ?>
-	    <p>
+	    <td>
+	    <?php echo $area_tematica['nome']; ?>
+	    </td>
+	    <td>
+	    <?php echo $materia['nome']; ?>
+	    </td>
+	    <td>
+	    <?php echo $corso['nome']; ?>
+	    </td>
+	    
 	    <form action="insegnanti/modifica_corso.php" method="post" >
 	    	<input type="hidden" name="id" value="<?php echo $id_corso;?>">
+	    	<td>
 			<input type="text" id="nome_corso2" name="nome_corso2"  maxlength="45"
 				size="24" autofocus="true" >
 			<script type="text/javascript">
@@ -82,22 +101,32 @@ while ($materia = $result->fetch_assoc()) {
                                     nome_corso2.add(Validate.Presence);
                                     nome_corso2.add(Validate.TestoEnumeri);
                                 </script>
+                                </td>
+            <td>
 			<input type="submit" value="Modifica">
+			</td>
 		</form>
 		
 	    <?php
 	    if($to_delete){
 	        ?>
+	        <td>
 	        <button class="button" onclick=location.href="insegnanti/elimina-corso.php?<?php echo 'id='.$id_corso;?>">Elimina</button>
-	        
+	        </td>
+	        <?php 
+	    }else{
+	        ?>
+	        <td></td>
 	        <?php 
 	    }
-	    echo '<p></td></tr>';
+	    ?>
+	    </tr>
+	<?php 
 	}
 	?>
 	    
 <tr>
-			<td align="center" id="indietro" ><strong><a
+			<td align="center" id="indietro" colspan="6"><strong><a
 					href="corsi.html">
 					Indietro</a></strong></td>
 		</tr>

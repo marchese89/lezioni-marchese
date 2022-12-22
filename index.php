@@ -74,9 +74,7 @@ if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_intern
 
 
 </head>
-<body
-	onload="carica_lezioni(document.getElementById('corso').value)"
-	>
+<body>
 
 	<div id="cookie">
 		<br> Questo sito utilizza i cookie tecnici (indispensabili per il suo
