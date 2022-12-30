@@ -78,7 +78,7 @@ while ($ex = $result->fetch_assoc()) {
 			<td><?php echo $ex['prezzo'];$prezzo_tot = $prezzo_tot+$ex['prezzo'];$tot_ex = $tot_ex + $ex['prezzo'];?>&euro;</td>
 			<td>
 			<button class="button" onclick=location.href="visualizza-esercizio-ins-<?php echo $id_corso;?>-<?php echo $ex['id'];?>.html" >Visualizza</button>
-			<button class="button" onclick=location.href="visualizza-esercizio-ins-<?php echo $id_corso;?>-<?php echo $ex['id'];?>.html" >Modifica</button>
+			<button class="button" onclick=location.href="modifica-esercizio-ins-<?php echo $id_corso;?>-<?php echo $ex['id'];?>.html" >Modifica</button>
 			</td>
 			
 		</tr>

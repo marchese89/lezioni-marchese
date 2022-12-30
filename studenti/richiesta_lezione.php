@@ -118,33 +118,32 @@ function aggiungi_corso(){
 if(studente($_SESSION['user'],$conn)){
 ?>
 
-<table align="center" width="100%" id="pannello_controllo" cellspacing=0 cellpadding=0>
+<table align="center" id="pannello_controllo" >
 	
 		<tr id="titolo">
 			<th>Richiesta Svolgimento lezione su Commissione</th>
 		</tr>
 		<tr>
-		<tr style="height: 60px">
 		<td>
 		<label>Inserisci un file "traccia" per richiedere lo svolgimento di una lezione su commissione,</label>
 		</td>
 		</tr>
-		<tr style="height: 60px">
+		<tr>
 		<td>
 		<label>lo svolgimento o la correzione di un esercizio</label>
 		</td>
 		</tr>
-		<tr style="height: 60px">
+		<tr>
 		<td>
 		<label>L'insegnante interessato produrr&agrave; una risposta che sar&agrave; visibile sul tuo profilo studente</label>
 		</td>
 		</tr>
-		<tr style="height: 60px">
+		<tr>
 		<td>
-		<label>A quel punto potrai decidere quale acquistare</label>
+		<label>A quel punto potrai vedere il prezzo e decidere se acquistarla</label>
 		</td>
 		</tr>
-		<tr style="height: 60px">
+		<tr>
 		<td>
 		<label>Sono inclusi nel prezzo eventuali chiarimenti via chat (disponibili dopo l'acquisto)</label>
 		</td>

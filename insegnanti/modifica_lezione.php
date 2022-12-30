@@ -91,9 +91,6 @@ echo "<label>Area Tematica:</label> " . $row3['nome'] . " - <label>Materia:</lab
 <tr>
 		<td><button class="button" onclick=location.href="modifica-file-lezione-<?php echo $corso;?>-<?php echo $id_lezione;?>.html">Modifica File Lezione</button></td>
 	</tr>
-	<tr>
-		<td><button class="button" onclick=location.href="insegnanti/elimina_lezione.php?id_corso=<?php echo $corso;?>&id=<?php echo $id_lezione;?>">Elimina Lezione</button></td>
-	</tr>
 	<td align="center" id="indietro"><strong><a href="corso-ins-<?php echo $corso;?>.html">
 				Indietro</a></strong></td>
 </tr>

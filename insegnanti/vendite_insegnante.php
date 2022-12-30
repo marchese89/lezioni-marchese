@@ -12,6 +12,7 @@
 	</tr>
 	<?php
 $id_insegnante = trovaIdInsegnante($_SESSION['user'], $conn);
+
 $result = $conn->query("SELECT * FROM prodotti_ordine PO,ordine O WHERE PO.id_ordine = O.id ORDER BY O.data DESC");
 $mese_in_stampa = "";
 $totale_mensile = 0;

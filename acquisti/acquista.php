@@ -25,7 +25,7 @@ if(isset($_SESSION['user'])){
         ?>
         <script src="https://js.stripe.com/v3/"></script>
 		<script src="pagamenti/checkout.js?ts=<?=time()?>&quot" defer></script>
-        <table align="center" width="100%" id="pannello_controllo" cellspacing=0 cellpadding=0>
+        <table align="center" id="pannello_controllo" >
 <tr id="titolo">
 			<th colspan="4">Acquista</th>
 		</tr>
@@ -33,24 +33,25 @@ if(isset($_SESSION['user'])){
 		Paga <?php echo $_SESSION['carrello']->getTotale()?> &euro;
 		</td></tr>
 		
-		<table border=0 width=500px align=center cellpadding="0" cellspacing="0" align=center>
-		<tr style="height: 60px;width: 500px"><td><br>
-		<br>
+		
+
 		<form id="payment-form">
-      <div id="payment-element" style="width: 600px;">
+		<tr style="width: 500px" align="center"><td>
+      <div id="payment-element" style="width: 600px;margin-left: auto;margin-right: auto;">
         <!--Stripe.js injects the Payment Element-->
       </div>
-      </table>
-      <br>
-      <br>
+      </td>
+    </tr>
+    <tr><td>
       <button id="submit">
         <div class="spinner hidden" id="spinner"></div>
         <span id="button-text">Paga Adesso</span>
       </button>
       <div id="payment-message" class="hidden"></div>
+      </td>
+      </tr>
     </form>
-    </td>
-    </tr>
+    
     
 		</table>
       <?php   

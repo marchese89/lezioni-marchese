@@ -10,7 +10,7 @@ $id = $_GET['id'];
 $corso = $_GET['id_corso'];
 if ($id != - 1) {
     
-    if(isset($_GET['return'])){;
+    if(isset($_GET['return'])){
         header('Location: ../modifica-file-p-lezione-' . $corso .'-'. $id . '.html');
     }else{
         header('Location: ../modifica-file-lezione-' . $id . '.html');

@@ -2,8 +2,8 @@
 $corso = $_GET['id_corso'];
 ?>
 <script type="text/javascript">
-function cliccaFile(){
-    $('#fileuploadPDF_PL').click();
+function cliccaFile2(){
+    $('#fileuploadPDF_SE').click();
 }
 
 function completeHandler(event) {
@@ -26,16 +26,15 @@ function abortHandler(event) {
     _("status").innerHTML = "Caricamento Annullato";
 }
 
-
-function mandaPdfPL(supportAjaxUpload, formID) {
+function mandaPdfSE(supportAjaxUpload, formID) {
     if (supportAjaxUpload) {
         document.getElementById("progressBar").style.display = 'block';
         
-        var file_ = _("fileuploadPDF_PL").files[0];
+        var file_ = _("fileuploadPDF_SE").files[0];
         
         var formdata_ = new FormData();
-        formdata_.append("fileuploadPDF_PL", file_);
-        formdata_.append("UploadPDF_PL", "__");
+        formdata_.append("fileuploadPDF_SE", file_);
+        formdata_.append("UploadPDF_SE", "__");
         var ajax_ = new XMLHttpRequest();
         ajax_.upload.addEventListener("progress", progressHandler, false);
         ajax_.addEventListener("load", completeHandler, false);
@@ -50,51 +49,49 @@ function mandaPdfPL(supportAjaxUpload, formID) {
     }
 }
 
-function visualizza_pdfPL(img){
-    $('#ant_pdfPL').attr('src', img.value);
+function visualizza_pdfSE(img){
+    $('#ant_pdfSE').attr('src', img.value);
     
     var reader = new FileReader();
     reader.onload = function (e) {
-       $('#ant_pdfPL').attr('src', 'images/miniatura_pdf.png');
+       $('#ant_pdfSE').attr('src', 'images/miniatura_pdf.png');
     }
     reader.readAsDataURL(img.files[0]);
-    document.getElementById("ant_pdfPL").style.opacity = "1";
+    document.getElementById("ant_pdfSE").style.opacity = "1";
     var file = img.files[0];  
     var filename = file.name;
-    $('#nome_pdfPL').html('&nbsp;&nbsp;&nbsp;' +filename);
-    document.getElementById("nome_pdfPL").style.opacity = "1";
+    $('#nome_pdfSE').html('&nbsp;&nbsp;&nbsp;' +filename);
+    document.getElementById("nome_pdfSE").style.opacity = "1";
 }
-
 
 </script>
 <table id="pannello_controllo" >
 
 	<tr id="titolo">
-		<th>Modifica Presentazione Lezione</th>
+		<th>Modifica Svolgimento Esercizio</th>
 	</tr>
-<tr>
-		<td><label style="font-size: 18px">File Presentazione Lezione (immagine o
-				pdf)</label></td>
-	<tr style="text-align: center">
+
+	<tr>
+		<td><label style="font-size: 18px">File Svolgimento Esercizio
+				(immagine o pdf)</label></td>
+	</tr>
+<tr style="text-align: center">
 		<th style="text-align: center; alignment-adjust: central">
            <?php
-        if (! isset($_SESSION['percorsoPDF_PL'])) {
+        if (! isset($_SESSION['percorsoPDF_SE'])) {
             ?>	
-	
-	<tr align="center">
-		<th style="height: 70px; width: 780px; text-align: center"
-			align="center">
 			<form enctype="multipart/form-data" method="post"
-				action="upload/upload.php" id="loadPdfPL">
-				<input id="fileuploadPDF_PL" name="fileuploadPDF_PL" type="file"
-					accept=".pdf,image/*" class="file_upload" onchange="visualizza_pdfPL(this)" />
-				<input type="button" value="Scegli un file" id="btn2"
-					onclick="cliccaFile()" /><span style="opacity: 0">_</span> <img
-					id="ant_pdfPL" width="30" height="30" style="opacity: 0" /><span
+				action="upload/upload.php" id="loadPdfSE">
+				<input id="fileuploadPDF_SE" name="fileuploadPDF_SE" type="file"
+					accept=".pdf,image/*" class="file_upload"
+					onchange="visualizza_pdfSE(this)" /> <input type="button"
+					value="Scegli un file" id="btn2" onclick="cliccaFile2()" /><span
+					style="opacity: 0">_</span> <img id="ant_pdfSE" width="30"
+					height="30" style="opacity: 0" /><span
 					style="opacity: 0; font-size: 11px; font-stretch: initial"
-					id="nome_pdfPL">______</span> <input type="button" value="Upload"
-					name="UploadPDFPL"
-					onclick="mandaPdfPL(ajaxUploadSupport(),'loadPdfPL')" /><br>
+					id="nome_pdfSE">______</span> <input type="button" value="Upload"
+					name="UploadPDFSE"
+					onclick="mandaPdfSE(ajaxUploadSupport(),'loadPdfSE')" /><br>
 				<progress id="progressBar" value="0" max="100"
 					style="width: 300px; display: none; margin-left: auto; margin-right: auto"></progress>
 				<br> <span id="status" style="font-size: 12px"></span><br> <span
@@ -102,17 +99,21 @@ function visualizza_pdfPL(img){
 			</form>
                
                     <?php
-        } else if ($_SESSION['pdfPLCaricato'] === "OK") {
+        } else if ($_SESSION['pdfSECaricato'] === "OK") {
             ?>
                     <p>
-				<label><font color="green">File Lezione caricato correttamente</font></label>
+				<label><font color="green">File svolgimento esercizio caricato
+						correttamente</font></label>
 			
 			<p>
-				<button value="elimina" onclick=location.href="upload/elimina_pdfPL.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>&return=1">elimina</button>
+				<button value="elimina" onclick=location.href="upload/elimina_pdfSE.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>&return=1">elimina</button>
+				<p>
+				<button onclick=location.href="insegnanti/modifica-file-s-esercizio.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>">Modifica</button>
+				
                         <?php
         } else {
-            unset($_SESSION['pdfPLCaricato']);
-            $motivoErrore = $_SESSION['motivo_errore_pdfPL'];
+            unset($_SESSION['pdfSECaricato']);
+            $motivoErrore = $_SESSION['motivo_errore_pdfSE'];
             $toPrint = '';
             switch ($motivoErrore) {
                 case 1:
@@ -136,9 +137,9 @@ function visualizza_pdfPL(img){
             ?>
                     <label><font color="red">Errore di caricamento: <?php echo $toPrint ?></font></label>
                     <?php
-            if ($_SESSION['motivo_errore_pdfPL'] === 'File gi&agrave; presente' && ! empty($_SESSION['pdf_to_deletePL'])) {
+            if ($_SESSION['motivo_errore_pdfSE'] === 'File gi&agrave; presente' && ! empty($_SESSION['pdf_to_deleteL'])) {
                 ?>
-                          <button onclick=location.href="upload/elimina_pdfPL.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>&return=1">elimina</button>
+                          <button onclick=location.href="upload/elimina_pdfSE.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>&return=1">elimina</button>
                     <?php
             }
         }
@@ -146,16 +147,11 @@ function visualizza_pdfPL(img){
 		
 		
 		
-		
-		
 		</th>
-	</tr>
-	<tr>
-		<td><button onclick=location.href="insegnanti/modifica-file-p-lezione.php?id_corso=<?php echo $corso;?>&id=<?php echo $_GET['id'];?>">Modifica</button></td>
 	</tr>
 
 <tr>
 	<td align="center" id="indietro"><strong><a
-			href="modifica-lezione-<?php echo $corso;?>-<?php echo $_GET['id'];?>.html"> Indietro</a></strong></td>
+			href="modifica-esercizio-ins-<?php echo $corso;?>-<?php echo $_GET['id'];?>.html"> Indietro</a></strong></td>
 </tr>
 </table>

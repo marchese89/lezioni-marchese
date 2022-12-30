@@ -16,21 +16,25 @@ if (isset($_POST["UploadFoto"])) {
     if ($ok == TRUE) {
 
         $percorso = "../file_insegnanti/foto/";
+        $nome_pdf = $_FILES['fileuploadFoto']['name'];
+        $ext = end(explode(".", $nome_pdf));
+        $data = date("Y_m_d_H_i_s");
+        
         if (is_uploaded_file($_FILES['fileuploadFoto']['tmp_name'])) {
 
             $number = 1;
             
-            while (file_exists($percorso . $number)) {
+            while (file_exists($percorso . $number . '_' . $data . '.'. $ext)) {
                 $number ++;
             }
 
-            $nomeFile = "file_insegnanti/foto/" . $number;
+            $nomeFile = "file_insegnanti/foto/" . $number . '_' . $data . '.'. $ext;
 
             if (! file_exists($percorso . $number)) {
 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadFoto']['tmp_name'], $percorso . $number)) {
-                        $_SESSION['percorsoFoto'] = "file_insegnanti/foto/" . $number;
+                    if (move_uploaded_file($_FILES['fileuploadFoto']['tmp_name'], $percorso . $number . '_' . $data . '.'. $ext)) {
+                        $_SESSION['percorsoFoto'] = "file_insegnanti/foto/" . $number . '_' . $data . '.'. $ext;
                         $_SESSION['fotoCaricata'] = "OK";
                     } else {
                         $_SESSION['fotoCaricata'] = "ERRORE";
@@ -42,7 +46,6 @@ if (isset($_POST["UploadFoto"])) {
                 }
             } else {
                 $_SESSION['fotoCaricata'] = "ERRORE";
-                // vediamo se c'è già un volantino con la stessa Foto
                 $sql = "SELECT * FROM insegnante WHERE foto='$nomeFile'";
                 $res = $conn->query($sql);
                 if ($res->num_rows == 0) {
@@ -75,20 +78,25 @@ if (isset($_POST["UploadFotoDI"])) {
     if ($ok == TRUE) {
 
         $percorso = "../file_insegnanti/doc_id/";
+        $nome_pdf = $_FILES['fileuploadFotoDI']['name'];
+        $ext = end(explode(".", $nome_pdf));
+        $dim_ext = strlen($ext) + 1;
+        $data = date("Y_m_d_H_i_s");
+        
         if (is_uploaded_file($_FILES['fileuploadFotoDI']['tmp_name'])) {
 
             $number = 1;
-            while (file_exists($percorso . $number)) {
+            while (file_exists($percorso . $number . '_' . $data . '.'. $ext)) {
                 $number ++;
             }
 
-            $nomeFile = "file_insegnanti/doc_id/" . $number;
+            $nomeFile = "file_insegnanti/doc_id/" . $number . '_' . $data . '.'. $ext;
 
-            if (! file_exists($percorso . $number)) {
+            if (! file_exists($percorso . $number . '_' . $data . '.'. $ext)) {
 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadFotoDI']['tmp_name'], $percorso . $number)) {
-                        $_SESSION['percorsoFotoDI'] = "file_insegnanti/doc_id/" . $number;
+                    if (move_uploaded_file($_FILES['fileuploadFotoDI']['tmp_name'], $percorso . $number . '_' . $data . '.'. $ext)) {
+                        $_SESSION['percorsoFotoDI'] = "file_insegnanti/doc_id/" . $number . '_' . $data . '.'. $ext;
                         $_SESSION['fotoDICaricata'] = "OK";
                     } else {
                         $_SESSION['fotoDICaricata'] = "ERRORE";
@@ -100,7 +108,6 @@ if (isset($_POST["UploadFotoDI"])) {
                 }
             } else {
                 $_SESSION['fotoDICaricata'] = "ERRORE";
-                // vediamo se c'è già un volantino con la stessa Foto
                 $sql = "SELECT * FROM insegnante WHERE doc_id='$nomeFile'";
                 $res = $conn->query($sql);
                 if ($res->num_rows == 0) {
@@ -133,20 +140,24 @@ if (isset($_POST["UploadFotoCF"])) {
     if ($ok == TRUE) {
 
         $percorso = "../file_insegnanti/codice_f/";
+        $nome_pdf = $_FILES['fileuploadFotoCF']['name'];
+        $ext = end(explode(".", $nome_pdf));
+        $data = date("Y_m_d_H_i_s");
+        
         if (is_uploaded_file($_FILES['fileuploadFotoCF']['tmp_name'])) {
 
             $number = 1;
-            while (file_exists($percorso . $number)) {
+            while (file_exists($percorso . $number . '_' . $data . '.'. $ext)) {
                 $number ++;
             }
 
-            $nomeFile = "file_insegnanti/codice_f/" . $number;
+            $nomeFile = "file_insegnanti/codice_f/" . $number . '_' . $data . '.'. $ext;
 
             if (! file_exists($percorso . $number)) {
 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadFotoCF']['tmp_name'], $percorso . $number)) {
-                        $_SESSION['percorsoFotoCF'] = "file_insegnanti/codice_f/" . $number;
+                    if (move_uploaded_file($_FILES['fileuploadFotoCF']['tmp_name'], $percorso . $number . '_' . $data . '.'. $ext)) {
+                        $_SESSION['percorsoFotoCF'] = "file_insegnanti/codice_f/" . $number . '_' . $data . '.'. $ext;
                         $_SESSION['fotoCFCaricata'] = "OK";
                     } else {
                         $_SESSION['fotoCFCaricata'] = "ERRORE";
@@ -158,7 +169,6 @@ if (isset($_POST["UploadFotoCF"])) {
                 }
             } else {
                 $_SESSION['fotoCFCaricata'] = "ERRORE";
-                // vediamo se c'è già un volantino con la stessa Foto
                 $sql = "SELECT * FROM insegnante WHERE codice_fiscale='$nomeFile'";
                 $res = $conn->query($sql);
                 if ($res->num_rows == 0) {
@@ -194,18 +204,20 @@ if (isset($_POST["UploadPDF_TS"])) {
         $data = date("Y_m_d_H_i_s");
         
         $number = 1;
-        while (file_exists($percorso . $number . '.'. $ext)) {
+        while (file_exists($percorso . $number . '_' . $data . '.'. $ext)) {
             $number ++;
         }
         
+        $nomeFile = "file_insegnanti/titolo_studio/" . $number . '_' . $data . '.'. $ext;
+        
         if (is_uploaded_file($_FILES['fileuploadPDF_TS']['tmp_name'])) {
 
-            $nomeFile = "file_insegnanti/titolo_studio/" . $number . '.' . $ext;
+            
 
             if (! file_exists($percorso . $_FILES['fileuploadPDF_TS']['name'])) {
 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_TS']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_TS']['tmp_name'], $percorso . $number . '_' . $data . '.'. $ext)) {
                         $_SESSION['percorsoPDF_TS'] = $nomeFile;
                         $_SESSION['pdfTSCaricato'] = "OK";
                     } else {
@@ -218,7 +230,6 @@ if (isset($_POST["UploadPDF_TS"])) {
                 }
             } else {
                 $_SESSION['pdfTSCaricato'] = "ERRORE";
-                // vediamo se il pdf è collegato ad un altro volantino
                 $sql = "SELECT * FROM insegnante WHERE titolo_di_studio='$nomeFile'";
                 $res = $conn->query($sql);
                 if ($res->num_rows == 0) {
@@ -250,21 +261,21 @@ if (isset($_POST["UploadPDF_CV"])) {
         $nome_pdf = $_FILES['fileuploadPDF_CV']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-        
+        $data = date("Y_m_d_H_i_s");
         $number = 1;
-        while (file_exists($percorso . $number . '.' .$ext)) {
+        while (file_exists($percorso  . $number . '_' . $data . '.'. $ext)) {
             $number ++;
         }
         
         
         if (is_uploaded_file($_FILES['fileuploadPDF_CV']['tmp_name'])) {
 
-            $nomeFile = "file_insegnanti/cv/" . $number . '.' . $ext;
+            $nomeFile = "file_insegnanti/cv/"  . $number . '_' . $data . '.'. $ext;
 
             if (! file_exists($percorso . $_FILES['fileuploadPDF_CV']['name'])) {
 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_CV']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_CV']['tmp_name'], $percorso  . $number . '_' . $data . '.'. $ext)) {
                         $_SESSION['percorsoPDF_CV'] = $nomeFile;
                         $_SESSION['pdfCVCaricato'] = "OK";
                     } else {
@@ -277,7 +288,6 @@ if (isset($_POST["UploadPDF_CV"])) {
                 }
             } else {
                 $_SESSION['pdfCVCaricato'] = "ERRORE";
-                // vediamo se il pdf è collegato ad un altro volantino
                 $sql = "SELECT * FROM insegnante WHERE cv='$nomeFile'";
                 $res = $conn->query($sql);
                 if ($res->num_rows == 0) {
@@ -310,21 +320,21 @@ if (isset($_POST["UploadPDF_PL"])) {
         $nome_pdf = $_FILES['fileuploadPDF_PL']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-      
+        $data = date("Y_m_d_H_i_s");
         $number = 1;
-        while (file_exists($percorso . $number . '.' . $ext)) {
+        while (file_exists($percorso . $number . '_' . $data .  '.' . $ext)) {
             $number ++;
         }
         
         
         if (is_uploaded_file($_FILES['fileuploadPDF_PL']['tmp_name'])) {
             
-            $nomeFile = "file_lezioni/" . $number . '.' . $ext;
+            $nomeFile = "file_lezioni/" . $number .  '_' . $data . '.' . $ext;
             
             if (! file_exists($percorso . $_FILES['fileuploadPDF_PL']['name'])) {
                 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_PL']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_PL']['tmp_name'], $percorso . $number . '_' . $data .  '.' . $ext)) {
                         $_SESSION['percorsoPDF_PL'] = $nomeFile;
                         $_SESSION['pdfPLCaricato'] = "OK";
                     } else {
@@ -363,21 +373,21 @@ if (isset($_POST["UploadPDF_L"])) {
         $nome_pdf = $_FILES['fileuploadPDF_L']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-        
+        $data = date("Y_m_d_H_i_s");
         $number = 1;
-        while (file_exists($percorso . $number . '.' . $ext)) {
+        while (file_exists($percorso . $number . '_' . $data . '.' . $ext)) {
             $number ++;
         }
         
         
         if (is_uploaded_file($_FILES['fileuploadPDF_L']['tmp_name'])) {
             
-            $nomeFile = "file_lezioni/" . $number . '.' . $ext;
+            $nomeFile = "file_lezioni/" . $number .  '_' . $data . '.' . $ext;
             
             if (! file_exists($percorso . $_FILES['fileuploadPDF_L']['name'])) {
                 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_L']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_L']['tmp_name'], $percorso . $number . '_' . $data . '.' . $ext)) {
                         $_SESSION['percorsoPDF_L'] = $nomeFile;
                         $_SESSION['pdfLCaricato'] = "OK";
                     } else {
@@ -416,21 +426,21 @@ if (isset($_POST["UploadPDF_TE"])) {
         $nome_pdf = $_FILES['fileuploadPDF_TE']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-        
+        $data = date("Y_m_d_H_i_s");
         $number = 1;
-        while (file_exists($percorso . $number . '.' . $ext)) {
+        while (file_exists($percorso . $number . '_' . $data .  '.' . $ext)) {
             $number ++;
         }
         
         
         if (is_uploaded_file($_FILES['fileuploadPDF_TE']['tmp_name'])) {
             
-            $nomeFile = "file_esercizi/" . $number . '.' . $ext;
+            $nomeFile = "file_esercizi/" . $number . '_' . $data . '.' . $ext;
             
             if (! file_exists($percorso . $_FILES['fileuploadPDF_TE']['name'])) {
                 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_TE']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_TE']['tmp_name'], $percorso . $number . '_' . $data . '.' . $ext)) {
                         $_SESSION['percorsoPDF_TE'] = $nomeFile;
                         $_SESSION['pdfTECaricato'] = "OK";
                     } else {
@@ -468,21 +478,21 @@ if (isset($_POST["UploadPDF_SE"])) {
         $nome_pdf = $_FILES['fileuploadPDF_SE']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-        
+        $data = date("Y_m_d_H_i_s");
         $number = 1;
-        while (file_exists($percorso . $number . '.' . $ext)) {
+        while (file_exists($percorso . $number .  '_' . $data . '.' . $ext)) {
             $number ++;
         }
         
         
         if (is_uploaded_file($_FILES['fileuploadPDF_SE']['tmp_name'])) {
             
-            $nomeFile = "file_esercizi/" . $number . '.' . $ext;
+            $nomeFile = "file_esercizi/" . $number .  '_' . $data . '.' . $ext;
             
             if (! file_exists($percorso . $_FILES['fileuploadPDF_SE']['name'])) {
                 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_SE']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_SE']['tmp_name'], $percorso . $number .  '_' . $data . '.' . $ext)) {
                         $_SESSION['percorsoPDF_SE'] = $nomeFile;
                         $_SESSION['pdfSECaricato'] = "OK";
                     } else {
@@ -521,21 +531,21 @@ if (isset($_POST["UploadPDF_RL"])) {
         $nome_pdf = $_FILES['fileuploadPDF_RL']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-        
+        $data = date("Y_m_d_H_i_s");
         $number = 1;
-        while (file_exists($percorso . $number . '.' . $ext)) {
+        while (file_exists($percorso . $number .  '_' . $data . '.' . $ext)) {
             $number ++;
         }
         
         
         if (is_uploaded_file($_FILES['fileuploadPDF_RL']['tmp_name'])) {
             
-            $nomeFile = "file_richieste_lezioni/" . $number . '.' . $ext;
+            $nomeFile = "file_richieste_lezioni/" . $number .  '_' . $data . '.' . $ext;
             
             if (! file_exists($percorso . $_FILES['fileuploadPDF_RL']['name'])) {
                 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_RL']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_RL']['tmp_name'], $percorso . $number .  '_' . $data . '.' . $ext)) {
                         $_SESSION['percorsoPDF_RL'] = $nomeFile;
                         $_SESSION['pdfRLCaricato'] = "OK";
                     } else {
@@ -573,21 +583,21 @@ if (isset($_POST["UploadPDF_SL"])) {
         $nome_pdf = $_FILES['fileuploadPDF_SL']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
-        
+        $data = date("Y_m_d_H_i_s");
         $number = 1;
-        while (file_exists($percorso . $number . '.' . $ext)) {
+        while (file_exists($percorso . $number .  '_' . $data . '.' . $ext)) {
             $number ++;
         }
         
         
         if (is_uploaded_file($_FILES['fileuploadPDF_SL']['tmp_name'])) {
             
-            $nomeFile = "file_richieste_lezioni/" . $number . '.' . $ext;
+            $nomeFile = "file_richieste_lezioni/" . $number .  '_' . $data . '.' . $ext;
             
             if (! file_exists($percorso . $_FILES['fileuploadPDF_SL']['name'])) {
                 
                 if (strlen($nomeFile) <= 244) {
-                    if (move_uploaded_file($_FILES['fileuploadPDF_SL']['tmp_name'], $percorso . $number . '.' . $ext)) {
+                    if (move_uploaded_file($_FILES['fileuploadPDF_SL']['tmp_name'], $percorso . $number .  '_' . $data . '.' . $ext)) {
                         $_SESSION['percorsoPDF_SL'] = $nomeFile;
                         $_SESSION['pdfSLCaricato'] = "OK";
                     } else {

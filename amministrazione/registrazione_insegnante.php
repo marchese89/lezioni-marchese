@@ -3,7 +3,7 @@ session_start();
 
 ?>
 
-<table style="width: 100%; font-size: 28pt; font-family: cursive;">
+<table style="width: 100%; font-size: 28pt; font-family: cursive;"id="pannello_controllo">
 	<tr style="height: 100px; align-content: center">
 		<td><b>Sei un <font color="green">insegnante</font>?
 		</b></td>
@@ -18,7 +18,7 @@ session_start();
 	<tr style="height: 100px">
 		<td><b>Invia la tua <font color="green">candidatura</font>! 
 	<tr>
-	<td><input type="button" value="Avanti" onclick=location.href="registrazione-insegnante-1.html"></td>
+	<td colspan="2"><input type="button" value="Avanti" onclick=location.href="registrazione-insegnante-1.html"></td>
 	</tr>
 </table>
 <table style="width: 100%; font-size: 18pt">

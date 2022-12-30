@@ -19,13 +19,13 @@ $toPrint = '<table border=0 rules=all style="width: 100%" border-radius: 7px 7px
 $result2 = $conn->query("SELECT * FROM messaggi_chat WHERE id_chat = '$id_chat' ORDER BY DATA ASC");
 while($messaggio = $result2->fetch_assoc()){
     $autore = $messaggio['autore'];
-    $toPrint = $toPrint .'<tr style="height:60px;"><td ';
+    $toPrint = $toPrint .'<tr style="height:60px;"><th ';
     if($autore == 0){
         $toPrint = $toPrint .'align="right">';
     }else{
         $toPrint = $toPrint .'align="left">';
     }
-    $toPrint = $toPrint . $messaggio['messaggio'] . '</td></tr>';
+    $toPrint = $toPrint . $messaggio['messaggio'] . '</th></tr>';
 }
 $toPrint = $toPrint . "</table><br>";
 

@@ -3,7 +3,7 @@ include_once 'acquisti/carrello.php';
 include 'config/mysql-config.php';
 session_start();
 ?>
-<table align="center" width="100%" id="pannello_controllo" cellspacing=0 cellpadding=0>
+<table align="center" id="pannello_controllo" >
 <tr id="titolo">
 			<th colspan="4">Carrello</th>
 		</tr>
@@ -12,7 +12,6 @@ session_start();
 		$cont_carello = $carrello->contenuto();
 		if($carrello->nElementi() > 0){
 		?>
-	<table border=0 width=60% align=center cellpadding="0" cellspacing="0">
 		
 		<tr style="height: 60px">
 		<td><label>Id</label></td>
@@ -39,15 +38,12 @@ session_start();
 		<tr style="height: 60px">
 		<td colspan="4"><button class="button" onclick=location.href="acquista.html">Acquista</button></td>
 		</tr>
-	</table>
 	<?php 
 		}else{
 		    ?>
-		    <table border=0 width=60% align=center cellpadding="0" cellspacing="0">
 		    <tr style="height: 120px">
 		    <td style="font-size: 18px">Il tuo Carello &egrave; Vuoto!</td>
 		    </tr>
-		    </table>
 		    <?php  
 		}
 	?>

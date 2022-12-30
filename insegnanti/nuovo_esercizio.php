@@ -115,7 +115,7 @@ function visualizza_pdfTE(img){
 						correttamente</font></label>
 			
 			<p>
-				<button value="elimina" onclick=location.href="upload/elimina_pdfTE.php">elimina</button>
+				<button value="elimina" onclick=location.href="upload/elimina_pdfTE.php?id=-1">elimina</button>
 				<p>
 				<button onclick=location.href="nuovo-esercizio2-<?php echo $corso;?>.html">Avanti</button>
                         <?php
@@ -147,7 +147,7 @@ function visualizza_pdfTE(img){
                     <?php
             if ($_SESSION['motivo_errore_pdfTE'] === 'File gi&agrave; presente' && ! empty($_SESSION['pdf_to_deleteTE'])) {
                 ?>
-                          <button onclick=location.href="upload/elimina_pdfTE.php">elimina</button>
+                          <button onclick=location.href="upload/elimina_pdfTE.php?id=-1">elimina</button>
                     <?php
             }
         }

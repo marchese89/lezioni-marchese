@@ -53,9 +53,34 @@ function invia_feefback(studente,prodotto,tipo_prodotto,punteggio) {
 	  
 }
 
+
+function countChar(val) {
+	  var len = val.value.length;
+	  document.getElementById("current").innerHTML = len;
+}
+
+function countChar2(val) {
+	  var len = val.value.length;
+	  document.getElementById("current2").innerHTML = len;
+}
+
+function invia_recensione(testo) {
+	
+	document.getElementById("recensione").value = "";
+	    var xmlhttp = new XMLHttpRequest();
+	    xmlhttp.onreadystatechange = function() {
+	      if (this.readyState == 4 && this.status == 200) {
+	        document.getElementById("recensione").value = this.responseText;
+	      }
+	    };
+	    xmlhttp.open("GET","richieste_ajax/invia_recensione.php?id_prod=<?php echo $id_ex;?>&tipo_prod=2&id_stud=<?php echo $id_stud;?>&testo="+testo,true);
+	    xmlhttp.send();
+	  
+	}
+
+
 </script>
-<table align="center" width="100%" id="pannello_controllo" cellspacing=0
-	cellpadding=0>
+<table align="center"  id="pannello_controllo" >
 
 	<tr id="titolo">
 		<th>Esercizio n. <?php echo $ex['id']?>: <?php echo $ex['titolo']?></th>
@@ -109,6 +134,43 @@ if ($rr1->num_rows > 0) {
 			</div>
 	
 	</tr>
+	<tr>
+		<td><label>Recensione</label></td>
+	</tr>
+	<tr style="height: 220px">
+		<td><textarea id="recensione" name="recensione" rows="5" cols="100"
+				maxlength="500" onkeyup="countChar(this)"
+				style="width: 80%; font-size: 18px; resize: none; border-radius: 5px 5px 5px 5px"><?php
+    $result = $conn->query("SELECT * FROM feedback WHERE prodotto = '$id_ex' AND tipo_prodotto = '2' AND studente = '$id_stud'");
+    if ($result->num_rows > 0) {
+        $feedback = $result->fetch_assoc();
+        if ($feedback['recensione'] != NULL) {
+            echo $feedback['recensione'];
+        }
+    }
+    ?></textarea>
+			<div id="the-count">
+				<span id="current">0</span> <span id="maximum">/ 500</span>
+			</div> <script type="text/javascript">
+ 					 var input = document.getElementById("recensione");
+
+					//Execute a function when the user presses a key on the keyboard
+					input.addEventListener("keypress", function(event) {
+ 					// If the user presses the "Enter" key on the keyboard
+					if (event.key === "Enter") {
+ 					// Cancel the default action, if needed
+ 					event.preventDefault();
+					 // Trigger the button element with a click
+					 document.getElementById("invia_recensione").click();
+					}
+					});
+					
+  </script> <br>
+
+			<button id="invia_recensione"
+				onclick=invia_recensione(document.getElementById("recensione").value)>Invia</button>
+			<br></td>
+	</tr>
 	<tr style="height: 60px">
 		<td><label>Chat Chiarimenti sull'esercizio</label></td>
 	</tr>
@@ -117,10 +179,13 @@ if ($rr1->num_rows > 0) {
 			<div id="messaggi"  style="width: 100%"></div>
 		</td>
 	</tr>
-		<tr style="height: 180px">
-		<td><textarea id="messaggio" name="messaggio" rows="5" cols="100"
+		<tr style="height: 220px">
+		<td><textarea id="messaggio" name="messaggio" rows="5" cols="100" onkeyup="countChar2(this)"
+				maxlength="500"
 				style="width: 80%; font-size: 18px; resize: none;border-radius: 5px 5px 5px 5px"></textarea> 
-				
+				<div id="the-count2">
+				<span id="current2">0</span> <span id="maximum2">/ 500</span>
+				</div> 
 				<script type="text/javascript">
  					 var input = document.getElementById("messaggio");
 

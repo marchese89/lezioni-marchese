@@ -8,7 +8,7 @@ $corso = $_GET['id_corso'];
 	</tr>
 <form action="insegnanti/inserisci_esercizio.php" method="post" >
 	<input type="hidden" name="corso" value="<?php echo $corso;?>">
-	<tr style="height: 60px">
+	<tr>
 		<td><label>Titolo</label><input type="text" name="titolo_esercizio"
 			id="titolo_esercizio" maxlength="45" size="24" autofocus="true"> <script
 				type="text/javascript">
@@ -18,7 +18,7 @@ $corso = $_GET['id_corso'];
                                 </script></td>
 	</tr>
 
-	<tr style="height: 60px">
+	<tr>
 		<td><label>Prezzo</label><input type="text" name="prezzo_esercizio"
 			id="prezzo_esercizio" maxlength="45" size="24" autofocus="true"> <b>
 				&euro;</b> <script type="text/javascript">
@@ -28,7 +28,7 @@ $corso = $_GET['id_corso'];
                                 </script></td>
 	</tr>
 	
-	<tr style="height: 60px">
+	<tr>
 		<td><input type="submit" value="Inserisci Esercizio"></td>
 	</tr>
 </form>

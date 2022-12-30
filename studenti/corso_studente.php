@@ -2,13 +2,7 @@
 $id_corso = $_GET['id_corso'];
 
 ?>
-<table align="center" width="100%" id="pannello_controllo" cellspacing=0
-	cellpadding=0>
-
-	<tr id="titolo">
-		<th>Corsi</th>
-	</tr>
-	<table border=0 width=60% align=center cellpadding="0" cellspacing="0">
+<table align="center" id="pannello_controllo" >
 	
 	<?php
 $studente;
@@ -31,12 +25,11 @@ $id_ut = $ins['utente_i'];
 $result4 = $conn->query("SELECT * FROM utente WHERE id='$id_ut'");
 $utente = $result4->fetch_assoc();
 ?>
-	<tr style="height: 60px">
-			<td colspan=5 style="font-size: 18px"> Corso: "<?php echo $corso['nome'];?>" - di <?php echo $utente['nome'] . " ". $utente['cognome'];?>
-		</td>
+	<tr id="titolo">
+			<th colspan=5 style="font-size: 18px"> Corso: "<?php echo $corso['nome'];?>" - di <?php echo $utente['nome'] . " ". $utente['cognome'];?>
+		</th>
 		</tr>
-		<tr style="height: 60px">
-
+		<tr>
 			<td colspan=5><label style="font-size: 18px">Lezioni</label></td>
 		</tr>
 
@@ -91,12 +84,9 @@ while ($lez = $result2->fetch_assoc()) {
     }
 
 ?>
-		
 
-	</table>
-	<table width=100% align=center>
 		<tr>
-			<td align="center" id="indietro"><strong><a
+			<td align="center" id="indietro" colspan="3"><strong><a
 					href="corsi-studente.html"> Indietro</a></strong></td>
 		</tr>
 	</table>
