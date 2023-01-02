@@ -1,16 +1,16 @@
 
 <form action="amministrazione/recupera_credenziali.php" method="post">
-    <table align="center"  style="border-collapse: collapse" id="prev">
-        <tr>
-            <th height="90">&nbsp;</th>
+    <table align="center"  style="border-collapse: collapse" id="pannello_controllo">
+        <tr id="titolo">
+            <th height="90">Recupero Credenziali</th>
         </tr>
         <tr>
-            <th height='70'>
+            <td>
         <h3>Inserire l'email collegata all'account,<br>verr&agrave; generata una una password e inviata a quell'indirizzo</h3>
-        </th>
+        </td>
         </tr>
         <tr>
-            <th height='100px'>
+            <td height='100px'>
                 <input type="text" name="email" id="email">
                 <script type="text/javascript">
                     var email1 = new LiveValidation('email',{onlyOnSubmit: true});
@@ -18,13 +18,18 @@
                     email1.add(Validate.Email);
                 </script>
 
-            </th>
+            </td>
         </tr>
         <tr>
-            <th style="padding-bottom: 30px">
+            <td>
                 <input type="submit" value="invia">
-            </th>
+            </td>
         </tr>
+        <tr>
+			<td align="center" id="indietro"><strong><a
+					href="login.html">
+					Indietro</a></strong></td>
+		</tr>
     </table>
 </form>
 

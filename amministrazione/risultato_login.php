@@ -4,8 +4,10 @@ session_start();
 date_default_timezone_set('Europe/Rome');
 $email = $_POST['email'];
 $pass = $_POST['password'];
-if (isset($_GET['return'])) {
-    $return = $_GET['return'];
+$return = 0;
+
+if (isset($_POST['ret'])) {
+    $return = $_POST['ret'];
 }
 mysqli_autocommit($conn, FALSE);
 $conn->query("LOCK TABLES utente READ,amministratore READ");
@@ -57,7 +59,9 @@ if ($result->num_rows > 0) {
 }
 $redirezione = '';
 if ($_SESSION['loginCorretto']) {
-    if ($_SESSION['user'] === "admin") {
+    if($return == '1'){
+        $redirezione = 'Location: ../lezioni-su-richiesta.html';
+    }else if ($_SESSION['user'] === "admin") {
         $redirezione = 'Location: ../home-admin.html';
     } else {
         $r1 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");

@@ -41,15 +41,18 @@ if (! empty($_GET['return'])) {
 <form
 	action="amministrazione/risultato_registrazione.php<?php if(!empty($ritorno)){echo '?return=ok';}?>"
 	method="post" onsubmit="modifica_pass()">
-	<table width="40%" cellspacing="0" cellpadding="0" align="center"
-		style="border-collapse: collapse;" RULES=none FRAME=none>
-		<tr>
+	<table  id="pannello_controllo" >
+	<tr id="titolo" >
 			<th valign="center" height="100"
 				style="font-size: 24px; color: #0e83cd;" colspan="2">Iscrizione</th>
 		</tr>
+	<tr><td>
+	<table cellspacing="0" cellpadding="0" align="center"
+		style="border-collapse: collapse;width:40%;" RULES=none FRAME=none id="pannello_controllo" >
+		
 		<tr>
 
-			<td valign="middle" align="center" height="60" width="98">
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Nome</p>
 				<p>
 					<input type="text" id="nome" name="nome" maxlength="45" size="30">
@@ -59,9 +62,9 @@ if (! empty($_GET['return'])) {
                                     nome_.add(Validate.SoloTesto);
                                 </script>
 				</p>
-			</td>
+			</th>
 
-			<td valign="middle" align="center" height="60" width="98">
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Cognome</p>
 				<p>
 					<input type="text" id="cognome" name="cognome" maxlength="45"
@@ -72,10 +75,10 @@ if (! empty($_GET['return'])) {
                                     cognome_.add(Validate.SoloTesto);
                                 </script>
 				</p>
-			</td>
+			</th>
 		</tr>
 		<tr>
-			<td valign="middle" align="center" height="60" width="98">
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Indirizzo (via/piazza)</p>
 				<p>
 					<input type="text" id="via" name="via" maxlength="255" size="30">
@@ -85,8 +88,8 @@ if (! empty($_GET['return'])) {
                                     via_.add(Validate.SoloTesto);
                                 </script>
 				</p>
-			</td>
-			<td valign="middle" align="center" height="60" width="98">
+			</th>
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">N.Civico</p>
 				<p>
 					<input type="text" id="n_civico" name="n_civico" maxlength="6"
@@ -96,10 +99,10 @@ if (! empty($_GET['return'])) {
                                     n_civico_.add(Validate.Presence);
                                 </script>
 				</p>
-			</td>
+			</th>
 		</tr>
 		<tr>
-			<td valign="middle" align="center" height="60" width="98">
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Citt&agrave;</p>
 				<p>
 					<input type="text" id="citta" name="citta" maxlength="255"
@@ -110,8 +113,8 @@ if (! empty($_GET['return'])) {
                                     citta_.add(Validate.SoloTesto);
                                 </script>
 				</p>
-			</td>
-			<td valign="middle" align="center" height="60" width="98">
+			</th>
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Provincia</p>
 				<p>
 					<input type="text" id="provincia" name="provincia" maxlength="2"
@@ -122,10 +125,10 @@ if (! empty($_GET['return'])) {
                                     provincia_.add(Validate.SoloTesto);
                                 </script>
 				</p>
-			</td>
+			</th>
 		</tr>
 		<tr>
-			<td valign="middle" align="center" height="60" width="98">
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">CAP</p>
 				<p>
 					<input type="text" id="cap" name="cap" maxlength="5" size="30">
@@ -135,8 +138,8 @@ if (! empty($_GET['return'])) {
                                     cap_.add(Validate.InteriPositivi);
                                 </script>
 				</p>
-			</td>
-			<td valign="middle" align="center" height="60" width="98">
+			</th>
+			<th valign="middle" align="center" height="60" width="98">
 				<p style="color: #0e83cd">Codice Fiscale</p>
 				<p>
 					<input type="text" id="cf" name="cf" maxlength="16" size="30">
@@ -146,11 +149,11 @@ if (! empty($_GET['return'])) {
                                     cf_.add(Validate.CodiceFiscale);
                                 </script>
 				</p>
-			</td>
+			</th>
 		</tr>
 
 		<tr>
-			<td valign="middle" align="center" height="60" width="78">
+			<th valign="middle" align="center" height="60" width="78">
 				<p style="color: #0e83cd">Email</p>
 				<p>
 					<input type="text" name="email1" id="email1" maxlength="45"
@@ -161,8 +164,8 @@ if (! empty($_GET['return'])) {
                                     email1.add(Validate.Email);
                                 </script>
 				</p>
-			</td>
-			<td valign="middle" align="center" height="60" width="78">
+			</th>
+			<th valign="middle" align="center" height="60" width="78">
 				<p style="color: #0e83cd">Conferma Email</p>
 				<p>
 					<input type="text" name="email2" id="email2" maxlength="45"
@@ -173,13 +176,13 @@ if (! empty($_GET['return'])) {
                                 email2.add(Validate.Email);
                                 email2.add(Validate.Confirmation, {match: 'email1'});
                             </script>
-			</td>
+			</th>
 
 		</tr>
 
 
 		<tr>
-			<td valign="middle" align="center" height="60" width="78">
+			<th valign="middle" align="center" height="60" width="78">
 				<p style="color: #0e83cd">Password</p>
 				<p>
 					<input type="password" id="pass1" name="pass1" maxlength="45"
@@ -191,8 +194,8 @@ if (! empty($_GET['return'])) {
                                 </script>
 				</p> <input type="checkbox" onclick="mostraPassword1()">Mostra
 				Password
-			</td>
-			<td valign="middle" align="center" height="80" width="78">
+			</th>
+			<th valign="middle" align="center" height="80" width="78">
 				<p style="color: #0e83cd">Conferma Password</p>
 				<p>
 					<input type="password" name="pass2" id="pass2" maxlength="45"
@@ -206,11 +209,11 @@ if (! empty($_GET['return'])) {
 				Password
 				<p>
 			
-			</td>
+			</th>
 
 		</tr>
 		<tr>
-			<td colspan="2"><label>La password deve essere lunga alemno 10
+			<th colspan="2"><label>La password deve essere lunga alemno 10
 					caratteri,
 					<p>contenere almeno una lettera maiuscola e una minuscola,
 					
@@ -220,7 +223,7 @@ if (! empty($_GET['return'])) {
 					<p>non deve inoltre contenere più di due cifre uguali ripetute o
 						più di due lettere ripetute
 					
-			</label></td>
+			</label></th>
 		</tr>
 		<tr>
 			<th colspan="2" height="300px" style="color: #0e83cd">Informativa sul
@@ -267,16 +270,19 @@ b) al trattamento di dati personali che lo riguardano a fini di invio di materia
 			</th>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="70px">
+			<th colspan="2" align="center" height="70px">
 				<p>
 					<input type="submit" class="submit" name="iscrizione"
 						value="Conferma">
 				</p> <br>
 				<p>
 			
-			</td>
+			</th>
 
 		</tr>
+	</table>
+	</td>
+	</tr>
 	</table>
 </form>
 

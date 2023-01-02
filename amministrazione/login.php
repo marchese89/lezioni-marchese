@@ -11,6 +11,13 @@ if (! empty($_SESSION['user'])) {
 		</tr>
 	
 	<form action="amministrazione/risultato_login.php" method="post">
+	<?php 
+	if(isset($_GET['ret'])){
+	    ?>
+	    <input  type="hidden" name="ret" value="<?php echo $_GET['ret'];?>">
+	    <?php 
+	}
+	?>
 	<tr>
 		<td><label>Email</label></td>
 	</tr>

@@ -85,20 +85,7 @@ function punteggioInsegnante($id_corso, $conn): float
         $tipo = $feed['tipo_prodotto'];
         $id_prod = $feed['prodotto'];
         $punteggio = $feed['punteggio'];
-        $ins_prod = 0;
-        switch ($tipo) {
-            case 0:
-                $ins_prod = trovaIdInsegnanteDaLezione($id_prod, $conn);
-                break;
-            case 2:
-                $ins_prod = trovaIdInsegnanteDaEsercizio($id_prod, $conn);
-                break;
-            case 5:
-                $ins_prod = trovaIdInsegnanteDaLezioneSuRichiesta($id_prod, $conn);
-                break;
-            default:
-                break;
-        }
+        $ins_prod = trovaIdInsegnanteDaProdotto($id_prod,$tipo,$conn);
         if ($id_ins == $ins_prod) {
             $cont = $cont + 1;
             $somma = $somma + $punteggio;
@@ -109,6 +96,23 @@ function punteggioInsegnante($id_corso, $conn): float
         return $somma / $cont;
     else
         return 0;
+}
+
+function trovaIdInsegnanteDaProdotto($id_prod,$tipo_prod,$conn):int{
+    switch ($tipo_prod) {
+        case 0:
+            return trovaIdInsegnanteDaLezione($id_prod, $conn);
+            break;
+        case 2:
+            return trovaIdInsegnanteDaEsercizio($id_prod, $conn);
+            break;
+        case 5:
+            return trovaIdInsegnanteDaLezioneSuRichiesta($id_prod, $conn);
+            break;
+        default:
+            return -1;
+            break;
+    }
 }
 
 function trovaIdInsegnanteDaLezione($id_lezione, $conn): int

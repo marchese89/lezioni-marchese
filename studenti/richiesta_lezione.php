@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['user'])){
-    header("Location: login.html");
+    header("Location: login2.html");
 }
 
 
@@ -72,47 +72,6 @@ function visualizza_pdfRL(img){
 }
 
 
-
-function carica_materia(id_area_tem) {
-	  if (id_area_tem == "") {
-	    document.getElementById("materia").innerHTML = "";
-	    return;
-	  } else {
-	    var xmlhttp = new XMLHttpRequest();
-	    xmlhttp.onreadystatechange = function() {
-	      if (this.readyState == 4 && this.status == 200) {
-	        document.getElementById("materia").innerHTML = this.responseText;
-	      }
-	    };
-	    xmlhttp.open("GET","richieste_ajax/carica_materia.php?id="+id_area_tem,true);
-	    xmlhttp.send();
-	  }
-	}
-function carica_corso(id_materia) {
-	  if (id_materia == "") {
-	    document.getElementById("corso").innerHTML = "";
-	    return;
-	  } else {
-	    var xmlhttp = new XMLHttpRequest();
-	    xmlhttp.onreadystatechange = function() {
-	      if (this.readyState == 4 && this.status == 200) {
-	        document.getElementById("corso").innerHTML = this.responseText;
-	      }
-	    };
-	    xmlhttp.open("GET","richieste_ajax/carica_corsi_materia2.php?id="+id_materia,true);
-	    xmlhttp.send();
-	  }
-	}
-
-
-function aggiungi_corso(){
-	var form = document.getElementById('form_lez_r');
-  var input = document.createElement('input');
-  input.setAttribute('name', 'corso');
-  input.setAttribute('value', document.getElementById('select_corso').value);
-  input.setAttribute('type', 'hidden');
-  form.appendChild(input);
-}
 </script>
 <?php 
 if(studente($_SESSION['user'],$conn)){
@@ -182,46 +141,10 @@ if(studente($_SESSION['user'],$conn)){
 			
 			<p>
 				<button value="elimina" onclick=location.href="upload/elimina_pdfRL.php">elimina</button>
-				<br>
-				<br>
-				<label>Area Tematica</label> <select name="area_tematica"
-			id="area_tematica" onchange="carica_materia(this.value)">
-				<option value="0"></option>
-				
-	<?php
-$email = $_SESSION['user'];
-
-$result0 = $conn->query("SELECT * FROM area_tematica");
-while ($area_tematica = $result0->fetch_assoc()) {
-
-    ?>
-	    <option value="<?php echo $area_tematica['id'];?>"><?php echo  $area_tematica['nome'];?></option>
+				<p>
+				<input type="button" value="Avanti" onclick=location.href="richiesta_lezione2.html">
 				
 				
-	    <?php
-}
-?>
-		
-		</select>
-		<br>
-		
-			<div id="materia"></div>
-		<br>
-			<div id="corso"></div>
-			
-			<br>
-				<form  action="studenti/carica-richiesta-lezione.php" method="post" id="form_lez_r" onsubmit="aggiungi_corso()">
-				<label>Titolo Lezione    </label><input type="text" id="titolo_l" name="titolo_l" maxlength="45"
-						size="30">
-					<script type="text/javascript">
-                                    var titolo_l_ = new LiveValidation('titolo_l', {onlyOnSubmit: true});
-                                    titolo_l_.add(Validate.Presence);
-                                    titolo_l_.add(Validate.SoloTesto);
-                                </script>
-                                <br>
-                                <br>
-				<input type="submit" value="Invia Richiesta">
-				       </form>
                         <?php
         } else {
             unset($_SESSION['pdfRLCaricato']);
@@ -267,7 +190,7 @@ while ($area_tematica = $result0->fetch_assoc()) {
 <?php 
 }else{
     ?>
-    <table align="center" width="100%" id="pannello_controllo" cellspacing=0 cellpadding=0>
+    <table align="center" id="pannello_controllo" >
     
     <tr id="titolo">
     <th>Richiesta Svolgimento lezione su Commissione</th>
