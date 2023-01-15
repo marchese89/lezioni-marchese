@@ -12,14 +12,15 @@ if (isset($_POST['ret'])) {
 mysqli_autocommit($conn, FALSE);
 $conn->query("LOCK TABLES utente READ,amministratore READ");
 $conn->query("BEGIN");
-$sql = "SELECT * FROM amministratore WHERE email='$email'";
-$result = $conn->query($sql);
+$result = $conn->query("SELECT * FROM amministratore WHERE email='$email'");
+$admin = FALSE;
 if ($result->num_rows > 0) {
+    $admin = TRUE;
     $email;
     while ($argomento = $result->fetch_assoc()) {
         $email = $argomento['email'];
         if (password_verify($pass, $argomento['password'])) {
-            $_SESSION['user'] = "admin";
+            $_SESSION['user'] = $email;
             $_SESSION['nomeUtente'] = "amministratore";
             $_SESSION['loginCorretto'] = TRUE;
             $_SESSION['last_login'] = $argomento['ultimo_accesso'];
@@ -61,17 +62,12 @@ $redirezione = '';
 if ($_SESSION['loginCorretto']) {
     if($return == '1'){
         $redirezione = 'Location: ../lezioni-su-richiesta.html';
-    }else if ($_SESSION['user'] === "admin") {
-        $redirezione = 'Location: ../home-admin.html';
+    }else if ($admin) {
+        $redirezione = 'Location: ../home-insegnante.html';
     } else {
         $r1 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
         if ($r1->num_rows > 0) {
             $redirezione = 'Location: ../home-user.html';
-        }else{
-            $r1 = $conn->query("SELECT * FROM insegnante WHERE utente_i='$id'");
-            if ($r1->num_rows > 0) {
-                $redirezione = 'Location: ../home-insegnante.html';
-            }
         }
     }
 } else {

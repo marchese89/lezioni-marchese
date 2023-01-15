@@ -61,7 +61,7 @@ if ($utente['stato_account'] === '1') {
 	</tr>
 	<tr style="height: 60px;">
 		<td>
-		<a href="richieste-studenti.html" style="font-size: 18px">Richieste Agli Insegnanti</a>
+		<a href="richieste-studenti.html" style="font-size: 18px">Richieste Dirette</a>
 		</td>
 	</tr>
 	<tr style="height: 60px;">

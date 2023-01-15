@@ -18,15 +18,10 @@ if (isset($_SESSION['user'])) {
 }
 $r = $conn->query("SELECT * FROM corso WHERE id='$id_corso'");
 $corso = $r->fetch_assoc();
-$id_ins = $corso['insegnante'];
-$result3 = $conn->query("SELECT * FROM insegnante WHERE id='$id_ins'");
-$ins = $result3->fetch_assoc();
-$id_ut = $ins['utente_i'];
-$result4 = $conn->query("SELECT * FROM utente WHERE id='$id_ut'");
-$utente = $result4->fetch_assoc();
+
 ?>
 	<tr id="titolo">
-			<th colspan=5 style="font-size: 18px"> Corso: "<?php echo $corso['nome'];?>" - di <?php echo $utente['nome'] . " ". $utente['cognome'];?>
+			<th colspan=5 style="font-size: 18px"><?php echo $corso['nome'];?>
 		</th>
 		</tr>
 		<tr>

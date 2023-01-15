@@ -5,7 +5,7 @@
 		<th colspan=6>Chat con gli studenti</th>
 	</tr>
 	<tr style="height: 60px">
-	<td colspan=6><label>Legenda:  verde:ok, rosso: richiede risposta, blu: chat non avviata</label></td>
+	<td colspan=6><label>Legenda:  <font style="color:green;">verde</font>:ok, <font style="color: red;">rosso</font>: richiede risposta, <font style="color: blue;">blu</font>: chat non avviata</label></td>
 	</tr>
 	<tr style="height: 60px">
 	<td><label>Id</label></td>
@@ -16,7 +16,6 @@
 	<td><label>Operazioni</label></td>
 	</tr>
 	<?php 
-	$id_ins = trovaIdInsegnante($_SESSION['user'], $conn);
 	
 	$result = $conn->query("SELECT * FROM chat ORDER BY id DESC");
 	while($chat = $result->fetch_assoc()){
@@ -36,8 +35,6 @@
 	       case 0://lezione
 	           $result2 = $conn->query("SELECT * FROM lezione WHERE id = '$id_prodotto'");
 	           $lezione = $result2->fetch_assoc();
-	           $id_insegn = trovaIdInsegnanteDaLezione($id_prodotto,$conn);
-	           if($id_ins == $id_insegn){
 	               ?>
 	               <tr style="height: 60px">
 	               <td><?php echo $id_prodotto;?></td>
@@ -56,13 +53,11 @@
 	               <td><button onclick=location.href="chat-con-studenti-<?php echo $id_chat;?>.html">Visualizza Chat</button></td>
 	               </tr>
 	               <?php
-	           }
+	           
 	           break;
 	       case 2://esercizio
 	           $result2 = $conn->query("SELECT * FROM esercizio WHERE id = '$id_prodotto'");
 	           $esercizio = $result2->fetch_assoc();
-	           $id_insegn = trovaIdInsegnanteDaEsercizio($id_prodotto,$conn);
-	           if($id_ins == $id_insegn){
 	               ?>
 	               <tr style="height: 60px">
 	               <td><?php echo $id_prodotto;?></td>
@@ -81,13 +76,10 @@
 	               <td><button onclick=location.href="chat-con-studenti-<?php echo $id_chat;?>.html">Visualizza Chat</button></td>
 	               </tr>
 	               <?php
-	           }
 	           break;
 	       case 5://lezione su richiesta
 	           $result2 = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id_prodotto'");
 	           $lezione = $result2->fetch_assoc();
-	           $id_insegn = trovaIdInsegnanteDaLezioneSuRichiesta($id_prodotto,$conn);
-	           if($id_ins == $id_insegn){
 	               ?>
 	               <tr style="height: 60px">
 	               <td><?php echo $id_prodotto;?></td>
@@ -106,7 +98,6 @@
 	               <td><button onclick=location.href="chat-con-studenti-<?php echo $id_chat;?>.html" >Visualizza Chat</button></td>
 	               </tr>
 	               <?php
-	           }
 	           break;
 	       default:
 	           ;

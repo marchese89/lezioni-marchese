@@ -61,7 +61,7 @@ function inviaFile(supportAjaxUpload, formID) {
 </script>
 <table id="pannello_controllo">
 <tr  id="titolo">
-<th>Foto Profilo</th>
+<th>Modifica Foto Profilo</th>
 </tr>
 	<tr align=center>
 		<th height="220" align="center">
@@ -94,14 +94,14 @@ function inviaFile(supportAjaxUpload, formID) {
 				<label><font color="green">Foto caricata correttamente</font></label>
 			
 			<p>
-				<button value="elimina" onclick=location.href="upload/elimina_foto.php">elimina</button>
+				<button value="elimina" onclick=location.href="upload/elimina_foto.php?ret=1">elimina</button>
 				<p>
-                           <input type="button" value="Avanti" onclick=location.href="registrazione-insegnante-2.html">
+                 <button value="modifica_foto" onclick=location.href="insegnanti/modifica_foto_ins.php">Modifica Foto</button>          
                    
                         <?php
                         } else {
                             unset($_SESSION['fotoCaricata']);
-                            $motivoErrore = $_SESSION['motivo_errore_icona'];
+                            $motivoErrore = $_SESSION['motivo_errore_Foto'];
                             $toPrint = '';
                             switch ($motivoErrore) {
                                 case 1:
@@ -141,7 +141,7 @@ function inviaFile(supportAjaxUpload, formID) {
 	</tr>
 	<tr>
 			<td align="center" id="indietro"><strong><a
-					href="lavora-con-noi.html">
+					href="modifica-dati-insegnante.html">
 					Indietro</a></strong></td>
 		</tr>
 </table>

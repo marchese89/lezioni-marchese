@@ -15,9 +15,9 @@ RewriteRule ^home-admin.html index.php?pagina=amministrazione/admin.php
 RewriteRule ^modifica-dati.html index.php?pagina=studenti/ModDatiUtente.php
 RewriteRule ^modifica-dati2.html index.php?pagina=studenti/modifica_dati_p.php
 RewriteRule ^modifica-dati-insegnante.html index.php?pagina=insegnanti/ModDatiUtente.php
-RewriteRule ^modifica-dati2-ins.html index.php?pagina=insegnanti/modifica_dati_p_ins.php
 RewriteRule ^modifica-pass-insegnante.html index.php?pagina=insegnanti/cambia_pass.php
 RewriteRule ^modifica-pass.html index.php?pagina=studenti/cambia_pass.php
+RewriteRule ^modifica_foto_ins.html index.php?pagina=insegnanti/modifica_foto.php
 RewriteRule ^risultato-operazione.html index.php?pagina=info_res_operazioni.php
 RewriteRule ^carrello.html index.php?pagina=acquisti/visualizza_carrello.php
 RewriteRule ^acquista.html index.php?pagina=acquisti/acquista.php
@@ -41,13 +41,6 @@ RewriteRule ^modifica-file-lezione-([0-9]*)-([0-9]*).html index.php?pagina=inseg
 RewriteRule ^modifica-file-t-esercizio-([0-9]*)-([0-9]*).html index.php?pagina=insegnanti/modifica_file_t_esercizio.php&id_corso=$1&id=$2
 RewriteRule ^modifica-file-s-esercizio-([0-9]*)-([0-9]*).html index.php?pagina=insegnanti/modifica_file_s_esercizio.php&id_corso=$1&id=$2
 RewriteRule ^preventivi-esercizi.html index.php?pagina=insegnanti/preventivi.php
-RewriteRule ^lavora-con-noi.html index.php?pagina=amministrazione/registrazione_insegnante.php
-RewriteRule ^registrazione-insegnante-1.html index.php?pagina=amministrazione/registrazione_ins1.php
-RewriteRule ^registrazione-insegnante-2.html index.php?pagina=amministrazione/registrazione_ins2.php
-RewriteRule ^registrazione-insegnante-3.html index.php?pagina=amministrazione/registrazione_ins3.php
-RewriteRule ^registrazione-insegnante-4.html index.php?pagina=amministrazione/registrazione_ins4.php
-RewriteRule ^registrazione-insegnante-5.html index.php?pagina=amministrazione/registrazione_ins5.php
-RewriteRule ^registrazione-insegnante-6.html index.php?pagina=amministrazione/registrazione_ins6.php
 RewriteRule ^modifica-lezione-([0-9]*)-([0-9]*).html index.php?pagina=insegnanti/modifica_lezione.php&id_corso=$1&id=$2
 RewriteRule ^modifica-esercizio-ins-([0-9]*)-([0-9]*).html index.php?pagina=insegnanti/modifica_esercizio.php&id_corso=$1&id=$2
 RewriteRule ^aree-tematiche.html index.php?pagina=studenti/aree_tematiche.php

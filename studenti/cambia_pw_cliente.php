@@ -26,16 +26,17 @@ if (password_verify($vecchiaPass, $utente['password'])) {
     if (!$conn->query($aggiornaCliente)) {
         $conn->query("ROLLBACK");
         $conn->query("UNLOCK TABLES");
-        echo '<tr><th height="100px">&nbsp;</th></tr><tr><th height=80px><font color="red">Errore,<br>Problemi durante l\'inserimento</font></th></tr>';
+        $_SESSION['res_cambia_pw_cliente'] = '<tr><td><font color="red">Errore,<br>Problemi durante l\'inserimento</font></td></tr>';
     }else{
         $conn->query("COMMIT");
         $conn->query("UNLOCK TABLES");
-        echo '<tr><th height="100px">&nbsp;</th></tr><tr><th height=80px><font color="green">Password Cambiata</font></th></tr>';
+        $_SESSION['res_cambia_pw_cliente'] = '<tr><td><font color="green">Password Cambiata</font></td></tr>';
     }
 }else{
     $conn->query("ROLLBACK");
     $conn->query("UNLOCK TABLES");
-    echo '<tr><th height="100px">&nbsp;</th></tr><tr><th height=80px><font color="red">Errore,<br>vecchia password non corrispondente!</font></th></tr>';
+    $_SESSION['res_cambia_pw_cliente'] =  '<tr><td><font color="red">Errore,<br>vecchia password non corrispondente!</font></td></tr>';
 }
 
+header("Location: ../modifica-pass.html");
 

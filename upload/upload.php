@@ -30,7 +30,7 @@ if (isset($_POST["UploadFoto"])) {
 
             $nomeFile = "file_insegnanti/foto/" . $number . '_' . $data . '.'. $ext;
 
-            if (! file_exists($percorso . $number)) {
+            if (! file_exists($percorso . $number  . '_' . $data . '.'. $ext)) {
 
                 if (strlen($nomeFile) <= 244) {
                     if (move_uploaded_file($_FILES['fileuploadFoto']['tmp_name'], $percorso . $number . '_' . $data . '.'. $ext)) {

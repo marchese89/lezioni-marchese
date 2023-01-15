@@ -10,10 +10,9 @@
 		<td><label>Operazioni</label></td>
 	</tr>
 	<?php
-$id_insegnante = trovaIdInsegnante($_SESSION['user'], $conn);
+
 $result = $conn->query("SELECT * FROM richieste_lezioni  ORDER BY data DESC");
 while ($richiesta = $result->fetch_assoc()) {
-    if ($richiesta['insegnante'] == $id_insegnante) {
         ?>
 	    <tr style="height: 60px">
 		<td><?php echo $richiesta['id'];?></td>
@@ -38,7 +37,7 @@ while ($richiesta = $result->fetch_assoc()) {
 		</td>
 	</tr> 
 	    <?php
-    }
+    
 }
 ?>
 		<tr>

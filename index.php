@@ -99,7 +99,7 @@ if (empty($_SESSION['user'])) {
 				href="registrati.html" class="collegamento"><b>Registrati</b></a>
    <?php
 } else {
-    if ($_SESSION['user'] !== "admin") {
+    if ($_SESSION['nomeUtente'] !== "amministratore") {
         $user = $_SESSION['user'];
 
         $r1 = $conn->query("SELECT * FROM utente WHERE email='$user'");
@@ -121,7 +121,8 @@ if (empty($_SESSION['user'])) {
         }
     } else {
         ?>
-        <a href="index.php?pagina=amministrazione/admin.php"><b>Il mio
+        <b>Amministratore</b>
+        <a href="home-insegnante.html"><b>Il mio
 						profilo</b></a>|<a href="amministrazione/logout.php"
 				class="collegamento"><b>Logout</b></a>
         <?php
@@ -131,15 +132,13 @@ if (empty($_SESSION['user'])) {
 		</td>
 		</tr>
 		<tr id="seconda_riga">
-			<th style="margin-left: 0; align: center;" id="p_col"><a
-				href="index.html"><img src="images/logo.png" width="50%"
-					height="70" title="Home Page" alt="img"></a></th>
+			<th style="margin-left: 0; align: center;height: 100px" id="p_col"><a
+				href="index.html"><font style="font-size: 40px;font-family:cursive;">Lezioni Marchese</font></a></th>
 			<th id="c"></th>
 			<th style="font-size: 18pt;" id="s_col"><a href="aree-tematiche.html">Aree
 					Tematiche</a>  
-					<a href="lezioni-su-richiesta.html">Su Richiesta</a> 
-					<a href="">Chi Siamo</a> <a href="">Contatti</a> <a
-				href="lavora-con-noi.html">Lavora con noi</a></th>
+					<a href="lezioni-su-richiesta.html">Materiale su Richiesta</a>
+					<a href="">Informazioni</a><a href="">Contatti</a></th>
 
 		</tr>
 

@@ -10,8 +10,7 @@
 <td><label>Operazioni</label></td>
 	<?php 
 	
-	$id_ins = trovaIdInsegnante($_SESSION['user'], $conn);
-	$result = $conn->query("SELECT * FROM corso WHERE insegnante = '$id_ins'");
+	$result = $conn->query("SELECT * FROM corso");
 	while($corso = $result->fetch_assoc()){
 	    $id_materia = trovaMateriaCorso($corso['id'], $conn);
 	    $id_area_tematica = trovaAreaTematicaMateria($id_materia, $conn);

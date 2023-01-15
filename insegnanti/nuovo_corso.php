@@ -59,8 +59,7 @@ while ($materia = $result->fetch_assoc()) {
 <td><label>Input</label></td>
 <td colspan="2"><label>Operazioni</label></td></tr>
 	<?php
-	$ins = trovaIdInsegnante($email,$conn);
-	$result = $conn->query("SELECT * FROM corso WHERE insegnante='$ins' ORDER BY materia ASC");
+	$result = $conn->query("SELECT * FROM corso ORDER BY materia ASC");
 	
 	while($corso = $result->fetch_assoc()){
 	    ?>

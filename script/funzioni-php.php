@@ -23,6 +23,9 @@ function studente($email, $conn): bool
     $conn->query("LOCK TABLES utente READ, studente READ");
     $result1 = $conn->query("SELECT * FROM utente WHERE email='$email'");
     $utente = $result1->fetch_assoc();
+    if ($result1->num_rows == 0) {
+        return FALSE;
+    }
     $idUtente = $utente['id'];
     $result2 = $conn->query("SELECT * FROM studente WHERE utente_s='$idUtente'");
 
@@ -53,95 +56,22 @@ function trovaIdStudente($email, $conn): int
     }
 }
 
-function trovaIdInsegnante($email, $conn): int
-{
-    $conn->query("LOCK TABLES utente READ, insegnante READ");
-    $result1 = $conn->query("SELECT * FROM utente WHERE email='$email'");
-    $utente = $result1->fetch_assoc();
-    $idUtente = $utente['id'];
-    $result2 = $conn->query("SELECT * FROM insegnante WHERE utente_i='$idUtente'");
-    $insegnante = $result2->fetch_assoc();
-    $conn->query("UNLOCK TABLES");
-    return $insegnante['id'];
-}
-
-function trovaIdInsegnanteDaCorso($id_corso, $conn): int
-{
-    $conn->query("LOCK TABLES corso READ");
-    $result1 = $conn->query("SELECT * FROM corso WHERE id = '$id_corso'");
-    $corso = $result1->fetch_assoc();
-    $conn->query("UNLOCK TABLES");
-    return $corso['insegnante'];
-}
-
-function punteggioInsegnante($id_corso, $conn): float
+function punteggioInsegnante($conn): float
 {
     $conn->query("LOCK TABLES feedback READ");
-    $id_ins = trovaIdInsegnanteDaCorso($id_corso, $conn);
-    $result = $conn->query("SELECT  * FROM feedback");
+    $result = $conn->query("SELECT * FROM feedback");
     $cont = 0;
     $somma = 0;
     while ($feed = $result->fetch_assoc()) {
-        $tipo = $feed['tipo_prodotto'];
-        $id_prod = $feed['prodotto'];
         $punteggio = $feed['punteggio'];
-        $ins_prod = trovaIdInsegnanteDaProdotto($id_prod,$tipo,$conn);
-        if ($id_ins == $ins_prod) {
-            $cont = $cont + 1;
-            $somma = $somma + $punteggio;
-        }
+        $cont = $cont + 1;
+        $somma = $somma + $punteggio;
     }
     $conn->query("UNLOCK TABLES");
     if ($cont > 0)
         return $somma / $cont;
     else
         return 0;
-}
-
-function trovaIdInsegnanteDaProdotto($id_prod,$tipo_prod,$conn):int{
-    switch ($tipo_prod) {
-        case 0:
-            return trovaIdInsegnanteDaLezione($id_prod, $conn);
-            break;
-        case 2:
-            return trovaIdInsegnanteDaEsercizio($id_prod, $conn);
-            break;
-        case 5:
-            return trovaIdInsegnanteDaLezioneSuRichiesta($id_prod, $conn);
-            break;
-        default:
-            return -1;
-            break;
-    }
-}
-
-function trovaIdInsegnanteDaLezione($id_lezione, $conn): int
-{
-    $conn->query("LOCK TABLES lezione READ");
-    $result = $conn->query("SELECT * FROM lezione WHERE id = '$id_lezione'");
-    $lezione = $result->fetch_assoc();
-    $id_corso = $lezione['corso_lez'];
-    $conn->query("UNLOCK TABLES");
-    return trovaIdInsegnanteDaCorso($id_corso, $conn);
-}
-
-function trovaIdInsegnanteDaEsercizio($id_ex, $conn): int
-{
-    $conn->query("LOCK TABLES esercizio READ");
-    $result = $conn->query("SELECT * FROM esercizio WHERE id = '$id_ex'");
-    $esercizio = $result->fetch_assoc();
-    $id_corso = $esercizio['corso_ex'];
-    $conn->query("UNLOCK TABLES");
-    return trovaIdInsegnanteDaCorso($id_corso, $conn);
-}
-
-function trovaIdInsegnanteDaLezioneSuRichiesta($id_lezione, $conn): int
-{
-    $conn->query("LOCK TABLES richieste_lezioni READ");
-    $result = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id_lezione'");
-    $lezione = $result->fetch_assoc();
-    $conn->query("UNLOCK TABLES");
-    return $lezione['insegnante'];
 }
 
 function trovaMateriaCorso($id_corso, $conn): int

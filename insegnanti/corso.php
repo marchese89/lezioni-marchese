@@ -6,12 +6,6 @@ $id_corso = $_GET['id_corso'];
 $r = $conn->query("SELECT * FROM corso WHERE id='$id_corso'");
 $corso = $r->fetch_assoc();
 
-$id_ins = $corso['insegnante'];
-$result3 = $conn->query("SELECT * FROM insegnante WHERE id='$id_ins'");
-$ins = $result3->fetch_assoc();
-$id_ut = $ins['utente_i'];
-$result4 = $conn->query("SELECT * FROM utente WHERE id='$id_ut'");
-$utente = $result4->fetch_assoc();
 
 ?>
 <table   id="pannello_controllo" >
