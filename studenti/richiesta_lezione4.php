@@ -1,5 +1,5 @@
 <?php
-$mat = $_GET['mat'];
+
 $at = $_GET['at'];
 ?>
 <script type="text/javascript">

@@ -50,8 +50,6 @@ function inviaFile(supportAjaxUpload, formID) {
         ajax.addEventListener("abort", abortHandler, false);
         ajax.open("POST", "upload/upload.php");
         ajax.send(formdata);
-
-
     } else {
         _(formID).submit();
 
@@ -76,7 +74,7 @@ function inviaFile(supportAjaxUpload, formID) {
 					<span style="opacity: 0">__</span>
 				<img id="anteprima" width="100" height="100" style="opacity: 0" />
 				<span style="opacity: 0">______</span> 
-				<input type="submit" value="Upload" name="UploadFoto" onclick="inviaFile(ajaxUploadSupport(),'loadImg')" />
+				<input type="button" value="Upload" name="UploadFoto" onclick="inviaFile(ajaxUploadSupport(),'loadImg')" />
 			</form> 
 			<br> 
 			<progress id="progressBar" value="0" max="100" style="width: 300px; display: none"></progress>

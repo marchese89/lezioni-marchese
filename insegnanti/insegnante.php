@@ -42,25 +42,35 @@ if (isset($_SESSION['user'])) {
 		</td>
 	</tr>
 
-	<tr style="height: 60px">
+	<tr>
 		<td><a href="modifica-dati-insegnante.html" style="font-size: 18px">Modifica
 				Dati Personali</a></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 		<td><a href="modifica-pass-insegnante.html" style="font-size: 18px">Modifica
 				Password</a></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 		<td><a href="corsi.html" style="font-size: 18px">Corsi</a></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 		<td><a href="lezioni-richieste.html">Richieste Studenti</a></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 		<td><a href="chat-studenti.html">Chat Studenti</a></td>
 	</tr>
-	<tr style="height: 60px">
+	<tr>
 		<td><a href="vendite-insegnante.html" style="font-size: 18px">Vendite</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<a href="elenco-fatture.html" style="font-size: 18px">Elenco Fatture</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<a href="fattura-extra.html" style="font-size: 18px">Fattura Extra</a>
 		</td>
 	</tr>
 </table>

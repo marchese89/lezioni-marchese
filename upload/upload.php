@@ -30,7 +30,7 @@ if (isset($_POST["UploadFoto"])) {
 
             $nomeFile = "file_insegnanti/foto/" . $number . '_' . $data . '.'. $ext;
 
-            if (! file_exists($percorso . $number  . '_' . $data . '.'. $ext)) {
+            if (! file_exists($percorso . $nome_pdf  . '_' . $data . '.'. $ext)) {
 
                 if (strlen($nomeFile) <= 244) {
                     if (move_uploaded_file($_FILES['fileuploadFoto']['tmp_name'], $percorso . $number . '_' . $data . '.'. $ext)) {
@@ -118,7 +118,7 @@ if (isset($_POST["UploadFotoDI"])) {
             }
         } else {
             $_SESSION['fotoDICaricata'] = "ERRORE";
-            $_SESSION['motivo_errore_DI'] = $_FILES['fileuploadFoto']['error'];
+            $_SESSION['motivo_errore_DI'] = $_FILES['fileuploadFotoDI']['error'];
         }
     } else {
         $_SESSION['fotoDICaricata'] = "ERRORE";
@@ -257,7 +257,7 @@ if (isset($_POST["UploadPDF_CV"])) {
         $ok = FALSE;
     }
     if ($ok == TRUE) {
-        $percorso = "../file_insegnanti/cv/";
+        $percorso = "../file_insegnanti/certificati/";
         $nome_pdf = $_FILES['fileuploadPDF_CV']['name'];
         $ext = end(explode(".", $nome_pdf));
         $dim_ext = strlen($ext) + 1;
@@ -270,7 +270,7 @@ if (isset($_POST["UploadPDF_CV"])) {
         
         if (is_uploaded_file($_FILES['fileuploadPDF_CV']['tmp_name'])) {
 
-            $nomeFile = "file_insegnanti/cv/"  . $number . '_' . $data . '.'. $ext;
+            $nomeFile = "file_insegnanti/certificati/"  . $number . '_' . $data . '.'. $ext;
 
             if (! file_exists($percorso . $_FILES['fileuploadPDF_CV']['name'])) {
 

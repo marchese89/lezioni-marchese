@@ -138,7 +138,7 @@ if (empty($_SESSION['user'])) {
 			<th style="font-size: 18pt;" id="s_col"><a href="aree-tematiche.html">Aree
 					Tematiche</a>  
 					<a href="lezioni-su-richiesta.html">Materiale su Richiesta</a>
-					<a href="">Informazioni</a><a href="">Contatti</a></th>
+					<a href="informazioni.html">Informazioni</a><a href="contatti.html">Contatti</a></th>
 
 		</tr>
 

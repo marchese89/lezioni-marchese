@@ -95,7 +95,7 @@ while ($prodotto = $result->fetch_assoc()) {
 		<td><?php echo $data['giorno'] . "/" . $data['mese'] . "/". $data['anno']; ?></td>
 		<td>Lezione Corso</td>
 		<td><?php echo $lezione['titolo'];?></td>
-		<td><?php echo $lezione['prezzo'];?>&euro;</td>
+		<td><?php echo $prodotto['prezzo'];?>&euro;</td>
 
 	</tr>
 	               <?php
@@ -128,7 +128,7 @@ while ($prodotto = $result->fetch_assoc()) {
 		<td><?php echo $data['giorno'] . "/" . $data['mese'] . "/". $data['anno']; ?></td>
 		<td>Esercizio Corso</td>
 		<td><?php echo $esercizio['titolo'];?></td>
-		<td><?php echo $esercizio['prezzo'];?>&euro;</td>
+		<td><?php echo $prodotto['prezzo'];?>&euro;</td>
 
 	</tr>
 	               <?php
@@ -161,7 +161,7 @@ while ($prodotto = $result->fetch_assoc()) {
 		<td><?php echo $data['giorno'] . "/" . $data['mese'] . "/". $data['anno']; ?></td>
 		<td>Lezione su richiesta</td>
 		<td><?php echo $richiesta['titolo'];?></td>
-		<td><?php echo $richiesta['prezzo'];?>&euro;</td>
+		<td><?php echo $prodotto['prezzo'];?>&euro;</td>
 
 	</tr>
 	               <?php
@@ -173,12 +173,17 @@ while ($prodotto = $result->fetch_assoc()) {
     if ($riga_corrente == $numero_righe) {
         ?>
 	                    <tr style="height: 60px">
-		<td colspan=5><b><?php echo "Totale mensile: " . $totale_mensile?>&euro;</b></td>
+		<td colspan=5><b><?php echo "Totale mensile: " . $totale_mensile;?>&euro;</b></td>
 	</tr>
 	                    <?php
     }
 }
 ?>
+<tr>
+<td colspan=5>
+<button onclick=location.href="insegnanti/scarica_fatture.php">Scarica Fatture</button>
+</td>
+</tr>
 	<tr>
 		<td align="center" id="indietro" colspan=5><strong><a
 				href="home-insegnante.html"> Indietro</a></strong></td>

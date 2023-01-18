@@ -10,7 +10,7 @@ use Dompdf\Dompdf;
 session_start();
 
 mysqli_autocommit($conn, FALSE);
-$conn->query("LOCK TABLES fattura WRITE,utente READ,studente READ,lezione READ,esercizio READ,richieste_lezioni WRITE,ordine WRITE,prodotti_ordine WRITE,chat WRITE");
+$conn->query("LOCK TABLES fattura WRITE, fatture WRITE, utente READ,studente READ,lezione READ,esercizio READ,richieste_lezioni WRITE,ordine WRITE,prodotti_ordine WRITE,chat WRITE");
 $conn->query("BEGIN");
 $rollback = FALSE;
 $dompdf = new Dompdf();
@@ -20,16 +20,14 @@ $dataFattura = $data_['giorno'].'/'. $data_['mese']. '/' . $data_['anno'];
 $rr = $conn->query("SELECT * FROM fattura");
 $u_f = $rr->fetch_assoc();
 $ultimo = $u_f['numero'];
-echo 'numero ultima fattura: '. $ultimo . '<br>';
+
 $data_ultima_f = $u_f['data'];
 $data2 = stampa_data($data_ultima_f);
 $numeroFattura  = 1;
-echo 'data[anno]: ' . $data_['anno']. '<br>';
-echo 'data2[anno]: ' . $data2['anno']. '<br>';
 if($data_['anno'] == $data2['anno']){
 $numeroFattura = $ultimo+1;
 }
-echo 'numero fattura: ' . $numeroFattura. '<br>';
+
 $r0 = $conn->query("DELETE FROM fattura WHERE numero = '$ultimo'");
 if(!$r0){
     $rollback = TRUE;
@@ -495,11 +493,14 @@ for ($i = 0; $i < count($contenuto); $i ++) {
  if(!$r12){
      $rollback = TRUE;
  }
- $output;
+ $r13 = $conn->query("INSERT INTO fatture (numero,data,percorso) VALUES('$numeroFattura','$data','$percorso_fattura')");
+ if(!$r13){
+     $rollback = TRUE;
+ }
  if($rollback){
+     unlink('../fatture/' . $number. '.pdf');
      $conn->query("ROLLBACK");
      $conn->query("UNLOCK TABLES");
-     unlink('../fatture/' . $number. '.pdf');
      //rimborso totale
      $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
      $stripe->refunds->create(['payment_intent' => $_GET['payment_intent']]);
@@ -508,9 +509,9 @@ for ($i = 0; $i < count($contenuto); $i ++) {
      $r = $conn->query("COMMIT");
      $conn->query("UNLOCK TABLES");
      if(!$r){
+         unlink('../fatture/' . $number. '.pdf');
          $conn->query("ROLLBACK");
          $conn->query("UNLOCK TABLES");
-         unlink('../fatture/' . $number. '.pdf');
          //rimborso totale
          $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
          $stripe->refunds->create(['payment_intent' => $_GET['payment_intent']]);

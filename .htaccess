@@ -7,8 +7,7 @@ RewriteRule ^login.html index.php?pagina=amministrazione/login.php
 RewriteRule ^login2.html index.php?pagina=amministrazione/login.php&ret=1
 RewriteRule ^recupero_credenziali.html index.php?pagina=amministrazione/recupero_credenziali.php
 RewriteRule ^registrati.html index.php?pagina=amministrazione/registrazione.php
-RewriteRule ^contatti.html index.php?pagina=amministrazione/contatti_per_clienti.php
-RewriteRule ^chi_siamo.html index.php?pagina=amministrazione/chi_siamo.php
+RewriteRule ^contatti.html index.php?pagina=amministrazione/contatti.php
 RewriteRule ^home-user.html index.php?pagina=studenti/studente.php
 RewriteRule ^home-insegnante.html index.php?pagina=insegnanti/insegnante.php
 RewriteRule ^home-admin.html index.php?pagina=amministrazione/admin.php
@@ -18,6 +17,8 @@ RewriteRule ^modifica-dati-insegnante.html index.php?pagina=insegnanti/ModDatiUt
 RewriteRule ^modifica-pass-insegnante.html index.php?pagina=insegnanti/cambia_pass.php
 RewriteRule ^modifica-pass.html index.php?pagina=studenti/cambia_pass.php
 RewriteRule ^modifica_foto_ins.html index.php?pagina=insegnanti/modifica_foto.php
+RewriteRule ^nuovo-certificato.html index.php?pagina=insegnanti/nuovo_certificato.php
+RewriteRule ^nuovo-certificato2.html index.php?pagina=insegnanti/nuovo_certificato2.php
 RewriteRule ^risultato-operazione.html index.php?pagina=info_res_operazioni.php
 RewriteRule ^carrello.html index.php?pagina=acquisti/visualizza_carrello.php
 RewriteRule ^acquista.html index.php?pagina=acquisti/acquista.php
@@ -80,3 +81,7 @@ RewriteRule ^vendite-insegnante.html index.php?pagina=insegnanti/vendite_insegna
 RewriteRule ^chat-studenti.html index.php?pagina=insegnanti/elenco_chat_studenti.php
 RewriteRule ^chat-con-studenti-([0-9]*).html index.php?pagina=insegnanti/chat_con_studenti.php&id_chat=$1
 RewriteRule ^vendite.html index.php?pagina=amministrazione/vendite.php
+RewriteRule ^informazioni.html index.php?pagina=amministrazione/informazioni.php
+RewriteRule ^fattura-extra.html index.php?pagina=amministrazione/fattura_extra.php
+RewriteRule ^elenco-fatture.html index.php?pagina=amministrazione/elenco_fatture.php
+RewriteRule ^mostra-fattura-([0-9]*).html index.php?pagina=amministrazione/mostra_fattura.php&n=$1

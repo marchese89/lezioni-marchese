@@ -56,7 +56,7 @@ if ($utente['stato_account'] === '1') {
 	</tr>
 	<tr style="height: 60px;">
 		<td>
-		<a href="ordini-studente.html" style="font-size: 18px">I miei Ordini</a>
+		<a href="lezioni-su-richiesta-acquistate.html" style="font-size: 18px">Lezioni su richiesta acquistate</a>
 		</td>
 	</tr>
 	<tr style="height: 60px;">
@@ -66,10 +66,9 @@ if ($utente['stato_account'] === '1') {
 	</tr>
 	<tr style="height: 60px;">
 		<td>
-		<a href="lezioni-su-richiesta-acquistate.html" style="font-size: 18px">Lezioni su richiesta acquistate</a>
+		<a href="ordini-studente.html" style="font-size: 18px">I miei Ordini</a>
 		</td>
 	</tr>
-
 </table>
 
 <?php
