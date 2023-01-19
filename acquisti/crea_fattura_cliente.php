@@ -1,4 +1,5 @@
 <?php
+session_start();
 date_default_timezone_set('Europe/Rome');
 include_once '../config/mysql-config.php';
 require_once '../dompdf/autoload.inc.php';
@@ -92,28 +93,28 @@ $html = '
 <td></td>
     
 <td align="right">
-<font size=4 >' . $_POST['nome'] . '&nbsp;' . $_POST['cognome'] . '</font>
+<font size=4 >' . $_SESSION['nome'] . '&nbsp;' . $_SESSION['cognome'] . '</font>
 </td>
 </tr>
 <tr style="height:30px">
 <td></td>
     
 <td align="right">
-<font size=4 >' . $_POST['via'] . ',' . $_POST['n_civico'] . '</font>
+<font size=4 >' . $_SESSION['via'] . ',' . $_SESSION['n_civico'] . '</font>
 </td>
 </tr>
 <tr style="height:30px">
 <td></td>
     
 <td align="right">
-<font size=4 >' . $_POST['cap'] . ' - ' . $_POST['citta'] . '&nbsp;(' . $_POST['provincia'] . ')</font>
+<font size=4 >' . $_SESSION['cap'] . ' - ' . $_SESSION['citta'] . '&nbsp;(' . $_SESSION['provincia'] . ')</font>
 </td>
 </tr>
 <tr style="height:30px">
 <td></td>
     
 <td align="right">
-<font size=4 >CF:&nbsp;' . $_POST['cf'] . '</font>
+<font size=4 >CF:&nbsp;' . $_SESSION['cf'] . '</font>
 </td>
 </tr>
 <tr style="height:30px">
@@ -149,16 +150,16 @@ $html = '
 </td>
 </tr>
 <tr><td align="center">
-            <font size=4 >' . $_POST['descrizione'] . '</font>
+            <font size=4 >' . $_SESSION['descrizione'] . '</font>
             </td>
             <td align="center">
-            <font size=4 >' . $_POST['prezzo'] . '&euro;</font>
+            <font size=4 >' . $_SESSION['prezzo'] . '&euro;</font>
             </td>
             <td align="center">
-            <font size=4 >' . $_POST['qta'] . '</font>
+            <font size=4 >' . $_SESSION['qta'] . '</font>
             </td>
             <td align="center">
-            <font size=4 ><b>' . $_POST['importo'] . '&euro;</b></font></td>
+            <font size=4 ><b>' . $_SESSION['importo'] . '&euro;</b></font></td>
             </tr>
             </table>
             </td>
@@ -168,7 +169,7 @@ $html = '
     
 <td align="right">
 <font size=3 >IMPONIBILE:&nbsp; </font>
-<font size=3 >' . number_format($_POST['importo'] / 1.04, 2, '.', '') . '&nbsp;&euro;</font>
+<font size=3 >' . number_format($_SESSION['importo'] / 1.04, 2, '.', '') . '&nbsp;&euro;</font>
 </td>
 </tr>
 <tr style="height:50px">
@@ -176,7 +177,7 @@ $html = '
     
 <td align="right">
 <font size=3 >Rivalsa Inps 4%:&nbsp;</font>
-<font size=3 >' . number_format(($_POST['importo'] / 1.04) * 4 / 100, 2, '.', '') . '&nbsp;&euro;</font>
+<font size=3 >' . number_format(($_SESSION['importo'] / 1.04) * 4 / 100, 2, '.', '') . '&nbsp;&euro;</font>
 </td>
 </tr>
 <tr style="height:50px">
@@ -184,7 +185,7 @@ $html = '
     
 <td align="right">
 <font size=3 ><b>TOTALE</b>&nbsp;</font>
-<font size=3 ><b>' . $_POST['importo'] . '&nbsp;&euro;</b></font>
+<font size=3 ><b>' . $_SESSION['importo'] . '&nbsp;&euro;</b></font>
 </td>
 </tr>
 <tr>
@@ -210,7 +211,7 @@ $html = '
 </tr>
 <tr>
 <td>
-<font size=3 >' . $_POST['note'] . '</font>
+<font size=3 >' . $_SESSION['note'] . '</font>
 </td>
 <td>
 </td>
@@ -253,17 +254,35 @@ if (! $r13) {
 if ($rollback) {
     unlink('../fatture/' . $number . '.pdf');
     $conn->query("ROLLBACK");
+    // rimborso totale
+    $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+    $stripe->refunds->create([
+        'payment_intent' => $_GET['payment_intent']
+    ]);
 
+    $conn->query("UNLOCK TABLES");
+
+    header('Location: ../ordine-fallito.html');
 } else {
     $r = $conn->query("COMMIT");
     if (! $r) {
         unlink('../fatture/' . $number . '.pdf');
         $conn->query("ROLLBACK");
-    }  
+        $conn->query("UNLOCK TABLES");
+        // rimborso totale
+        $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+        $stripe->refunds->create([
+            'payment_intent' => $_GET['payment_intent']
+        ]);
+
+        $conn->query("UNLOCK TABLES");
+
+        header('Location: ../ordine-fallito.html');
+    }
+
+    $conn->query("UNLOCK TABLES");
+    session_unset();
+    header('Location: ../mostra-fattura-cliente-' . $numeroFattura . '.html');
 }
-
-$conn->query("UNLOCK TABLES");
-
-header('Location: ../home-insegnante.html');
 
 ?>

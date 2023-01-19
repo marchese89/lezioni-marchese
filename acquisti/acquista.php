@@ -10,7 +10,7 @@ if(isset($_SESSION['user'])){
     $conn->query("LOCK TABLES utente READ,studente READ");
     $conn->query("BEGIN");
     $email = $_SESSION['user'];
-    if($email == 'admin'){
+    if($_SESSION['nomeUtente'] == "amministratore"){
         header("Location: registrati.html");
     }
     $result1 = $conn->query("SELECT * FROM utente WHERE email='$email'");
@@ -30,16 +30,15 @@ if(isset($_SESSION['user'])){
 			<th colspan="4">Acquista</th>
 		</tr>
 		<tr style="height: 60px;font-size: 18px"><td>
-		Paga <?php echo $_SESSION['carrello']->getTotale()?> &euro;
+		Paga <?php echo $_SESSION['carrello']->getTotale()?> &euro; In modo Sicuro tramite Stripe
 		</td></tr>
 		
-		
-
 		<form id="payment-form">
-		<tr style="width: 500px" align="center"><td>
+		<tr style="width: 500px" align="center"><td><p>
       <div id="payment-element" style="width: 600px;margin-left: auto;margin-right: auto;">
         <!--Stripe.js injects the Payment Element-->
       </div>
+      <p>
       </td>
     </tr>
     <tr><td>
@@ -51,7 +50,10 @@ if(isset($_SESSION['user'])){
       </td>
       </tr>
     </form>
-    
+    <tr>
+		<td align="center" id="indietro" ><strong><a
+				href="carrello.html"> Indietro</a></strong></td>
+	</tr>
     
 		</table>
       <?php   

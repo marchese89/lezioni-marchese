@@ -85,3 +85,7 @@ RewriteRule ^informazioni.html index.php?pagina=amministrazione/informazioni.php
 RewriteRule ^fattura-extra.html index.php?pagina=amministrazione/fattura_extra.php
 RewriteRule ^elenco-fatture.html index.php?pagina=amministrazione/elenco_fatture.php
 RewriteRule ^mostra-fattura-([0-9]*).html index.php?pagina=amministrazione/mostra_fattura.php&n=$1
+RewriteRule ^pagamenti.html index.php?pagina=acquisti/pagamenti.php
+RewriteRule ^pagamenti2.html index.php?pagina=acquisti/pagamenti2.php
+RewriteRule ^fattura_annullata.html index.php?pagina=acquisti/fattura_annullata.php
+RewriteRule ^mostra-fattura-cliente-([0-9]*).html  index.php?pagina=acquisti/mostra_fattura_cliente.php&n=$1

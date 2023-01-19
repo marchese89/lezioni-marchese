@@ -2,6 +2,7 @@
 const stripe = Stripe("pk_test_51LkNn9H3pdyIax9svhVQGSQTEfSnem7jDEnxBXZK8yGJKyQyVmdEhtDlfIcBHbIThMgHtnKG2YZ2veP13gjZmY6N003nlT8Yp8");
 
 
+
 let elements;
 
 initialize();
@@ -14,7 +15,7 @@ document
 // Fetches a payment intent and captures the client secret
 async function initialize() {
 	
-	   const { clientSecret } = await fetch("pagamenti/create.php", {
+	   const { clientSecret } = await fetch("pagamenti/create2.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
   }).then((r) => r.json());	
@@ -35,7 +36,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "https://localhost/easy-learning/acquisti/acquisto_effettuato.php",
+      return_url: "https://localhost/easy-learning/acquisti/crea_fattura_cliente.php",
     },
   });
   
