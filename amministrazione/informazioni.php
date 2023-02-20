@@ -14,6 +14,37 @@ $amministratore = $result->fetch_assoc();
 		<td><p><img src="<?php echo $amministratore['foto'];?>" height="250"
 			width="250"></td>
 	</tr>
+	<tr>
+	<td>
+	<p>
+	Sono un laureato magistrale in Ingegneria Informatica con voti 110/110
+	<p>
+	Ho interamente progettato e realizzato il sito web che state visitando
+	<p>
+	Prima di completare gli studi ho fatto molta esperienza con le lezioni private
+	<p>
+	ottenendo ottimi risultati, sia per i livelli scolastici inferiori (scuola superiore)
+	<p>
+	che per l'universit&agrave;, insegnando fino al livello della laurea magistrale.
+	<p>
+	Sul sito &egrave; possibile trovare lezioni ed esercizi svolti gi&agrave; pronti da acquistare
+	<p>
+	&egrave; inoltre possibile chiedere lo svolgimento di esercizi/lezioni oppure la correzione di esercizi svolti.
+	<p>
+	Nel caso abbiate bisogno delle tradizionali "lezioni private" potete contattarmi personalmente (vedi sezione contatti) 
+	
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<img src="file_insegnanti/certificati/laurea magistrale.jpg" width="90%">
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<img src="file_insegnanti/certificati/laurea triennale.jpg" width="90%">
+	</td>
+	</tr>
 	<?php 
 	$res0 = $conn->query("SELECT * FROM certificati ORDER BY numero ASC");
 	while($cert = $res0->fetch_assoc()){

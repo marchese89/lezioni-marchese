@@ -6,11 +6,18 @@ include_once '../config/mysql-config.php';
 require_once '../dompdf/autoload.inc.php';
 require_once '../pagamenti/stripe-php-9.6.0/init.php';
 
+// Include required PHPMailer files
+require '../phpmailer/PHPMailer.php';
+require '../phpmailer/SMTP.php';
+require '../phpmailer/Exception.php';
+// Define name spaces
+use PHPMailer\PHPMailer\PHPMailer;
+
 use Dompdf\Dompdf;
 session_start();
 
 mysqli_autocommit($conn, FALSE);
-$conn->query("LOCK TABLES fattura WRITE, fatture WRITE, utente READ,studente READ,lezione READ,esercizio READ,richieste_lezioni WRITE,ordine WRITE,prodotti_ordine WRITE,chat WRITE");
+$conn->query("LOCK TABLES  amministratore READ, fattura WRITE, fatture WRITE, utente READ,studente READ,lezione READ,esercizio READ,richieste_lezioni WRITE,ordine WRITE,prodotti_ordine WRITE,chat WRITE");
 $conn->query("BEGIN");
 $rollback = FALSE;
 $dompdf = new Dompdf();
@@ -50,6 +57,11 @@ if(!$r1){
     $rollback = TRUE;
 }
 $utente = $r1->fetch_assoc();
+
+// dati amministratore
+$rrr = $conn->query("SELECT * FROM amministratore");
+$admin = $rrr->fetch_assoc();
+
 $html = '
 <table width="100%" cellspacing="0" cellpadding="0"
 		align="center"
@@ -62,34 +74,34 @@ $html = '
 </tr>
 <tr style="height:30px">
 <td align="left">
-<font size=4 >Antonio Giovanni Marchese</font>
+<font size=4 >' . $admin['nome'] . ' ' . $admin['cognome'] . '</font>
 </td>
 <td></td>
 </tr>
 <tr style="height:30px">
 <td align="left">
-<font size=4 >Via Teodoro Mesimerio, 1/A</font>
-</td>
-    
-<td></td>
-</tr>
-<tr style="height:30px">
-<td align="left">
-<font size=4 >89822 -  Spadola (VV)</font>
+<font size=4 >' . $admin['via'] . ', ' . $admin['n_civico'] . '</font>
 </td>
     
 <td></td>
 </tr>
 <tr style="height:30px">
 <td align="left">
-<font size=4 >PARTITA IVA:&nbsp;03810660799</font>
+<font size=4 >' . $admin['cap'] . ' - ' . $admin['citta'] . ' (' . $admin['provincia'] . ')</font>
 </td>
     
 <td></td>
 </tr>
 <tr style="height:30px">
 <td align="left">
-<font size=4 >COD. FISC: MRCNNG89L11I872V</font>
+<font size=4 >PARTITA IVA:&nbsp;' . $admin['piva'] . '</font>
+</td>
+    
+<td></td>
+</tr>
+<tr style="height:30px">
+<td align="left">
+<font size=4 >COD. FISC: ' . $admin['cf'] . '</font>
 </td>
     
 <td></td>
@@ -367,7 +379,7 @@ for ($i = 0; $i < count($contenuto); $i ++) {
 
             break;
         case 5:
-            $r10 = $conn->query("UPDATE richieste_lezioni SET evasa = '1' WHERE id = '$id'");
+            $r10 = $conn->query("UPDATE richieste_lezioni SET pagata = '1' WHERE id = '$id'");
             if(!$r10){
                 $rollback = TRUE;
             }
@@ -502,7 +514,7 @@ for ($i = 0; $i < count($contenuto); $i ++) {
      $conn->query("ROLLBACK");
      $conn->query("UNLOCK TABLES");
      //rimborso totale
-     $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+     $stripe = new \Stripe\StripeClient($admin['stripe_private_key']);
      $stripe->refunds->create(['payment_intent' => $_GET['payment_intent']]);
      header('Location: ../ordine-fallito.html');
  }else{
@@ -513,10 +525,43 @@ for ($i = 0; $i < count($contenuto); $i ++) {
          $conn->query("ROLLBACK");
          $conn->query("UNLOCK TABLES");
          //rimborso totale
-         $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+         $stripe = new \Stripe\StripeClient($admin['stripe_private_key']);
          $stripe->refunds->create(['payment_intent' => $_GET['payment_intent']]);
          header('Location: ../ordine-fallito.html');
      }
+     //invio email
+     // Create instance of PHPMailer
+     $mail = new PHPMailer();
+     // Set mailer to use smtp
+     $mail->isSMTP();
+     // Define smtp host
+     $mail->Host = "smtps.aruba.it";
+     // Enable smtp authentication
+     $mail->SMTPAuth = true;
+     // Set smtp encryption type (ssl/tls)
+     $mail->SMTPSecure = "ssl";
+     // Port to connect smtp
+     $mail->Port = "465";
+     // Set gmail username
+     $mail->Username = "info@lezioni-marchese.it";
+     // Set gmail password
+     $mail->Password = "3DWjnkVW#tkez5NS";
+     // Email subject
+     $mail->Subject = "Ordine Effettuato";
+     // Set sender email
+     $mail->setFrom('info@lezioni-marchese.it');
+     // Enable HTML
+     $mail->isHTML(true);
+     // Attachment
+     $mail->addAttachment('../fatture/' . $number. '.pdf',$number. '.pdf', 'base64','application/pdf');
+     // Email body
+     $mail->Body = "Gentile cliente,<br>Il suo ordine &egrave; andato a buon fine.<br>Fattura in allegato.<br><br><br>Lezioni Marchese";
+     // Add recipient
+     $mail->addAddress($_SESSION['user']);
+     // Finally send email
+     $mail->send();
+     // Closing smtp connection
+     $mail->smtpClose();
      $_SESSION['carrello']->vuotaCarrello();
      header('Location: ../ordine-effettuato.html');
  }

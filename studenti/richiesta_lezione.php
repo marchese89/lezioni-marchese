@@ -1,10 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['user'])){
-    header("Location: login2.html");
-}
 
-if(studente($_SESSION['user'],$conn)){
 ?>
 
 <table align="center" id="pannello_controllo" >
@@ -38,23 +34,22 @@ if(studente($_SESSION['user'],$conn)){
 		</td>
 		</tr>
 		<tr>
-		<td><input type="button" value="Avanti" onclick=location.href="richiesta_lezione2.html"></td>
+		<td>
+		<?php 
+		if(isset($_SESSION['user']) && studente($_SESSION['user'],$conn)){
+        ?>
+		<input type="button" value="Avanti" onclick=location.href="richiesta_lezione2.html">
+		
+		<?php
+		}else{
+		    ?>
+		    <p>
+		    Devi fare il login come studente per accedere a questa funzionalità
+		    <p>
+		    <input type="button" value="Vai al Login" onclick=location.href="login2.html">
+		    <?php
+		}
+		?>
+		</td>
 		</tr>
-
 </table>
-
-<?php 
-}else{
-    ?>
-    <table align="center" id="pannello_controllo" >
-    
-    <tr id="titolo">
-    <th>Richiesta Svolgimento lezione su Commissione</th>
-    </tr>
-    <tr style="height: 60px">
-    <td><font color="red" style="font-size: 18px">Devi fare il login come studente per accedere a questa funzionalità</font></td>
-    </tr>
-    </table>
-    <?php 
-}
-?>

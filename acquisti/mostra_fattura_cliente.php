@@ -6,7 +6,7 @@ $numero = $_GET['n'];
 		<th valign="center" height="100"
 			style="font-size: 24px; color: #0e83cd;" colspan="3">Fattura n. <?php echo $numero;?></th>
 	</tr>
-	<tr><td>Si prega di scaricare la fattura, perchè non sarà più possibile visualizzarla</td></tr>
+	<tr><td>Una email &egrave; stata inviata al tuo account di posta.</td></tr>
 	<tr>
 	<td>
 	<?php 

@@ -1,5 +1,6 @@
 // This is your test publishable API key.
-const stripe = Stripe("pk_test_51LkNn9H3pdyIax9svhVQGSQTEfSnem7jDEnxBXZK8yGJKyQyVmdEhtDlfIcBHbIThMgHtnKG2YZ2veP13gjZmY6N003nlT8Yp8");
+
+const stripe = Stripe("pk_live_51LkNn9H3pdyIax9s9mh6hbhber2JiJfOJNOHVUZoGR8WXbLeUWIcMNbld1j79QTKqaIrtyx7sMPrOLIIYobYOVmb00nOagtMfO");
 
 
 let elements;
@@ -35,7 +36,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "https://localhost/easy-learning/acquisti/acquisto_effettuato.php",
+      return_url: "https://lezioni-marchese.it/acquisti/acquisto_effettuato.php",
     },
   });
   

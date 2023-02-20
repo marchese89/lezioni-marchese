@@ -9,6 +9,7 @@ $_SESSION['cap'] = $_POST['cap'];
 $_SESSION['citta'] = $_POST['citta'];
 $_SESSION['provincia'] = $_POST['provincia']; 
 $_SESSION['cf'] = $_POST['cf']; 
+$_SESSION['email'] = $_POST['email']; 
 $_SESSION['descrizione'] = $_POST['descrizione'];
 $_SESSION['prezzo'] = $_POST['prezzo'];
 $_SESSION['qta'] = $_POST['qta'];

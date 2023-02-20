@@ -231,12 +231,12 @@ if (! empty($_GET['return'])) {
 			<p>
 					<textarea rows="10" cols="50" disabled>Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
 1. I dati personali da Lei/Voi forniti o acquisiti nell&apos;ambito della nostra attivit&agrave; saranno oggetto di trattamento improntato ai principi di correttezza, liceit&agrave;, trasparenza e di tutela della Sua/Vostra riservatezza e dei Suoi/Vostri diritti.
-2. Il trattamento di tali dati personali sar&agrave; finalizzato agli adempimenti degli obblighi contrattuali o derivanti da incarico conferito dall&apos;interessato ed in particolare all&apos;invio telematico di ulteriori informazioni commerciali e materiale pubblicitario sulle novit&agrave; dei prodotti dei titolari di questo sito o eventuali fatture.
+2. Il trattamento di tali dati personali sar&agrave; finalizzato agli adempimenti degli obblighi contrattuali o derivanti da incarico conferito dall&apos;interessato ed in particolare all&apos;invio telematico di eventuali fatture.
 3. Il trattamento potr&agrave; essere effettuato anche con l&apos;ausilio di strumenti elettronici con modalit&agrave; idonee a garantire la sicurezza e riservatezza dei dati.
 4. Il conferimento dei dati &egrave; obbligatorio. L&apos;eventuale rifiuto a fornirci, in tutto o in parte, i Suoi/Vostri dati personali o l&apos;autorizzazione al trattamento implica l&apos;impossibilit&agrave; di iscriversi al sito.
 5. I dati potranno essere comunicati, esclusivamente per le finalit&agrave; sopra indicate, a soggetti determinati al fine di adempiere agli obblighi di cui sopra. Altri soggetti potrebbero venire a conoscenza dei dati in qualit&agrave; di responsabili o incaricati del trattamento o in qualit&agrave; di gestori e manutentori del sito stesso. In nessun caso i dati personali trattati saranno oggetto di diffusione.
-7. Il titolare del trattamento dei dati personali &egrave; Cosmo Damiano Umbrello con sede in Via Basilio Bertucci, 1 - 89822 Simbario VV
-Il responsabile del trattamento dei dati personali &egrave; Cosmo Damiano Umbrello
+7. Il titolare del trattamento dei dati personali &egrave; Antonio Giovanni Marchese con sede in Via Teodoro Mesimerrio, 1 - 89822 Spadola VV
+Il responsabile del trattamento dei dati personali &egrave; Antonio Giovanni Marchese
 8. Al titolare del trattamento o al responsabile Lei/Voi potr&agrave; rivolgersi per far valere i Suoi diritti, cos&igrave; come previsto dall&apos;articolo 7 del D.lgs n.196/2003, che per Sua/Vostra comodit&agrave; riproduciamo integralmente:
 Art. 7 Diritto di accesso ai dati personali ed altri diritti
 

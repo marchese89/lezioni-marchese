@@ -9,6 +9,7 @@ $return = 0;
 if (isset($_POST['ret'])) {
     $return = $_POST['ret'];
 }
+
 mysqli_autocommit($conn, FALSE);
 $conn->query("LOCK TABLES utente READ,amministratore READ");
 $conn->query("BEGIN");

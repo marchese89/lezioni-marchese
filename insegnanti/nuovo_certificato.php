@@ -77,7 +77,7 @@ function mandaPdfCV(supportAjaxUpload, formID) {
 			<form enctype="multipart/form-data" method="post"
 				action="upload/upload.php" id="loadPdfCV">
 				<input id="fileuploadPDF_CV" name="fileuploadPDF_CV" type="file"
-					accept=".pdf" class="file_upload" onchange="visualizza_pdfCV(this)" />
+					accept=".pdf,image/*" class="file_upload" onchange="visualizza_pdfCV(this)" />
 				<input type="button" value="Scegli un file" id="btn2"
 					onclick="cliccaFile()" /><span style="opacity: 0">_</span> <img
 					id="ant_pdfCV" width="30" height="30" style="opacity: 0" /><span

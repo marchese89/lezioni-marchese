@@ -57,7 +57,9 @@ RewriteRule ^corso-studente-([0-9]*).html index.php?pagina=studenti/corso_studen
 RewriteRule ^visualizza-lezione-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_lezione.php&corso=$1&id=$2
 RewriteRule ^visualizza-lezione-ins-([0-9]*)-([0-9]*).html index.php?pagina=insegnanti/visualizza_lezione.php&corso=$1&id=$2
 RewriteRule ^visualizza-presentazione-lezione-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_presentazione_lezione.php&corso=$1&id=$2
+RewriteRule ^visualizza-lezione-gratuita-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_lezione_gratuita.php&corso=$1&id=$2
 RewriteRule ^visualizza-esercizio-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_esercizio.php&corso=$1&id=$2
+RewriteRule ^visualizza-esercizio-gratuito-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_esercizio_gratuito.php&corso=$1&id=$2
 RewriteRule ^visualizza-esercizio-ins-([0-9]*)-([0-9]*).html index.php?pagina=insegnanti/visualizza_esercizio.php&corso=$1&id=$2
 RewriteRule ^visualizza-traccia-esercizio-([0-9]*)-([0-9]*).html index.php?pagina=studenti/visualizza_traccia_esercizio.php&corso=$1&id=$2
 RewriteRule ^lezioni-su-richiesta.html index.php?pagina=studenti/richiesta_lezione.php

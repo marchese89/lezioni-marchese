@@ -26,7 +26,6 @@ $richiesta = $result->fetch_assoc();
 	</td>
 	</tr>
 	<tr style="height: 60px">
-	<td><label>Insegnante</label></td>
 	<td><label>Prezzo</label></td>
 	<td><label>Operazioni</label></td>
 	</tr>
@@ -34,17 +33,7 @@ $richiesta = $result->fetch_assoc();
 	   $result = $conn->query("SELECT * FROM richieste_lezioni WHERE id = '$id' AND svolgimento <> 'NULL'");
 	   if($result->num_rows > 0){
 	   $richiesta = $result->fetch_assoc();
-	       $id_ins = $richiesta['insegnante'];
-	       $result2 = $conn->query("SELECT * FROM insegnante WHERE id = '$id_ins'");
-	       $ins = $result2->fetch_assoc();
-	       $id_ut = $ins['utente_i'];
-	       $result3 = $conn->query("SELECT * FROM utente WHERE id = '$id_ut'");
-	       $ut = $result3->fetch_assoc();
-	       
-	       ?>
-	       <tr style="height: 60px"><td>
-	       <?php echo $ut['nome'] . " " . $ut['cognome'];?>
-	       </td>
+        ?>
 	       <td><?php echo $richiesta['prezzo']?> &euro;</td>
 	       <td><button onclick=location.href="acquisti/aggiungi_al_carrello.php?id=<?php echo $richiesta['id'];?>&tipo=lez_r&ret=<?php echo  $id;?>">Acquista</button></td>
 	       </tr>

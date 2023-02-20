@@ -113,7 +113,20 @@ session_start();
 						</p>
 					</th>
 				</tr>
-
+				<tr>
+			<th colspan="2" valign="middle" align="center" height="60" width="78">
+				<p style="color: #0e83cd">Email</p>
+				<p>
+					<input type="text" name="email" id="email" maxlength="45"
+						size="30">
+					<script type="text/javascript">
+                                    var email = new LiveValidation('email', {onlyOnSubmit: true});
+                                    email.add(Validate.Presence);
+                                    email.add(Validate.Email);
+                                </script>
+				</p>
+			</th>
+			</tr>
 			</table>
 
 		</th>

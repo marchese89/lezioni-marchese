@@ -147,6 +147,30 @@ $amministratore = $result->fetch_assoc();
 				</p>
 			</td>
 			</tr>
+					<tr>
+			<td width="98">
+				<p style="color: #0e83cd">PIVA</p>
+				<p>
+					<input type="text" id="piva" name="piva" maxlength="11" size="30" value="<?php echo $amministratore['piva']?>">
+					<script type="text/javascript">
+                                    var piva_ = new LiveValidation('piva', {onlyOnSubmit: true});
+                                    piva_.add(Validate.Presence);
+                                    piva_.add(Validate.InteriPositivi);
+                                </script>
+				</p>
+			</td>
+			</tr>
+			<td width="98">
+				<p style="color: #0e83cd">Chiave Privata Stripe</p>
+				<p>
+					<input type="text" id="str_sk" name="str_sk" maxlength="107" size="110" value="<?php echo $amministratore['stripe_private_key']?>">
+					<script type="text/javascript">
+                                    var str_sk_ = new LiveValidation('str_sk', {onlyOnSubmit: true});
+                                    str_sk_.add(Validate.Presence);
+                                </script>
+				</p>
+			</td>
+			</tr>
                 <tr>
                     <td>
                         <input type="submit" value="Conferma Modifiche">

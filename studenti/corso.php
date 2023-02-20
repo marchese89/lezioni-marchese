@@ -57,7 +57,7 @@ $prezzo_tot = 0;
 $tot_lez = 0;
 $result = $conn->query("SELECT * FROM lezione WHERE corso_lez='$id_corso'");
 while ($lez = $result->fetch_assoc()) {
-
+    if($lez['prezzo'] > 0){
         if ($studente && !prodotto_acquistato($id_stud, $lez['id'], 0, $conn)) { // inseriamo solo se la lezione non è stata già acquistata
             
             ?>
@@ -86,7 +86,17 @@ while ($lez = $result->fetch_assoc()) {
           <?php 
             
         }
-    
+    }else{
+        ?>
+		    <tr style="height: 60px">
+		    <label style="color: black;">
+				<td><?php echo $lez['numero'];?> </td>
+				<td><?php echo $lez['titolo'];?></td>
+				<td  style="color:green;"><?php echo "Gratis";$prezzo_tot = $prezzo_tot+$lez['prezzo']; $tot_lez = $tot_lez+$lez['prezzo'];?></td>
+				<td><button class="button" onclick=location.href="visualizza-lezione-gratuita-<?php echo $id_corso;?>-<?php echo $lez['id'];?>.html">Visualizza Lezione</button></label></td>
+			</tr>
+          <?php 
+    }
 }
 if($tot_lez > 0){
 ?>
@@ -107,6 +117,7 @@ if($tot_lez > 0){
 $tot_ex = 0;
 $result = $conn->query("SELECT * FROM esercizio WHERE corso_ex='$id_corso'");
 while ($ex = $result->fetch_assoc()) {
+    if($ex['prezzo'] > 0){
         if ($studente && !prodotto_acquistato($id_stud, $ex['id'], 2, $conn)) {
         ?>
 	        <tr style="height: 60px">
@@ -132,7 +143,18 @@ while ($ex = $result->fetch_assoc()) {
 		</tr>
         <?php
         
-    
+        }
+    }else{
+        ?>
+        <tr style="height: 60px">
+        <td></td>
+        <td><label style="color: black;"></label><?php echo $ex['titolo']?> </td>
+			<td style="color:green;"><?php echo "Gratis";$prezzo_tot = $prezzo_tot+$ex['prezzo'];$tot_ex = $tot_ex + $ex['prezzo'];?></td>
+			<td><button class="button" onclick=location.href="visualizza-esercizio-gratuito-<?php echo $id_corso;?>-<?php echo $ex['id'];?>.html">Visualizza Esercizio</button>
+			</label></td>
+			</td>
+		</tr>
+		<?php 
     }
 }
 if($tot_ex > 0){

@@ -5,7 +5,7 @@
 	</tr>
 	<?php 
 	$id_studente = trovaIdStudente($_SESSION['user'],$conn);
-	$result = $conn->query("SELECT * FROM richieste_lezioni WHERE studente='$id_studente' AND evasa = '0'");
+	$result = $conn->query("SELECT * FROM richieste_lezioni WHERE studente='$id_studente' AND pagata = '0'");
 	while($richiesta = $result->fetch_assoc()){
 	    ?>
 	    <tr style="height: 60px">

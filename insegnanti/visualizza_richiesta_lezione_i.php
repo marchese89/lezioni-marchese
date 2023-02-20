@@ -103,16 +103,18 @@ function visualizza_pdfSL(img){
 	<iframe src="<?php echo $svolgimento;?>#view=FitH" width="90%" height="800px"></iframe>
 	</td>
 	</tr>
-	<?php 
-	if($richiesta['evasa'] == 0){
-	?>
+	
 	<tr style="height: 60px">
 	<td>
 	<button onclick=location.href="modifica-svolgimento-lezione-<?php echo $id;?>.html">Modifica Svolgimento</button>
 	</td>
 	</tr>
-	
+	<?php 
+	if($richiesta['pagata'] == 0){
+	?>
 	<tr><td>
+	<p>
+	
 	<form  action="insegnanti/modifica_p_soluzione_lezione.php" method="post">
 				<input type="hidden" name="id" value="<?php echo $id;?>"/>
 				<label>Prezzo    </label><input type="text" id="prezzo_s" name="prezzo_s" maxlength="45"
@@ -126,6 +128,7 @@ function visualizza_pdfSL(img){
                                 <br>
 				<input type="submit" value="Modifica Prezzo">
 				       </form>
+				       <p>
 	</td>
 	</tr>
 	    <?php 

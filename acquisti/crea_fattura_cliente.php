@@ -5,6 +5,13 @@ include_once '../config/mysql-config.php';
 require_once '../dompdf/autoload.inc.php';
 include_once '../script/funzioni-php.php';
 
+// Include required PHPMailer files
+require '../phpmailer/PHPMailer.php';
+require '../phpmailer/SMTP.php';
+require '../phpmailer/Exception.php';
+// Define name spaces
+use PHPMailer\PHPMailer\PHPMailer;
+
 use Dompdf\Dompdf;
 
 mysqli_autocommit($conn, FALSE);
@@ -255,7 +262,7 @@ if ($rollback) {
     unlink('../fatture/' . $number . '.pdf');
     $conn->query("ROLLBACK");
     // rimborso totale
-    $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+    $stripe = new \Stripe\StripeClient($admin['stripe_private_key']);
     $stripe->refunds->create([
         'payment_intent' => $_GET['payment_intent']
     ]);
@@ -270,7 +277,7 @@ if ($rollback) {
         $conn->query("ROLLBACK");
         $conn->query("UNLOCK TABLES");
         // rimborso totale
-        $stripe = new \Stripe\StripeClient('sk_test_51LkNn9H3pdyIax9sV9wedmHBJPMfcfTdeXDXbMhnBTlN3dzYa7kTVrSl3CJPYHNgRklQiJJI5rrjOMjoOM4RbALu00n77YaBXr');
+        $stripe = new \Stripe\StripeClient($admin['stripe_private_key']);
         $stripe->refunds->create([
             'payment_intent' => $_GET['payment_intent']
         ]);
@@ -281,6 +288,40 @@ if ($rollback) {
     }
 
     $conn->query("UNLOCK TABLES");
+    //invio email
+    // Create instance of PHPMailer
+    $mail = new PHPMailer();
+    // Set mailer to use smtp
+    $mail->isSMTP();
+    // Define smtp host
+    $mail->Host = "smtps.aruba.it";
+    // Enable smtp authentication
+    $mail->SMTPAuth = true;
+    // Set smtp encryption type (ssl/tls)
+    $mail->SMTPSecure = "ssl";
+    // Port to connect smtp
+    $mail->Port = "465";
+    // Set gmail username
+    $mail->Username = "info@lezioni-marchese.it";
+    // Set gmail password
+    $mail->Password = "3DWjnkVW#tkez5NS";
+    // Email subject
+    $mail->Subject = "Ordine Effettuato";
+    // Set sender email
+    $mail->setFrom('info@lezioni-marchese.it');
+    // Enable HTML
+    $mail->isHTML(true);
+    // Attachment
+    $mail->addAttachment('../fatture/' . $number. '.pdf',$number. '.pdf', 'base64','application/pdf');
+    // Email body
+    $mail->Body = "Gentile cliente,<br>Il suo ordine &egrave; andato a buon fine.<br>Fattura in allegato.<br><br><br>Lezioni Marchese";
+    // Add recipient
+    $mail->addAddress($_SESSION['email']);
+    // Finally send email
+    $mail->send();
+    // Closing smtp connection
+    $mail->smtpClose();
+   
     session_unset();
     header('Location: ../mostra-fattura-cliente-' . $numeroFattura . '.html');
 }

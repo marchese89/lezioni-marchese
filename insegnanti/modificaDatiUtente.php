@@ -15,8 +15,11 @@ $n_civico = $_POST['n_civico'];
 $citta = str_replace("'", "''", $_POST['citta']);
 $provincia = $_POST['provincia'];
 $cap = $_POST['cap'];
+$piva = $_POST['piva'];
+$str_sk = $_POST['str_sk'];
 
-$aggiorna = "UPDATE amministratore SET via = '$via', n_civico = '$n_civico', citta = '$citta', provincia = '$provincia', cap = '$cap', email='$nuovaEmail' WHERE email ='$email'";
+$aggiorna = "UPDATE amministratore SET via = '$via', n_civico = '$n_civico', citta = '$citta', provincia = '$provincia', cap = '$cap', 
+piva = '$piva', stripe_private_key = '$str_sk',  email='$nuovaEmail' WHERE email ='$email'";
 if (! $conn->query($aggiorna)) {
     $conn->query("ROLLBACK");
 } else {

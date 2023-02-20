@@ -92,7 +92,7 @@ function visualizza_pdfTE(img){
 			<form enctype="multipart/form-data" method="post"
 				action="upload/upload.php" id="loadPdfTE">
 				<input id="fileuploadPDF_TE" name="fileuploadPDF_TE" type="file"
-					accept=".pdf,image/*" class="file_upload"
+					accept=".pdf" class="file_upload"
 					onchange="visualizza_pdfTE(this)" /> <input type="button"
 					value="Scegli un file" id="btn2" onclick="cliccaFile()" /><span
 					style="opacity: 0">_</span> <img id="ant_pdfTE" width="30"

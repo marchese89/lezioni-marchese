@@ -1,8 +1,24 @@
 <?php
 session_start();
+
+if(!isset($_SESSION['user'])){
+    header('Location: ../index.html');
+}
+
+
 date_default_timezone_set('Europe/Rome');
 include_once '../config/mysql-config.php';
 include_once '../script/funzioni-php.php';
+// Include required PHPMailer files
+require '../phpmailer/PHPMailer.php';
+require '../phpmailer/SMTP.php';
+require '../phpmailer/Exception.php';
+// Define name spaces
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+
 $traccia = $_SESSION['percorsoPDF_RL'];
 $studente = trovaIdStudente($_SESSION['user'], $conn);
 $titolo = $_POST['titolo_l'];
@@ -18,22 +34,40 @@ if ($r) {
     unset($_SESSION['percorsoPDF_RL']);
     unset($_SESSION['pdfRLCaricato']);
     //invio email //TODO
+    $rr = $conn->query("SELECT * FROM amministratore");
+    $admin = $rr->fetch_assoc();
+    $to = $admin['email'];
     
-    $to = "marchese89@hotmail.com";
-    $subject = "Nuova Richiesta Studente";
-    $sender = "info@easylearning.com"; // TODO da modificare
-    $testoMailReg = "Gentile insegnante,\nuno studente ha effettuato una richiesta.\nConsultare il sito per ulteriori dettagli.\nEasy Learning";
-    
-    $headers = "Reply-To: EasyLearning <$sender>\r\n";
-    $headers .= "Return-Path: EasyLearning <$sender>\r\n";
-    $headers .= "From: EasyLearning <$sender>\r\n";
-    $headers .= "Organization: EasyLearning\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/plain; charset=\"iso-8859-1\"\r\n";
-    $headers .= "X-Priority: 3\r\n";
-    $headers .= "X-Mailer: PHP " . phpversion() . "\r\n";
-    
-    mail($to, $subject, $testoMailReg, $headers, "-f$sender");
+    // Create instance of PHPMailer
+    $mail = new PHPMailer();
+    // Set mailer to use smtp
+    $mail->isSMTP();
+    // Define smtp host
+    $mail->Host = "smtps.aruba.it";
+    // Enable smtp authentication
+    $mail->SMTPAuth = true;
+    // Set smtp encryption type (ssl/tls)
+    $mail->SMTPSecure = "ssl";
+    // Port to connect smtp
+    $mail->Port = "465";
+    // Set gmail username
+    $mail->Username = "info@lezioni-marchese.it";
+    // Set gmail password
+    $mail->Password = "3DWjnkVW#tkez5NS";
+    // Email subject
+    $mail->Subject = "Nuova Richiesta Studente";
+    // Set sender email
+    $mail->setFrom('info@lezioni-marchese.it');
+    // Enable HTML
+    $mail->isHTML(true);
+    // Email body
+    $mail->Body = "Gentile insegnante,<br>uno studente ha effettuato una richiesta.<br>Consultare il sito per ulteriori dettagli.<br><br><br>Lezioni Marchese";
+    // Add recipient
+    $mail->addAddress($to);
+    // Finally send email
+    $mail->send();
+    // Closing smtp connection
+    $mail->smtpClose();
     
     header("Location: ../richiesta-lezione-inserita.html");
 } else {
