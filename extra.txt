@@ -1,0 +1,5 @@
+cache azzerata:
+?ts=<?=time()?>&quot 
+esempio:
+<link href="fogliCSS/home.css?ts=<?=time()?>&quot" rel="stylesheet"
+	type="text/css">

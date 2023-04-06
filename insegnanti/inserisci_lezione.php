@@ -3,7 +3,7 @@ session_start();
 
 include '../config/mysql-config.php';
 
-$titolo =  $_POST['titolo_lezione'];
+$titolo =  str_replace("'", "''", $_POST['titolo_lezione']);
 $numero = $_POST['numero_lezione'];
 $corso = $_POST['corso'];
 $prezzo_lezione = $_POST['prezzo_lezione'];
