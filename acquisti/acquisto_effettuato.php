@@ -543,19 +543,19 @@ for ($i = 0; $i < count($contenuto); $i ++) {
      // Port to connect smtp
      $mail->Port = "465";
      // Set gmail username
-     $mail->Username = "info@lezioni-marchese.it";
+     $mail->Username = "info@lezioni-informatica.it";
      // Set gmail password
-     $mail->Password = "3DWjnkVW#tkez5NS";
+     $mail->Password = "3DWjnkVW.tkez5NS";
      // Email subject
      $mail->Subject = "Ordine Effettuato";
      // Set sender email
-     $mail->setFrom('info@lezioni-marchese.it');
+     $mail->setFrom('info@lezioni-informatica.it');
      // Enable HTML
      $mail->isHTML(true);
      // Attachment
      $mail->addAttachment('../fatture/' . $number. '.pdf',$number. '.pdf', 'base64','application/pdf');
      // Email body
-     $mail->Body = "Gentile cliente,<br>Il suo ordine &egrave; andato a buon fine.<br>Fattura in allegato.<br><br><br>Lezioni Marchese";
+     $mail->Body = "Gentile cliente,<br>Il suo ordine &egrave; andato a buon fine.<br>Fattura in allegato.<br><br><br>Lezioni Informatica";
      // Add recipient
      $mail->addAddress($_SESSION['user']);
      // Finally send email

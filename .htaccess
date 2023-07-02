@@ -24,6 +24,7 @@ RewriteRule ^carrello.html index.php?pagina=acquisti/visualizza_carrello.php
 RewriteRule ^acquista.html index.php?pagina=acquisti/acquista.php
 RewriteRule ^dettagli-ordine-([0-9]*)-([0-9]*).html index.php?pagina=acquisti/dettagli_ordine_cliente.php&ordine=$1&return=$2
 RewriteRule ^cookiepolicy.html index.php?pagina=cookie.html
+RewriteRule ^privacypolicy.html index.php?pagina=privacy.html
 RewriteRule ^corsi-studente.html index.php?pagina=studenti/corsi_studente.php
 RewriteRule ^corsi.html index.php?pagina=insegnanti/corsi.php
 RewriteRule ^esercizi.html index.php?pagina=insegnanti/corsi_insegnante.php&inner=insegnanti/esercizi.php

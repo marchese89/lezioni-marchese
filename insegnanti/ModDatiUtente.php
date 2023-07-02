@@ -160,6 +160,7 @@ $amministratore = $result->fetch_assoc();
 				</p>
 			</td>
 			</tr>
+			<tr>
 			<td width="98">
 				<p style="color: #0e83cd">Chiave Privata Stripe</p>
 				<p>

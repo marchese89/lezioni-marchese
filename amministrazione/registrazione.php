@@ -1,5 +1,3 @@
-
-
 <?php
 if (! $conn) {
     header("Location: ../index.php");
@@ -229,7 +227,7 @@ if (! empty($_GET['return'])) {
 			<th colspan="2" height="300px" style="color: #0e83cd">Informativa sul
 				trattamento dei dati personali<br>
 			<p>
-					<textarea rows="10" cols="50" disabled>Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
+					<textarea rows="10" cols="60" disabled style="resize: none">Ai sensi dell'articolo 13 del D.lgs n.196/2003, Le/Vi forniamo le seguenti informazioni:
 1. I dati personali da Lei/Voi forniti o acquisiti nell&apos;ambito della nostra attivit&agrave; saranno oggetto di trattamento improntato ai principi di correttezza, liceit&agrave;, trasparenza e di tutela della Sua/Vostra riservatezza e dei Suoi/Vostri diritti.
 2. Il trattamento di tali dati personali sar&agrave; finalizzato agli adempimenti degli obblighi contrattuali o derivanti da incarico conferito dall&apos;interessato ed in particolare all&apos;invio telematico di eventuali fatture.
 3. Il trattamento potr&agrave; essere effettuato anche con l&apos;ausilio di strumenti elettronici con modalit&agrave; idonee a garantire la sicurezza e riservatezza dei dati.

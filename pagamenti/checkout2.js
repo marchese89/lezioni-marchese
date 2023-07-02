@@ -36,7 +36,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "https://lezioni-marchese.it/acquisti/crea_fattura_cliente.php",
+      return_url: "https://lezioni-informatica.it/acquisti/crea_fattura_cliente.php",
     },
   });
   

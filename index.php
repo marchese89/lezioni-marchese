@@ -13,108 +13,111 @@ include_once 'script/funzioni-php.php';
 session_cache_limiter('nocache');
 session_start();
 
-if (! isset($_SESSION['carrello'])) {
+if (!isset($_SESSION['carrello'])) {
     $_SESSION['carrello'] = new Carrello();
 }
 
 $pagina_interna = filter_input(INPUT_GET, "pagina");
 
-if (! empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
+if (!empty($_SESSION['user']) && $_SESSION['user'] !== 'admin' && $pagina_interna === 'amministrazione/admin.php') {
     header("Location: index.html");
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-<title>Lezioni Marchese</title>
+    <title>Lezioni Informatica</title>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<link href="fogliCSS/home.css" rel="stylesheet"
-	type="text/css">
-<link href="fogliCSS/menu.css" rel="stylesheet"
-	type="text/css">
-<link href="fogliCSS/pagina_login.css"
-	rel="stylesheet" type="text/css">
-<link href="fogliCSS/admin.css" rel="stylesheet"
-	type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script type="text/javascript" src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
-<script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
+    <link href="fogliCSS/home.css" rel="stylesheet" type="text/css">
+    <link href="fogliCSS/menu.css" rel="stylesheet" type="text/css">
+    <link href="fogliCSS/pagina_login.css" rel="stylesheet" type="text/css">
+    <link href="fogliCSS/admin.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script type="text/javascript" src="script/validazione_campi/livevalidation_standalone.compressed.js"></script>
+    <script type="text/javascript" src="script/ajax/metodi_ajax.js"></script>
 
-<meta name="description" content="Sito Web Supporto Studenti">
-<meta name="author" content="Antonio Giovanni Marchese">
-<meta name="keywords" content="lezioni private, lezioni informatica, lezioni matematica, corsi, e-commerce, 
+    <meta name="description" content="Sito Web Supporto Studenti">
+    <meta name="author" content="Antonio Giovanni Marchese">
+    <meta name="keywords" content="lezioni private, lezioni informatica, lezioni matematica, corsi, e-commerce, 
 corsi informatica, corsi matematica, esercizi, esercizi svolti, esercizi su commissione" />
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 </head>
+
 <body>
 
-	<table id="pagina_iniziale" cellaspacing=0 cellpaddin=0 >
+    <table id="pagina_iniziale" cellaspacing=0 cellpaddin=0>
 
-		<tr id="prima_riga">
-			<!-- <td id="pr_sinistra"></td> -->
-			<td align=right id="pr_destra">
-			
-<?php
-if (empty($_SESSION['user'])) {
-    ?>
-    <a href="login.html" ><b>Accedi</b></a>|<a
-				href="registrati.html" ><b>Registrati</b></a>
-   <?php
-} else {
-    if ($_SESSION['nomeUtente'] !== "amministratore") {
-        $user = $_SESSION['user'];
+        <tr id="prima_riga">
+            <!-- <td id="pr_sinistra"></td> -->
+            <td align=right id="pr_destra">
 
-        $r1 = $conn->query("SELECT * FROM utente WHERE email='$user'");
-        $ut = $r1->fetch_assoc();
-        $id = $ut['id'];
-        $r2 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
-        if ($r2->num_rows > 0) {
-            ?>
-        <b>Ciao <?php echo $ut['nome']?></b> <a href="carrello.html"><b>Carrello</b></a><?php echo '<b>(' . $_SESSION['carrello']->nElementi() . ')</b>';?>
-        <a href="home-user.html"><b>Il mio profilo</b></a>|<a
-				href="amministrazione/logout.php"  ><b>Logout</b></a>
-        <?php
-        } else {
-            ?>
-            <a href="home-insegnante.html"><b>Il mio profilo</b></a>|<a
-				href="amministrazione/logout.php" ><b>Logout</b></a>
-        <?php
-        }
-    } else {
-        ?>
-        <b>Amministratore</b> <a href="home-insegnante.html"><b>Il mio
-						profilo</b></a>|<a href="amministrazione/logout.php"
-				class="collegamento"><b>Logout</b></a>
-        <?php
-    }
-}
-?>
-		</td>
-		</tr>
-		<tr id="seconda_riga">
-			<th>
-			<a href="index.html"><h1>Lezioni Marchese</h1></a><p>L'informatica a portata di mano<p></th>
-		</tr>
-		<tr id="terza_riga">
-			<th ><a href="aree-tematiche.html">Aree Tematiche</a> <a
-				href="lezioni-su-richiesta.html">Materiale su Richiesta</a> <a
-				href="pagamenti.html">Pagamenti</a> <a href="informazioni.html">Informazioni</a><a
-				href="contatti.html">Contatti</a> <a href="cookiepolicy.html">Coockie
-					Policy</a></th>
+                <?php
+                if (empty($_SESSION['user'])) {
+                ?>
+                    <a href="login.html"><b>Accedi</b></a>|<a href="registrati.html"><b>Registrati</b></a>
+                    <?php
+                } else {
+                    if ($_SESSION['nomeUtente'] !== "amministratore") {
+                        $user = $_SESSION['user'];
 
-		</tr>
+                        $r1 = $conn->query("SELECT * FROM utente WHERE email='$user'");
+                        $ut = $r1->fetch_assoc();
+                        $id = $ut['id'];
+                        $r2 = $conn->query("SELECT * FROM studente WHERE utente_s='$id'");
+                        if ($r2->num_rows > 0) {
+                    ?>
+                            <b>Ciao <?php echo $ut['nome'] ?></b> <a href="carrello.html"><b>Carrello</b></a><?php echo '<b>(' . $_SESSION['carrello']->nElementi() . ')</b>'; ?>
+                            <a href="home-user.html"><b>Il mio profilo</b></a>|<a href="amministrazione/logout.php"><b>Logout</b></a>
+                        <?php
+                        } else {
+                        ?>
+                            <a href="home-insegnante.html"><b>Il mio profilo</b></a>|<a href="amministrazione/logout.php"><b>Logout</b></a>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <b>Amministratore</b> <a href="home-insegnante.html"><b>Il mio
+                                profilo</b></a>|<a href="amministrazione/logout.php" class="collegamento"><b>Logout</b></a>
+                <?php
+                    }
+                }
+                ?>
+            </td>
+        </tr>
+        <tr id="seconda_riga">
+            <th>
+                <a href="index.html">
+                    <h1>Lezioni Informatica</h1>
+                </a><br><br>
+            </th>
+        </tr>
+        <tr id="terza_riga">
+            <th>
+                <a href="aree-tematiche.html">Aree Tematiche</a> 
+                <a href="lezioni-su-richiesta.html">Materiale su Richiesta</a> 
+                <a href="pagamenti.html">Pagamenti</a> 
+                <a href="informazioni.html">Informazioni</a>
+                <a href="contatti.html">Contatti</a> 
+                <a href="cookiepolicy.html">Coockie Policy</a>
+                <a href="privacypolicy.html">Privacy Policy</a>
+            </th>
 
-	</table>
-					<?php
+        </tr>
+
+    </table>
+    <?php
     if (empty($pagina_interna)) {
         $pagina_interna = 'home.php';
     }
     try {
         include $pagina_interna;
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+    }
     ?>
 </body>
+
 </html>

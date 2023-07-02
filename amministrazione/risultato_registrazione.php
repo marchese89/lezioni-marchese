@@ -1,8 +1,53 @@
-
 <?php
+
 date_default_timezone_set('Europe/Rome');
+
 include '../config/mysql-config.php';
-include '../script/validazione_campi/validazioneServer.php';
+// Include required PHPMailer files
+
+include '../phpmailer/SMTP.php';
+include '../phpmailer/Exception.php';
+include '../phpmailer/PHPMailer.php';
+
+// Define name spaces
+use PHPMailer\PHPMailer\PHPMailer;
+
+function inviaEmail($mittente,$destinatario, $password, $oggetto, $contenuto)
+{
+    // invio email
+    // Create instance of PHPMailer
+    $mail = new PHPMailer();
+    // Set mailer to use smtp
+    $mail->isSMTP();
+    // Define smtp host
+    $mail->Host = "smtps.aruba.it";
+    // Enable smtp authentication
+    $mail->SMTPAuth = true;
+    // Set smtp encryption type (ssl/tls)
+    $mail->SMTPSecure = "ssl";
+    // Port to connect smtp
+    $mail->Port = "465";
+    // Set gmail username
+    $mail->Username = $mittente;
+    // Set gmail password
+    $mail->Password = $password;//"3DWjnkVW.tkez5NS";
+    // Email subject
+    $mail->Subject = $oggetto;//"Recupero Credenziali";
+    // Set sender email
+    $mail->setFrom($mittente);
+    // Enable HTML
+    $mail->isHTML(true);
+    // Email body
+    $mail->Body = $contenuto;
+    //"Gentile " . $utente['nome'] . " " . $utente['cognome'] . ",<br>la sua nuova password &egrave;:<br><b> " . $nuovaPass . "</b>.<br><br>la preghiamo di modificarla al tuo prossimo accesso.<br>Cordialmente,<br><br>Lezioni Marchese";
+    // Add recipient
+    $mail->addAddress($destinatario);
+    // Finally send email
+    $mail->send();
+    // Closing smtp connection
+    $mail->smtpClose();
+}
+
 session_start();
 
 mysqli_autocommit($conn, FALSE);
@@ -14,8 +59,8 @@ function generaCodice($length = 6)
     $salt = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678';
     $len = strlen($salt);
     $codiceAtt = '';
-    mt_srand(10000000 * (double) microtime());
-    for ($i = 0; $i < $length; $i ++) {
+    mt_srand(10000000 * (float) microtime());
+    for ($i = 0; $i < $length; $i++) {
         $codiceAtt .= $salt[mt_rand(0, $len - 1)];
     }
     return $codiceAtt;
@@ -34,10 +79,11 @@ $password1 = password_hash($_POST['pass1'], PASSWORD_DEFAULT);
 $codiceA = generaCodice();
 $data = date("Y-m-d H:i:s");
 
-$result = - 1;
+$result = -1;
 $result = $conn->query("INSERT INTO utente (email,password,nome,cognome,codice_attivaz,data_iscrizione,stato_account) VALUES('$email1','$password1','$nome','$cognome','$codiceA','$data','0')");
 
-$testoMailReg = "Gentile cliente\ngrazie per essersi registrato.\nPer attivare il suo account inserisca" . " il codice " . $codiceA . " dopo aver effettuato l'accesso\nEasy Learning";
+$testoMailReg = "Gentile cliente,<br>grazie per essersi registrato.<br>Per attivare il suo account inserisca il codice:<br><br> " . $codiceA . "<br>dopo aver effettuato l'accesso<br><br>Lezioni Informatica";
+
 if ($result) {
     $r = $conn->query("SELECT * FROM utente WHERE email='$email1'");
     $ut = $r->fetch_assoc();
@@ -48,20 +94,12 @@ if ($result) {
 
         $_SESSION['registrazione'] = "ok";
 
-        $to = $email1;
-        $subject = "Completa la tua registrazione";
-        $sender = "register@easylearning.com"; // TODO da modificare
-
-        $headers = "Reply-To: EasyLearning <$sender>\r\n";
-        $headers .= "Return-Path: EasyLearning <$sender>\r\n";
-        $headers .= "From: EasyLearning <$sender>\r\n";
-        $headers .= "Organization: EasyLearning\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/plain; charset=\"iso-8859-1\"\r\n";
-        $headers .= "X-Priority: 3\r\n";
-        $headers .= "X-Mailer: PHP " . phpversion() . "\r\n";
-
-        mail($to, $subject, $testoMailReg, $headers, "-f$sender");
+        $mittente = "register@lezioni-informatica.it";
+        $destinatario = $email1;
+        $oggetto = "Completa la tua registrazione";
+        $contenuto = $testoMailReg;
+        $password = "3DWjnkVW.tkez5NS";
+        inviaEmail($mittente, $destinatario, $password, $oggetto, $contenuto);
     } else {
         $risultatoReg = "no";
         $conn->query("ROLLBACK");
@@ -74,8 +112,3 @@ if ($result) {
 $conn->query("UNLOCK TABLES");
 
 header("Location: ../risultato-operazione.html");
-
-        
-
-
-   

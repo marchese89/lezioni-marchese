@@ -302,13 +302,13 @@ if ($rollback) {
     // Port to connect smtp
     $mail->Port = "465";
     // Set gmail username
-    $mail->Username = "info@lezioni-marchese.it";
+    $mail->Username = "info@lezioni-informatica.it";
     // Set gmail password
-    $mail->Password = "3DWjnkVW#tkez5NS";
+    $mail->Password = "3DWjnkVW.tkez5NS";
     // Email subject
     $mail->Subject = "Ordine Effettuato";
     // Set sender email
-    $mail->setFrom('info@lezioni-marchese.it');
+    $mail->setFrom('info@lezioni-informatica.it');
     // Enable HTML
     $mail->isHTML(true);
     // Attachment

@@ -52,7 +52,7 @@ function trovaIdStudente($email, $conn): int
         return $studente['id'];
     } else {
         $conn->query("UNLOCK TABLES");
-        return - 1;
+        return -1;
     }
 }
 
@@ -107,8 +107,7 @@ function trovaCorsoEsercizio($id_ex, $conn): int
     $result = $conn->query("SELECT * FROM esercizio WHERE id='$id_ex'");
     $ex = $result->fetch_assoc();
     $conn->query("UNLOCK TABLES");
-    return $ex['corso_ex'];
-    ;
+    return $ex['corso_ex'];;
 }
 
 function stampa_data($data)
@@ -125,4 +124,3 @@ function stampa_data($data)
 
     return $r;
 }
-?>
